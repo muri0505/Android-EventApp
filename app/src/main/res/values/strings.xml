@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">internationalASET</string>
+
+    <string name="eventName">eventName</string>
+    <string name="eventDate">eventDate</string>
+    <string name="eventDes">eventDes</string>
+    <string name="submit">submit</string>
+
+    <string name="events">Events </string>
+    <string name="addEvent">Add Event</string>
+</resources>

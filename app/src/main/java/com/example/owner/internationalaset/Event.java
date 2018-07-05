@@ -16,6 +16,10 @@ public class Event {
         eventDes = des;
     }
 
+    public String getEvent(){
+        return eventName + "\n" + eventDate +  "\n" + eventDes;
+    }
+
     public Map<String, Object> addEvent() {
         HashMap<String, Object> event = new HashMap<>();
         event.put("eventName", eventName);

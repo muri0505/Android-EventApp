@@ -10,44 +10,41 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/toolbar"/>
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:theme="@style/Base.Theme.AppCompat.CompactMenu">
-
         <LinearLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height= "wrap_content"
             android:orientation="horizontal"
-            android:weightSum="3">
+            android:weightSum="3"
+            android:layout_alignParentBottom="true"
+            style="?android:attr/buttonBarStyle">
 
             <Button
                 android:id="@+id/news"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight = "1"
-                android:drawableLeft="@drawable/news"
-                android:text="@string/news"/>
+                android:drawableStart="@drawable/news"
+                android:text="@string/news"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/events"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight = "1"
-                android:drawableLeft="@drawable/events"
-                android:text="@string/events"/>
+                android:drawableStart="@drawable/events"
+                android:text="@string/events"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/journals"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight = "1"
-                android:drawableLeft="@drawable/journal"
-                android:text="@string/journals"/>
+                android:drawableStart="@drawable/journal"
+                android:text="@string/journals"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
-    </android.support.v7.widget.Toolbar>
 </RelativeLayout>

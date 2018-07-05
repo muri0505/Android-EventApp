@@ -1,14 +1,13 @@
 package com.example.owner.internationalaset;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
+/*
+    activity event home page
+ */
 
 public class EventHomePage extends AppCompatActivity {
     private DrawerLayout menu;
@@ -30,10 +29,7 @@ public class EventHomePage extends AppCompatActivity {
 
                     if(menuItem.isChecked()){
                         switch (menuItem.getItemId()) {
-                            case R.id.addEvent:
-                                Intent i = new Intent(EventHomePage.this, AddEvent.class);
-                                startActivity(i);
-                                break;
+
                         }
                     }
                     return true;

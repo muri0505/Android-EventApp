@@ -1,14 +1,28 @@
 <resources>
     <string name="app_name">InternationalASET</string>
 
-    <string name="eventName">eventName</string>
-    <string name="eventDate">eventDate</string>
-    <string name="eventDes">eventDes</string>
-    <string name="submit">submit</string>
+    <string name="submit">Submit</string>
 
+    <string name="eventName">EventName</string>
+    <string name="eventDate">EventDate</string>
+    <string name="eventDes">EventDes</string>
     <string name="events">Events</string>
-    <string name="addEvent">Add Event</string>
+    <string name="controlEvent">Control Event</string>
+    <string name="searchEvent">Search Event</string>
+
     <string name="journals">Journals</string>
     <string name="news">News</string>
+    <string name="addSession">Add Session</string>
+
+    <string name="mode">mode</string>
+    <string name="editadd">Edit/Add</string>
+
+    <string name="sessionType">Session Type</string>
+    <string name="sessionName">Session Name</string>
+    <string name="sessionStartTime">Session Start Time</string>
+    <string name="sessionEndTime">Session End Time</string>
+    <string name="sessionDes">Session Des</string>
+    <string name="controlSession">Control Session</string>
+
 
 </resources>

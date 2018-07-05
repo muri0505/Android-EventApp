@@ -3,14 +3,14 @@ package com.example.owner.internationalaset;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Event {
+public class EventObject {
     private String eventName;
     private String eventDate;
     private String eventDes;
     private Map<String, Boolean> stars = new HashMap<>();
 
-    public Event(){}
-    public Event(String name, String date, String des){
+    public EventObject(){}
+    public EventObject(String name, String date, String des){
         eventName = name;
         eventDate = date;
         eventDes = des;

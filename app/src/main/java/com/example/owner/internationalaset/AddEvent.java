@@ -12,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class AddEvent extends Activity {
 
     DatabaseReference mDatabase;
-    Event temp;
+    EventObject eventObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +26,11 @@ public class AddEvent extends Activity {
 
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                temp = new Event(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
+                eventObject = new EventObject(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
 
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 String keyID  = mDatabase.child("Events").push().getKey();
-                mDatabase.child("Events").child(keyID).setValue(temp.addEvent());
+                mDatabase.child("Events").child(keyID).setValue(eventObject.addEvent());
             }
         });
 

@@ -1,12 +1,13 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,16 +45,14 @@ public class Events extends Fragment {
         });
 
         showEvent(eventList);
-        /*
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
-                String enterStop = (String) adapter.getItemAtPosition(pos);
-                Intent intent = new Intent(getActivity(), OCResultRoute.class);
-                intent.putExtra("enterStop", enterStop);
+                Intent intent = new Intent(getActivity(), EventHomePage.class);
                 startActivity(intent);
             }
         });
-                */
+
         return view;
     }
 
@@ -63,8 +62,8 @@ public class Events extends Fragment {
             String eventName = (String)data.child("eventName").getValue();
             String eventDate = (String)data.child("eventDate").getValue();
             String eventDes = (String)data.child("eventDes").getValue();
-            Event event = new Event(eventName, eventDate, eventDes);
-            eventList.add(event.getEvent());
+            EventObject eventObject = new EventObject(eventName, eventDate, eventDes);
+            eventList.add(eventObject.getEvent());
         }
     }
 

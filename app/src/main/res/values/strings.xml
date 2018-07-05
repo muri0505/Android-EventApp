@@ -6,7 +6,9 @@
     <string name="eventDes">eventDes</string>
     <string name="submit">submit</string>
 
-    <string name="events">Events </string>
+    <string name="events">Events</string>
     <string name="addEvent">Add Event</string>
+    <string name="journals">Journals</string>
+    <string name="news">News</string>
 
 </resources>

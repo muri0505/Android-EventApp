@@ -9,15 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
-        <activity android:name=".ControlEvent" />
-        <activity android:name=".EventHomePage"></activity>
+
+        <activity android:name=".ActivityControlEvent" />
+        <activity android:name=".ActivityControlSession" />
+
+        <activity android:name=".HomePageEvent"/>
         <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>

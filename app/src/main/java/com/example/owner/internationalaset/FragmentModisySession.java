@@ -8,10 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 
-public class FragmentSessionInformation extends Fragment {
+public class FragmentModisySession extends Fragment {
     DatabaseReference mDatabase;
     String getEventName;
 
@@ -21,12 +22,12 @@ public class FragmentSessionInformation extends Fragment {
     EditText sessionStartTime;
     EditText sessionEndTime;
     EditText sessionDes;
-    Button editadd;
+    Button edit;
 
-    public FragmentSessionInformation(){}
+    public FragmentModisySession(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_session_information, container, false);
+        View view = inflater.inflate(R.layout.fragment_modify_session, container, false);
 
         mode = (TextView) view.findViewById(R.id.mode);
         sessionType= (EditText) view.findViewById(R.id.sessionType);
@@ -34,11 +35,14 @@ public class FragmentSessionInformation extends Fragment {
         sessionStartTime = (EditText) view.findViewById(R.id.sessionStartTime);
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
         sessionDes = (EditText) view.findViewById(R.id.sessionDes);
-        editadd = (Button) view.findViewById(R.id.editadd);
+        edit = (Button) view.findViewById(R.id.edit);
+        
+        Button edit = (Button) view.findViewById(R.id.edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
-        getEventName = getArguments().getString("eventName");
-
+            }
+        });
         return view;
     }
-
 }

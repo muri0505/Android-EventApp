@@ -12,7 +12,7 @@ import android.widget.Button;
     activity general home page
  */
 
-public class HomePage extends AppCompatActivity implements FragmentEvents.FragmentEventslistener{
+public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener{
     private Fragment fragment;
 
     @Override
@@ -24,7 +24,7 @@ public class HomePage extends AppCompatActivity implements FragmentEvents.Fragme
         final Button events = (Button) findViewById(R.id.events);
         events.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                fragment = new FragmentEvents();
+                fragment = new FragmentListEvents();
                 fragmentSwitch(fragment);
             }
         });

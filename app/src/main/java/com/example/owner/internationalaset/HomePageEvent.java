@@ -9,13 +9,13 @@ import android.view.MenuItem;
     activity event home page
  */
 
-public class EventHomePage extends AppCompatActivity {
+public class HomePageEvent extends AppCompatActivity {
     private DrawerLayout menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_home_page);
+        setContentView(R.layout.activity_home_page_event);
 
         menu = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.menu);

@@ -23,7 +23,7 @@ public class FragmentControlPanel extends Fragment {
         Button events = (Button) view.findViewById(R.id.controlEvent);
         events.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ControlEvent.class);
+                Intent i = new Intent(getActivity(), ActivityControlEvent.class);
                 startActivity(i);
             }
         });

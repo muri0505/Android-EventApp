@@ -60,7 +60,7 @@
             android:hint="@string/sessionDes" />
 
         <Button
-            android:id="@+id/editadd"
+            android:id="@+id/edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

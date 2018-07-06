@@ -2,7 +2,6 @@ package com.example.owner.internationalaset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
     fragment event information
     search database with event name, add new event if not exist, Fragment Event Modify if exist
  */
-public class FragmentEventModify extends Fragment {
+public class FragmentModifyEvent extends Fragment {
     DatabaseReference mDatabase;
     String getEventKey = null;
     ObjectEvent event;
@@ -32,10 +31,10 @@ public class FragmentEventModify extends Fragment {
     Button edit;
     Button cancel;
 
-    public FragmentEventModify(){}
+    public FragmentModifyEvent(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_modify, container, false);
+        View view = inflater.inflate(R.layout.fragment_modify_event, container, false);
 
         getEventKey = getArguments().getString("eventKey");
 

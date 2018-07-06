@@ -1,7 +1,6 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,13 +23,13 @@ import java.util.ArrayList;
     fragment show all events
  */
 
-public class FragmentEvents extends Fragment {
+public class FragmentListEvents extends Fragment {
     private ListView listView;
     private ArrayList<String> eventList;
     private ArrayList<String> keyList;
     private ArrayAdapter<String> adapter;
 
-    public FragmentEvents(){}
+    public FragmentListEvents(){}
 
     FragmentEventslistener listener;
     public interface FragmentEventslistener{
@@ -46,7 +45,7 @@ public class FragmentEvents extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_events, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_events, container, false);
         listView = (ListView) view.findViewById(R.id.events);
         eventList = new ArrayList<String>();
         keyList = new ArrayList<String>();

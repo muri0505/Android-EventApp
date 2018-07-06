@@ -14,8 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 public class FragmentSessionInformation extends Fragment {
     DatabaseReference mDatabase;
     String getEventName;
-    String key;
-    ObjectEvent event;
 
     TextView mode;
     EditText sessionType;
@@ -39,8 +37,6 @@ public class FragmentSessionInformation extends Fragment {
         editadd = (Button) view.findViewById(R.id.editadd);
 
         getEventName = getArguments().getString("eventName");
-
-
 
         return view;
     }

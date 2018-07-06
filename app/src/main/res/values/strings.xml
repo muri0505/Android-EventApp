@@ -14,8 +14,12 @@
     <string name="news">News</string>
     <string name="addSession">Add Session</string>
 
-    <string name="mode">mode</string>
-    <string name="editadd">Edit/Add</string>
+    <string name="level">Level</string>
+    <string name="mode">Mode</string>
+    <string name="create">Create</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
     <string name="sessionType">Session Type</string>
     <string name="sessionName">Session Name</string>

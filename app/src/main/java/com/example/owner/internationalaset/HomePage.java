@@ -12,7 +12,7 @@ import android.widget.Button;
     activity general home page
  */
 
-public class HomePage extends AppCompatActivity {
+public class HomePage extends AppCompatActivity implements FragmentEvents.FragmentEventslistener{
     private Fragment fragment;
 
     @Override
@@ -46,4 +46,6 @@ public class HomePage extends AppCompatActivity {
         transaction.replace(R.id.fragment, f, "currentFragment");
         transaction.commit();
     }
+
+    public void getEventKey(String eventKey){}
 }

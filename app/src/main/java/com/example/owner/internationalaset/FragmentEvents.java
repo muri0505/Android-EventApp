@@ -1,5 +1,6 @@
 package com.example.owner.internationalaset;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,14 +27,29 @@ import java.util.ArrayList;
 public class FragmentEvents extends Fragment {
     private ListView listView;
     private ArrayList<String> eventList;
+    private ArrayList<String> keyList;
     private ArrayAdapter<String> adapter;
 
     public FragmentEvents(){}
+
+    FragmentEventslistener listener;
+    public interface FragmentEventslistener{
+        public void getEventKey(String eventKey);
+    }
+
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        try{
+            listener = (FragmentEventslistener) activity;
+        }catch(ClassCastException e){
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         listView = (ListView) view.findViewById(R.id.events);
         eventList = new ArrayList<String>();
+        keyList = new ArrayList<String>();
 
         //FirebaseDatabase
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
@@ -53,8 +69,8 @@ public class FragmentEvents extends Fragment {
         //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
-                Intent intent = new Intent(getActivity(), EventHomePage.class);
-                startActivity(intent);
+                String key = keyList.get(pos);
+                listener.getEventKey(key);
             }
         });
 
@@ -65,11 +81,14 @@ public class FragmentEvents extends Fragment {
     public void getEvent(DataSnapshot dataSnapshot){
         eventList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
+            String key = data.getKey();
             String eventName = (String)data.child("eventName").getValue();
             String eventDate = (String)data.child("eventDate").getValue();
             String eventDes = (String)data.child("eventDes").getValue();
+
             ObjectEvent objectEvent = new ObjectEvent(eventName, eventDate, eventDes);
             eventList.add(objectEvent.getEvent());
+            keyList.add(key);
         }
     }
 

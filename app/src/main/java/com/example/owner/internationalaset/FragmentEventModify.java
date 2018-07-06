@@ -2,6 +2,7 @@ package com.example.owner.internationalaset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,35 +18,34 @@ import com.google.firebase.database.ValueEventListener;
 
 /*
     fragment event information
-    search database with event name, add new event if not exist, modify/delete if exist
+    search database with event name, add new event if not exist, Fragment Event Modify if exist
  */
-
-public class FragmentEventInformation extends Fragment {
+public class FragmentEventModify extends Fragment {
     DatabaseReference mDatabase;
-    String getEventName;
-    String key;
+    String getEventKey = null;
     ObjectEvent event;
 
     EditText eventName;
     EditText eventDate;
     EditText eventDes;
     TextView mode;
-    Button editadd;
+    Button edit;
+    Button cancel;
 
-    public FragmentEventInformation(){}
+    public FragmentEventModify(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_information, container, false);
+        View view = inflater.inflate(R.layout.fragment_event_modify, container, false);
 
-        getEventName = getArguments().getString("eventName");
+        getEventKey = getArguments().getString("eventKey");
 
         eventName= (EditText) view.findViewById(R.id.eventName);
         eventDate = (EditText) view.findViewById(R.id.eventDate);
         eventDes = (EditText) view.findViewById(R.id.eventDes);
         mode = (TextView) view.findViewById(R.id.mode);
-        editadd = (Button) view.findViewById(R.id.editadd);
+        edit = (Button) view.findViewById(R.id.edit);
+        cancel = (Button) view.findViewById(R.id.cancel);
 
-        //FirebaseDatabase
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,14 +58,18 @@ public class FragmentEventInformation extends Fragment {
         });
 
         //create key and add event data/get key and modify event data
-        editadd.setOnClickListener(new View.OnClickListener() {
+        edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 event = new ObjectEvent(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
-                mDatabase = FirebaseDatabase.getInstance().getReference();
-                if(key == null) {
-                    key  = mDatabase.child("Events").push().getKey();
-                }
-                mDatabase.child("Events").child(key).setValue(event.addEvent());
+
+                if(getEventKey==null){getEventKey = mDatabase.push().getKey();}
+                mDatabase.child(getEventKey).setValue(event.addEvent());
+                getActivity().finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                 getActivity().finish();
             }
         });
@@ -76,18 +80,16 @@ public class FragmentEventInformation extends Fragment {
     //search event name in database
     public void getEvent(DataSnapshot dataSnapshot){
         for(DataSnapshot data : dataSnapshot.getChildren()){
-            String tempName = (String)data.child("eventName").getValue();
-            eventName.setText(getEventName);
+            String key = data.getKey();
 
-            if(tempName.equals(getEventName)) {
-                key = data.getKey();
-                mode.setText("Modify Event");
+            if(key.equals(getEventKey)) {
+                mode.setText("Edit Event");
+                eventName.setText((String) data.child("eventName").getValue());
                 eventDate.setText((String) data.child("eventDate").getValue());
                 eventDes.setText((String) data.child("eventDes").getValue());
                 break;
             }else{
-                key = null;
-                mode.setText("Event not exist, Add Event?");
+                mode.setText("Create Event");
             }
         }
     }

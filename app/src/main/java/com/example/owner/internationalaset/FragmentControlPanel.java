@@ -28,14 +28,6 @@ public class FragmentControlPanel extends Fragment {
             }
         });
 
-        Button session = (Button) view.findViewById(R.id.controlSession);
-        session.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ControlSession.class);
-                startActivity(i);
-            }
-        });
-
         return view;
     }
 }

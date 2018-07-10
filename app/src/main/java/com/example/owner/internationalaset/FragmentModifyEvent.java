@@ -2,6 +2,8 @@ package com.example.owner.internationalaset;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.EventLog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.EventObject;
 
 /*
     fragment event information
@@ -62,7 +66,7 @@ public class FragmentModifyEvent extends Fragment {
                 event = new ObjectEvent(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
 
                 if(getEventKey==null){getEventKey = mDatabase.push().getKey();}
-                mDatabase.child(getEventKey).setValue(event.addEvent());
+                mDatabase.child(getEventKey).setValue(event);
                 getActivity().finish();
             }
         });
@@ -72,7 +76,6 @@ public class FragmentModifyEvent extends Fragment {
                 getActivity().finish();
             }
         });
-
         return view;
     }
 
@@ -83,9 +86,12 @@ public class FragmentModifyEvent extends Fragment {
 
             if(key.equals(getEventKey)) {
                 mode.setText("Edit Event");
-                eventName.setText((String) data.child("eventName").getValue());
-                eventDate.setText((String) data.child("eventDate").getValue());
-                eventDes.setText((String) data.child("eventDes").getValue());
+                ObjectEvent e = (ObjectEvent)data.getValue(ObjectEvent.class);
+
+                eventName.setText(e.getEventName());
+                eventDate.setText(e.getEventDate());
+                eventDes.setText(e.getEventDes());
+
                 break;
             }else{
                 mode.setText("Create Event");

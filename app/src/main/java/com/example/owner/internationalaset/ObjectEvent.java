@@ -1,5 +1,6 @@
 package com.example.owner.internationalaset;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +8,6 @@ public class ObjectEvent {
     private String eventName;
     private String eventDate;
     private String eventDes;
-    private Map<String, Boolean> stars = new HashMap<>();
 
     public ObjectEvent(){}
     public ObjectEvent(String name, String date, String des){
@@ -16,16 +16,11 @@ public class ObjectEvent {
         eventDes = des;
     }
 
-    public String getEvent(){
-        return eventName + "\n" + eventDate +  "\n" + eventDes;
-    }
+    public String getEventName(){return eventName;}
+    public String getEventDate(){return eventDate;}
+    public String getEventDes(){return eventDes;}
 
-    public Map<String, Object> addEvent() {
-        HashMap<String, Object> event = new HashMap<>();
-        event.put("eventName", eventName);
-        event.put("eventDate", eventDate);
-        event.put("eventDes", eventDes);
-        event.put("stars", stars);
-        return event;
+    public String eventToString(){
+        return eventName + "\n" + eventDate +  "\n" + eventDes;
     }
 }

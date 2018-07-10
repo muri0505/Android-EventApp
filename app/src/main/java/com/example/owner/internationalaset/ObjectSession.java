@@ -3,7 +3,7 @@ package com.example.owner.internationalaset;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ObjectSession {
+public class ObjectSession{
     private String sessionType;
     private String sessionName;
     private String sessionStartTime;
@@ -19,17 +19,14 @@ public class ObjectSession {
         sessionDes = des;
     }
 
-    public String getSession(){
+    public String getSessionType() {return sessionType;}
+    public String getSessionName() {return sessionName;}
+    public void setSessionStartTime(String sessionStartTime) {this.sessionStartTime = sessionStartTime;}
+    public String getSessionEndTime() {return sessionEndTime;}
+    public String getSessionDes() {return sessionDes;}
+
+    public String sessionToString(){
         return sessionType  + "\n" + sessionName + "\n" + sessionStartTime + "\n" + sessionEndTime + "\n" + sessionDes;
     }
 
-    public Map<String, Object> addSession() {
-        HashMap<String, Object> session = new HashMap<>();
-        session.put("sessionType", sessionType);
-        session.put("sessionName", sessionName);
-        session.put("sessionStartTime", sessionStartTime);
-        session.put("sessionEndTime", sessionEndTime);
-        session.put("sessionDes", sessionDes);
-        return session;
-    }
 }

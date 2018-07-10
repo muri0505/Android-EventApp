@@ -8,13 +8,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class FragmentModisySession extends Fragment {
+public class FragmentModifySession extends Fragment {
     DatabaseReference mDatabase;
-    String getEventName;
+    ObjectSession session;
+    String getEventKey;
+    String getSessionKey = null;
+    String type;
+    String name;
+    String startTime;
+    String endTime;
+    String des;
 
     TextView mode;
     EditText sessionType;
@@ -24,7 +31,7 @@ public class FragmentModisySession extends Fragment {
     EditText sessionDes;
     Button edit;
 
-    public FragmentModisySession(){}
+    public FragmentModifySession(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_session, container, false);
@@ -36,11 +43,23 @@ public class FragmentModisySession extends Fragment {
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
         sessionDes = (EditText) view.findViewById(R.id.sessionDes);
         edit = (Button) view.findViewById(R.id.edit);
-        
+
+        getEventKey = getArguments().getString("eventKey");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Session");
+
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                type = sessionType.getText().toString();
+                name = sessionName.getText().toString();
+                startTime = sessionStartTime.getText().toString();
+                endTime = sessionEndTime.getText().toString();
+                des = sessionDes.getText().toString();
 
+                session = new ObjectSession(type, name, startTime, endTime, des);
+                if(getSessionKey==null){getSessionKey = mDatabase.push().getKey();}
+                mDatabase.child(getSessionKey).setValue(session);
+                getActivity().finish();
             }
         });
         return view;

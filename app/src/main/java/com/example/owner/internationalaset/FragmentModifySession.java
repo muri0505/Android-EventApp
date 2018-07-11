@@ -1,7 +1,9 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +11,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class FragmentModifySession extends Fragment {
     DatabaseReference mDatabase;
     ObjectSession session;
-    String getEventKey;
+    String getEventKey = null;
     String getSessionKey = null;
-    String type;
-    String name;
-    String startTime;
-    String endTime;
-    String des;
 
     TextView mode;
     EditText sessionType;
@@ -45,11 +45,27 @@ public class FragmentModifySession extends Fragment {
         edit = (Button) view.findViewById(R.id.edit);
 
         getEventKey = getArguments().getString("eventKey");
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Session");
+        getSessionKey = getArguments().getString("sessionKey");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Sessions");
+
+        if(getSessionKey != null) {
+            mDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    getSession(dataSnapshot);
+                }
+
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });
+        }else{mode.setText("Create Session");}
 
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String type, name,startTime, endTime, des;
                 type = sessionType.getText().toString();
                 name = sessionName.getText().toString();
                 startTime = sessionStartTime.getText().toString();
@@ -59,9 +75,40 @@ public class FragmentModifySession extends Fragment {
                 session = new ObjectSession(type, name, startTime, endTime, des);
                 if(getSessionKey==null){getSessionKey = mDatabase.push().getKey();}
                 mDatabase.child(getSessionKey).setValue(session);
-                getActivity().finish();
+                backToControl();
+            }
+        });
+
+        Button cancel = (Button) view.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                backToControl();
             }
         });
         return view;
+    }
+
+    public void getSession(DataSnapshot dataSnapshot){
+        for(DataSnapshot data : dataSnapshot.getChildren()){
+            String key = data.getKey();
+
+            if(key.equals(getSessionKey)) {
+                mode.setText("Edit Session");
+                ObjectSession s = (ObjectSession) data.getValue(ObjectSession.class);
+                sessionType.setText(s.getSessionType());
+                sessionName.setText(s.getSessionName());
+                sessionStartTime.setText(s.getSessionStartTime());
+                sessionEndTime.setText(s.getSessionEndTime());
+                sessionDes.setText(s.getSessionDes());
+
+                break;
+            }
+        }
+    }
+
+    public void backToControl(){
+        Intent i = new Intent(getActivity(), ActivityControlSession.class);
+        i.putExtra("eventKey",getEventKey);
+        startActivity(i);
     }
 }

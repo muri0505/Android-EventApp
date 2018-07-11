@@ -1,5 +1,6 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.EventLog;
@@ -50,6 +51,8 @@ public class FragmentModifyEvent extends Fragment {
         cancel = (Button) view.findViewById(R.id.cancel);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
+
+        if(getEventKey != null){
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -58,7 +61,7 @@ public class FragmentModifyEvent extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
-        });
+        });}else{mode.setText("Create Event");}
 
         //create key and add event data/get key and modify event data
         edit.setOnClickListener(new View.OnClickListener() {
@@ -67,13 +70,15 @@ public class FragmentModifyEvent extends Fragment {
 
                 if(getEventKey==null){getEventKey = mDatabase.push().getKey();}
                 mDatabase.child(getEventKey).setValue(event);
-                getActivity().finish();
+                Intent i = new Intent(getActivity(), ActivityControlEvent.class);
+                startActivity(i);
             }
         });
 
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getActivity().finish();
+                Intent i = new Intent(getActivity(), ActivityControlEvent.class);
+                startActivity(i);
             }
         });
         return view;
@@ -93,8 +98,6 @@ public class FragmentModifyEvent extends Fragment {
                 eventDes.setText(e.getEventDes());
 
                 break;
-            }else{
-                mode.setText("Create Event");
             }
         }
     }

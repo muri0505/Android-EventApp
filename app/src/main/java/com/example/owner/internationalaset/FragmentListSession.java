@@ -52,7 +52,7 @@ public class FragmentListSession extends Fragment{
 
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Session");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Sessions");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

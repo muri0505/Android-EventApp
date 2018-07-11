@@ -21,7 +21,7 @@ public class ObjectSession{
 
     public String getSessionType() {return sessionType;}
     public String getSessionName() {return sessionName;}
-    public void setSessionStartTime(String sessionStartTime) {this.sessionStartTime = sessionStartTime;}
+    public String getSessionStartTime() {return sessionStartTime;}
     public String getSessionEndTime() {return sessionEndTime;}
     public String getSessionDes() {return sessionDes;}
 

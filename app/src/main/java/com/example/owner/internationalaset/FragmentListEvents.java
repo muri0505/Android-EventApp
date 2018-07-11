@@ -1,16 +1,13 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,9 +17,9 @@ import java.util.ArrayList;
 
 public class FragmentListEvents extends Fragment {
     private ListView listView;
-    private ArrayList<String> eventList;
+    private ArrayList<ObjectEvent> eventList;
     private ArrayList<String> keyList;
-    private ArrayAdapter<String> adapter;
+    private AdapterEvent adapter;
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
     private static final String TAG = "FragmentListEvents";
 
@@ -44,8 +41,9 @@ public class FragmentListEvents extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         listView = (ListView) view.findViewById(R.id.list);
-        eventList = new ArrayList<String>();
+        eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
+        adapter = new AdapterEvent(getActivity(), R.layout.layout_list_event, eventList);
 
         //FirebaseDatabase
         firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
@@ -59,7 +57,8 @@ public class FragmentListEvents extends Fragment {
             }
         });
 
-        showEvent(eventList);
+        //showEvent(eventList);
+        listView.setAdapter(adapter);
 
         //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,21 +77,8 @@ public class FragmentListEvents extends Fragment {
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
             ObjectEvent e = data.getValue(ObjectEvent.class);
-            eventList.add(e.eventToString());
+            eventList.add(e);
             keyList.add(key);
         }
-    }
-
-    //show event data in list view
-    public void showEvent( ArrayList<String> list){
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setTextColor(Color.WHITE);
-                return view;
-            }
-        };
-        listView.setAdapter(adapter);
     }
 }

@@ -14,6 +14,7 @@ import android.widget.Button;
 
 public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener{
     private Fragment fragment;
+    private String eventKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,10 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         final Button events = (Button) findViewById(R.id.events);
         events.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("controlMode", false);
                 fragment = new FragmentListEvents();
+                fragment.setArguments(bundle);
                 fragmentSwitch(fragment);
             }
         });
@@ -47,5 +51,5 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         transaction.commit();
     }
 
-    public void getEventKey(String eventKey){}
+    public void getEventKey(String k){eventKey = k;}
 }

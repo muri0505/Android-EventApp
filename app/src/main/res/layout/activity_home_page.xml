@@ -17,6 +17,7 @@
             android:orientation="horizontal"
             android:weightSum="3"
             android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
             style="?android:attr/buttonBarStyle">
 
             <Button
@@ -26,7 +27,7 @@
                 android:layout_weight = "1"
                 android:drawableStart="@drawable/news"
                 android:text="@string/news"
-                style="?android:attr/buttonBarButtonStyle"/>
+                style="@style/bottomTool"/>
 
             <Button
                 android:id="@+id/events"
@@ -35,7 +36,7 @@
                 android:layout_weight = "1"
                 android:drawableStart="@drawable/events"
                 android:text="@string/events"
-                style="?android:attr/buttonBarButtonStyle"/>
+                style="@style/bottomTool"/>
 
             <Button
                 android:id="@+id/journals"
@@ -44,7 +45,7 @@
                 android:layout_weight = "1"
                 android:drawableStart="@drawable/journal"
                 android:text="@string/journals"
-                style="?android:attr/buttonBarButtonStyle"/>
+                style="@style/bottomTool"/>
 
         </LinearLayout>
 </RelativeLayout>

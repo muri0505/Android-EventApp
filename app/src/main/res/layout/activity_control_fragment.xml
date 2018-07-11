@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_weight = "1"
             android:text="@string/create"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/bottomTool"/>
 
         <Button
             android:id="@+id/edit"
@@ -35,7 +35,7 @@
             android:layout_height="match_parent"
             android:layout_weight = "1"
             android:text="@string/edit"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/bottomTool"/>
 
         <Button
             android:id="@+id/delete"
@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight = "1"
             android:text="@string/delete"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/bottomTool"/>
 
         <Button
             android:id="@+id/level"
@@ -51,7 +51,7 @@
             android:layout_height="match_parent"
             android:layout_weight = "1"
             android:text="@string/level"
-            style="?android:attr/buttonBarButtonStyle"/>
+            style="@style/bottomTool"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class FragmentListEvents extends Fragment {
     private ArrayList<String> keyList;
     private AdapterEvent adapter;
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private Boolean controlMode = false;
     private static final String TAG = "FragmentListEvents";
 
     public FragmentListEvents(){}
@@ -44,6 +46,7 @@ public class FragmentListEvents extends Fragment {
         eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
         adapter = new AdapterEvent(getActivity(), R.layout.layout_list_event, eventList);
+        controlMode = getArguments().getBoolean("controlMode");
 
         //FirebaseDatabase
         firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
@@ -57,7 +60,6 @@ public class FragmentListEvents extends Fragment {
             }
         });
 
-        //showEvent(eventList);
         listView.setAdapter(adapter);
 
         //click on event switch to activity event home page
@@ -65,6 +67,10 @@ public class FragmentListEvents extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
                 listener.getEventKey(key);
+                if(controlMode==false){
+                    Intent i = new Intent(getActivity(), HomePageEvent.class);
+                    startActivity(i);
+                }
             }
         });
 

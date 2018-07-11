@@ -28,7 +28,10 @@ public class ActivityControlEvent extends AppCompatActivity implements FragmentL
         setContentView(R.layout.activity_control_fragment);
 
         //default fragment, showing all events
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("controlMode", true);
         fragment = new FragmentListEvents();
+        fragment.setArguments(bundle);
         fragmentSwitch(fragment);
 
         //button to create new event, clean selected event key, intent to FragmentModifyEvent

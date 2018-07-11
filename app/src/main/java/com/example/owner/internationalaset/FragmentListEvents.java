@@ -14,20 +14,17 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-/*
-    fragment show all events
- */
 
 public class FragmentListEvents extends Fragment {
     private ListView listView;
     private ArrayList<String> eventList;
     private ArrayList<String> keyList;
     private ArrayAdapter<String> adapter;
+    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private static final String TAG = "FragmentListEvents";
 
     public FragmentListEvents(){}
 
@@ -51,8 +48,7 @@ public class FragmentListEvents extends Fragment {
         keyList = new ArrayList<String>();
 
         //FirebaseDatabase
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);
@@ -81,12 +77,8 @@ public class FragmentListEvents extends Fragment {
         eventList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            String eventName = (String)data.child("eventName").getValue();
-            String eventDate = (String)data.child("eventDate").getValue();
-            String eventDes = (String)data.child("eventDes").getValue();
-
-            ObjectEvent objectEvent = new ObjectEvent(eventName, eventDate, eventDes);
-            eventList.add(objectEvent.eventToString());
+            ObjectEvent e = data.getValue(ObjectEvent.class);
+            eventList.add(e.eventToString());
             keyList.add(key);
         }
     }

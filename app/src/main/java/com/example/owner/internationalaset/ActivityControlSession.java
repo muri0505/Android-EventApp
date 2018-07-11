@@ -2,76 +2,92 @@ package com.example.owner.internationalaset;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
+/*
+    ActivityControlSession: admin session control, get eventKey from previous activity/fragment,
+    default showing all sessions, create&edit button intent to FragmentModifySession, delete button to delete data
+    level button intent to ActivityControlAgenda
+*/
 public class ActivityControlSession extends AppCompatActivity implements FragmentListSession.FragmentSessionlistener{
+    private FirebaseHelper firebaseHelper = new FirebaseHelper();
     private Fragment fragment;
-    String eventKey = null;
-    String sessionKey = null;
+    private String eventKey = null;
+    private String sessionKey = null;
+    private static final String TAG = "ActivityControlSession";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_fragment);
 
+        //get&put database key
         Bundle i = getIntent().getExtras();
         eventKey = i.getString("eventKey");
+        i.putString("eventKey", eventKey);
+        Log.i(TAG,"Session list is under eventKey: "+eventKey);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("eventKey", eventKey);
-
+        //default fragment, showing all sessions
         fragment = new FragmentListSession();
-        fragment.setArguments(bundle);
+        fragment.setArguments(i);
         fragmentSwitch(fragment);
 
+        //button to create new session, clean selected session key, intent to FragmentModifySession
         Button create = (Button) findViewById(R.id.create);
         create.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 sessionKey = null;
                 modifySession(eventKey,sessionKey);
+                Log.i(TAG,"Create button clicked, create new session");
             }
         });
 
+        //button to edit session, check session selected, intent to FragmentModifySession
         Button edit = (Button) findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(validKey(sessionKey)){
                     modifySession(eventKey, sessionKey);
+                    Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
                 }
             }
         });
 
+        //button to delete, check session selected, delete selected session
         Button delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(validKey(sessionKey)){
-                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(eventKey).child("Sessions").child(sessionKey);
-                    mDatabase.removeValue();
+                    firebaseHelper.helperSessionKey(eventKey, sessionKey).removeValue();
+                    Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
                 }
             }
         });
 
+        //check session select, intent to selected event's ActivityControlAgenda
         Button level = (Button) findViewById(R.id.level);
-        level.setText("Agendda");
+        level.setText("Agenda");
         level.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(validKey(sessionKey)) {
-
+                    Intent i = new Intent(ActivityControlSession.this, ActivityControlAgenda.class);
+                    i.putExtra("eventKey", eventKey);
+                    i.putExtra("sessionKey", sessionKey);
+                    startActivity(i);
+                    Log.i(TAG,"Intent to ActivityControlAgenda with eventKey: "+ eventKey + " sessionKey: " + sessionKey);
                 }
             }
         });
     }
 
+    //fragmentSwitch
     public void fragmentSwitch(Fragment f) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -79,8 +95,10 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
         transaction.commit();
     }
 
+    //FragmentListSession listener, get selected session key
     public void getSessionKey(String k){sessionKey = k;}
 
+    //intent to FragmentModifySession
     public void modifySession(String eventKey, String sessionKey){
         Bundle bundle = new Bundle();
         bundle.putString("eventKey", eventKey);
@@ -89,8 +107,10 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
         fragment = new FragmentModifySession();
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
+        Log.i(TAG,"Intent to FragmentModifySession with eventKey:" + eventKey + " sessionKey: " + sessionKey);
     }
 
+    //check session selected
     public boolean validKey(String key){
         if(key == null){
             int duration = Toast.LENGTH_SHORT;

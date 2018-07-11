@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentModifyEvent">
+    tools:context=".FragmentModifyAgenda">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -20,30 +20,57 @@
             android:text="@string/mode" />
 
         <EditText
-            android:id="@+id/eventName"
+            android:id="@+id/agendaName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="text"
-            android:hint="@string/eventName" />
+            android:hint="@string/agendaName" />
 
         <EditText
-            android:id="@+id/eventDate"
+            android:id="@+id/agendaInstitution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="date"
-            android:hint="@string/eventDate"/>
+            android:hint="@string/agendaInstitution"
+            android:inputType="text" />
 
         <EditText
-            android:id="@+id/eventDes"
+            android:id="@+id/agendaLocation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:hint="@string/eventDes" />
+            android:hint="@string/agendaLocation" />
+
+        <EditText
+            android:id="@+id/agendaStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/agendaStartTime"
+            android:inputType="time" />
+
+        <EditText
+            android:id="@+id/agendaEndTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/agendaEndTime"
+            android:inputType="time" />
+
+        <EditText
+            android:id="@+id/agendaPeople"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/agendaPeople"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/edit"
@@ -60,4 +87,5 @@
             android:text="@string/cancel" />
 
     </LinearLayout>
+
 </FrameLayout>

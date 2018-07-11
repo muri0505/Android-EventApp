@@ -18,27 +18,28 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListSession extends Fragment{
+public class FragmentListAgenda extends Fragment {
     private ListView listView;
-    private ArrayList<String> sessionList;
+    private ArrayList<String> agendaList;
     private ArrayList<String> keyList;
     private ArrayAdapter<String> adapter;
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
 
     private String getEventKey = null;
-    private static final String TAG = "FragmentListSession";
+    private String getSessionKey = null;
+    private static final String TAG = "FragmentListAgenda";
 
-    public FragmentListSession(){}
+    public FragmentListAgenda(){}
 
-    FragmentListSession.FragmentSessionlistener listener;
-    public interface FragmentSessionlistener{
-        public void getSessionKey(String sessionKey);
+    FragmentListAgenda.FragmentAgendalistener listener;
+    public interface FragmentAgendalistener{
+        public void getAgendaKey(String agendaKey);
     }
 
     public void onAttach(Activity activity){
         super.onAttach(activity);
         try{
-            listener = (FragmentListSession.FragmentSessionlistener) activity;
+            listener = (FragmentListAgenda.FragmentAgendalistener) activity;
         }catch(ClassCastException e){
         }
     }
@@ -46,14 +47,16 @@ public class FragmentListSession extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         listView = (ListView) view.findViewById(R.id.list);
-        sessionList = new ArrayList<String>();
+        agendaList = new ArrayList<String>();
         keyList = new ArrayList<String>();
 
+        //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
-        firebaseHelper.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
+        getSessionKey = getArguments().getString("sessionKey");
+        firebaseHelper.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                getSession(dataSnapshot);
+                getAgenda(dataSnapshot);
                 adapter.notifyDataSetChanged();
             }
             public void onCancelled(DatabaseError databaseError) {
@@ -61,29 +64,32 @@ public class FragmentListSession extends Fragment{
             }
         });
 
-        showSession(sessionList);
+        showAgenda(agendaList);
 
+        //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
-                listener.getSessionKey(key);
+                listener.getAgendaKey(key);
             }
         });
 
         return view;
     }
 
-    public void getSession(DataSnapshot dataSnapshot){
-        sessionList.clear();
+    //get event data from database
+    public void getAgenda(DataSnapshot dataSnapshot){
+        agendaList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            ObjectSession s = data.getValue(ObjectSession.class);
-            sessionList.add(s.sessionToString());
+            ObjectAgenda a = data.getValue(ObjectAgenda.class);
+            agendaList.add(a.agendaToString());
             keyList.add(key);
         }
     }
 
-    public void showSession( ArrayList<String> list){
+    //show event data in list view
+    public void showAgenda( ArrayList<String> list){
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);

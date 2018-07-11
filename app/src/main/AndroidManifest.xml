@@ -12,6 +12,7 @@
 
         <activity android:name=".ActivityControlEvent" />
         <activity android:name=".ActivityControlSession" />
+        <activity android:name=".ActivityControlAgenda" />
 
         <activity android:name=".HomePageEvent"/>
         <activity android:name=".HomePage">

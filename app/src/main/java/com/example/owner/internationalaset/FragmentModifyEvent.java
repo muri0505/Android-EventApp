@@ -3,8 +3,6 @@ package com.example.owner.internationalaset;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.EventLog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,46 +12,37 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.EventObject;
 
 /*
     fragment event information
     search database with event name, add new event if not exist, Fragment Event Modify if exist
  */
 public class FragmentModifyEvent extends Fragment {
-    DatabaseReference mDatabase;
-    String getEventKey = null;
-    ObjectEvent event;
+    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private String getEventKey = null;
+    private ObjectEvent event;
 
-    EditText eventName;
-    EditText eventDate;
-    EditText eventDes;
-    TextView mode;
-    Button edit;
-    Button cancel;
+    private TextView mode;
+    private EditText eventName;
+    private EditText eventDate;
+    private EditText eventDes;
+    private static final String TAG = "FragmentModifyEvent";
 
     public FragmentModifyEvent(){}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_modify_event, container, false);
 
-        getEventKey = getArguments().getString("eventKey");
-
         eventName= (EditText) view.findViewById(R.id.eventName);
         eventDate = (EditText) view.findViewById(R.id.eventDate);
         eventDes = (EditText) view.findViewById(R.id.eventDes);
         mode = (TextView) view.findViewById(R.id.mode);
-        edit = (Button) view.findViewById(R.id.edit);
-        cancel = (Button) view.findViewById(R.id.cancel);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Events");
+        getEventKey = getArguments().getString("eventKey");
 
         if(getEventKey != null){
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);
@@ -64,21 +53,21 @@ public class FragmentModifyEvent extends Fragment {
         });}else{mode.setText("Create Event");}
 
         //create key and add event data/get key and modify event data
+        Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 event = new ObjectEvent(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
 
-                if(getEventKey==null){getEventKey = mDatabase.push().getKey();}
-                mDatabase.child(getEventKey).setValue(event);
-                Intent i = new Intent(getActivity(), ActivityControlEvent.class);
-                startActivity(i);
+                if(getEventKey==null){getEventKey = firebaseHelper.helperEvent().push().getKey();}
+                firebaseHelper.helperEventKey(getEventKey).setValue(event);
+                backToControl();
             }
         });
 
+        Button cancel = (Button) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ActivityControlEvent.class);
-                startActivity(i);
+                backToControl();
             }
         });
         return view;
@@ -100,5 +89,10 @@ public class FragmentModifyEvent extends Fragment {
                 break;
             }
         }
+    }
+
+    public void backToControl(){
+        Intent i = new Intent(getActivity(), ActivityControlEvent.class);
+        startActivity(i);
     }
 }

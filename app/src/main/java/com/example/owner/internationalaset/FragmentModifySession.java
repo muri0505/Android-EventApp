@@ -3,7 +3,6 @@ package com.example.owner.internationalaset;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,23 +12,21 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class FragmentModifySession extends Fragment {
-    DatabaseReference mDatabase;
-    ObjectSession session;
-    String getEventKey = null;
-    String getSessionKey = null;
+    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private ObjectSession session;
+    private String getEventKey = null;
+    private String getSessionKey = null;
 
-    TextView mode;
-    EditText sessionType;
-    EditText sessionName;
-    EditText sessionStartTime;
-    EditText sessionEndTime;
-    EditText sessionDes;
-    Button edit;
+    private TextView mode;
+    private EditText sessionType;
+    private EditText sessionName;
+    private EditText sessionStartTime;
+    private EditText sessionEndTime;
+    private EditText sessionDes;
+    private static final String TAG = "FragmentModifySession";
 
     public FragmentModifySession(){}
 
@@ -42,15 +39,12 @@ public class FragmentModifySession extends Fragment {
         sessionStartTime = (EditText) view.findViewById(R.id.sessionStartTime);
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
         sessionDes = (EditText) view.findViewById(R.id.sessionDes);
-        edit = (Button) view.findViewById(R.id.edit);
 
         getEventKey = getArguments().getString("eventKey");
         getSessionKey = getArguments().getString("sessionKey");
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Events").child(getEventKey).child("Sessions");
-
         if(getSessionKey != null) {
-            mDatabase.addValueEventListener(new ValueEventListener() {
+            firebaseHelper.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getSession(dataSnapshot);
@@ -73,8 +67,8 @@ public class FragmentModifySession extends Fragment {
                 des = sessionDes.getText().toString();
 
                 session = new ObjectSession(type, name, startTime, endTime, des);
-                if(getSessionKey==null){getSessionKey = mDatabase.push().getKey();}
-                mDatabase.child(getSessionKey).setValue(session);
+                if(getSessionKey==null){getSessionKey = firebaseHelper.helperSession(getEventKey).push().getKey();}
+                firebaseHelper.helperSessionKey(getEventKey,getSessionKey).setValue(session);
                 backToControl();
             }
         });

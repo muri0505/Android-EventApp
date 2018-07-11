@@ -28,5 +28,11 @@
     <string name="sessionDes">Session Des</string>
     <string name="controlSession">Control Session</string>
 
+    <string name="agendaName">Agenda Name</string>
+    <string name="agendaInstitution">Agenda Institution</string>
+    <string name="agendaLocation">Agenda Location</string>
+    <string name="agendaStartTime">Agenda StartTime</string>
+    <string name="agendaEndTime">Agenda EndTime</string>
+    <string name="agendaPeople">Agenda People</string>
 
 </resources>

@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">InternationalASET</string>
 
-    <string name="submit">Submit</string>
-
+    <!-- ObjectEvent -->
     <string name="eventName">eventName</string>
     <string name="eventStartDate">eventStartDate</string>
     <string name="eventEndDate">eventEndDate</string>
@@ -11,10 +10,12 @@
     <string name="events">Events</string>
     <string name="controlEvent">Control Event</string>
 
+    <!-- Home toolbar -->
     <string name="journals">Journals</string>
     <string name="news">News</string>
     <string name="addSession">Add Session</string>
 
+    <!-- Control modify -->
     <string name="level">Level</string>
     <string name="mode">Mode</string>
     <string name="create">Create</string>
@@ -22,6 +23,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
+    <!-- ObjectSession -->
     <string name="sessionType">Session Type</string>
     <string name="sessionName">Session Name</string>
     <string name="sessionStartTime">Session Start Time</string>
@@ -29,11 +31,23 @@
     <string name="sessionDes">Session Des</string>
     <string name="controlSession">Control Session</string>
 
+    <!-- ObjectAgenda-->
     <string name="agendaName">Agenda Name</string>
     <string name="agendaInstitution">Agenda Institution</string>
     <string name="agendaLocation">Agenda Location</string>
     <string name="agendaStartTime">Agenda StartTime</string>
     <string name="agendaEndTime">Agenda EndTime</string>
     <string name="agendaPeople">Agenda People</string>
+
+    <!-- Main event detail title -->
+    <string name="date">Date</string>
+    <string name="des">Description</string>
+    <string name="location">Location</string>
+
+    <!-- Main event toolbar -->
+    <string name="eventHome">Event Home</string>
+
+    <!--  -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

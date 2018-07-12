@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/what"
-        android:title="what" />
+        android:id="@+id/eventHome"
+        android:title="@string/eventHome"
+        android:icon="@drawable/home"/>
 
 </menu>

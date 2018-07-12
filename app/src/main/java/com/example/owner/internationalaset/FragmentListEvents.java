@@ -41,7 +41,7 @@ public class FragmentListEvents extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_style, container, false);
         listView = (ListView) view.findViewById(R.id.list);
         eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
@@ -68,7 +68,8 @@ public class FragmentListEvents extends Fragment {
                 String key = keyList.get(pos);
                 listener.getEventKey(key);
                 if(controlMode==false){
-                    Intent i = new Intent(getActivity(), HomePageEvent.class);
+                    Intent i = new Intent(getActivity(), MainEvent.class);
+                    i.putExtra("eventKey", key);
                     startActivity(i);
                 }
             }

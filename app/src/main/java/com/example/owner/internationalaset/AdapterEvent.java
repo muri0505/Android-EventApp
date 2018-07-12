@@ -28,18 +28,18 @@ public class AdapterEvent extends ArrayAdapter<ObjectEvent> {
         LayoutInflater i = LayoutInflater.from(getContext());
         View view = i.inflate(resource,null);
 
-        TextView name = (TextView) view.findViewById(R.id.eventName);
-        TextView startDate = (TextView) view.findViewById(R.id.eventStartDate);
-        TextView endDate = (TextView) view.findViewById(R.id.eventEndDate);
-        TextView des = (TextView) view.findViewById(R.id.eventDes);
-        TextView location = (TextView) view.findViewById(R.id.eventLocation);
+        TextView eventName = (TextView) view.findViewById(R.id.eventName);
+        TextView eventStartDate = (TextView) view.findViewById(R.id.eventStartDate);
+        TextView eventEndDate = (TextView) view.findViewById(R.id.eventEndDate);
+        TextView eventDes = (TextView) view.findViewById(R.id.eventDes);
+        TextView eventLocation = (TextView) view.findViewById(R.id.eventLocation);
 
         ObjectEvent e = events.get(position);
-        setTextView(name, e.getEventName());
-        setTextView(startDate, e.getEventStartDate());
-        setTo(endDate, e.getEventEndDate());
-        setTextView(des, e.getEventDes());
-        setTextView(location, e.getEventLocation());
+        setTextView(eventName, e.getEventName());
+        setTextView(eventStartDate, e.getEventStartDate());
+        setTo(eventEndDate, e.getEventEndDate());
+        setTextView(eventDes, e.getEventDes());
+        setTextView(eventLocation, e.getEventLocation());
 
         return view;
     }
@@ -47,7 +47,7 @@ public class AdapterEvent extends ArrayAdapter<ObjectEvent> {
     public void setTextView(TextView text, String string){
         if(text != null){
             text.setText("");
-            if(string != null){
+            if(!string.equals("")){
                 text.setText(string);
             }
         }
@@ -56,7 +56,7 @@ public class AdapterEvent extends ArrayAdapter<ObjectEvent> {
     public void setTo(TextView text, String string){
         if(text != null){
             text.setText("");
-            if(string != null){
+            if(!string.equals("")){
                 text.setText(" To " + string);
             }
         }

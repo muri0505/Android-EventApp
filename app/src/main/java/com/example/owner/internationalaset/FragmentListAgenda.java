@@ -45,7 +45,7 @@ public class FragmentListAgenda extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_style, container, false);
         listView = (ListView) view.findViewById(R.id.list);
         agendaList = new ArrayList<String>();
         keyList = new ArrayList<String>();

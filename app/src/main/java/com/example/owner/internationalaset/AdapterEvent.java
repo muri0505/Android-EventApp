@@ -29,13 +29,36 @@ public class AdapterEvent extends ArrayAdapter<ObjectEvent> {
         View view = i.inflate(resource,null);
 
         TextView name = (TextView) view.findViewById(R.id.eventName);
-        TextView date = (TextView) view.findViewById(R.id.eventDate);
+        TextView startDate = (TextView) view.findViewById(R.id.eventStartDate);
+        TextView endDate = (TextView) view.findViewById(R.id.eventEndDate);
         TextView des = (TextView) view.findViewById(R.id.eventDes);
+        TextView location = (TextView) view.findViewById(R.id.eventLocation);
 
         ObjectEvent e = events.get(position);
-        if(name != null) name.setText(e.getEventName());
-        if(date != null) date.setText(e.getEventDate());
-        if(des != null) des.setText(e.getEventDes());
+        setTextView(name, e.getEventName());
+        setTextView(startDate, e.getEventStartDate());
+        setTo(endDate, e.getEventEndDate());
+        setTextView(des, e.getEventDes());
+        setTextView(location, e.getEventLocation());
+
         return view;
+    }
+
+    public void setTextView(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(string != null){
+                text.setText(string);
+            }
+        }
+    }
+
+    public void setTo(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(string != null){
+                text.setText(" To " + string);
+            }
+        }
     }
 }

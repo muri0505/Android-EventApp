@@ -25,8 +25,10 @@ public class FragmentModifyEvent extends Fragment {
 
     private TextView mode;
     private EditText eventName;
-    private EditText eventDate;
+    private EditText eventStartDate;
+    private EditText eventEndDate;
     private EditText eventDes;
+    private EditText eventLocation;
     private static final String TAG = "FragmentModifyEvent";
 
     public FragmentModifyEvent(){}
@@ -35,8 +37,10 @@ public class FragmentModifyEvent extends Fragment {
         View view = inflater.inflate(R.layout.fragment_modify_event, container, false);
 
         eventName= (EditText) view.findViewById(R.id.eventName);
-        eventDate = (EditText) view.findViewById(R.id.eventDate);
+        eventStartDate = (EditText) view.findViewById(R.id.eventStartDate);
+        eventEndDate = (EditText) view.findViewById(R.id.eventEndDate);
         eventDes = (EditText) view.findViewById(R.id.eventDes);
+        eventLocation = (EditText) view.findViewById(R.id.eventLocation);
         mode = (TextView) view.findViewById(R.id.mode);
 
         getEventKey = getArguments().getString("eventKey");
@@ -56,7 +60,12 @@ public class FragmentModifyEvent extends Fragment {
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                event = new ObjectEvent(eventName.getText().toString(), eventDate.getText().toString(), eventDes.getText().toString());
+                String name = eventName.getText().toString();
+                String startDate = eventStartDate.getText().toString();
+                String endDate = eventEndDate.getText().toString();
+                String des = eventDes.getText().toString();
+                String location = eventLocation.getText().toString();
+                event = new ObjectEvent(name, startDate, endDate, des, location);
 
                 if(getEventKey==null){getEventKey = firebaseHelper.helperEvent().push().getKey();}
                 firebaseHelper.helperEventKey(getEventKey).setValue(event);
@@ -83,8 +92,10 @@ public class FragmentModifyEvent extends Fragment {
                 ObjectEvent e = (ObjectEvent)data.getValue(ObjectEvent.class);
 
                 eventName.setText(e.getEventName());
-                eventDate.setText(e.getEventDate());
+                eventStartDate.setText(e.getEventStartDate());
+                eventEndDate.setText(e.getEventEndDate());
                 eventDes.setText(e.getEventDes());
+                eventLocation.setText(e.getEventLocation());
 
                 break;
             }

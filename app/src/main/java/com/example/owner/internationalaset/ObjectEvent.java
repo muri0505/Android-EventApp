@@ -6,21 +6,23 @@ import java.util.Map;
 
 public class ObjectEvent {
     private String eventName;
-    private String eventDate;
+    private String eventStartDate;
+    private String eventEndDate;
     private String eventDes;
+    private String eventLocation;
 
     public ObjectEvent(){}
-    public ObjectEvent(String name, String date, String des){
-        eventName = name;
-        eventDate = date;
-        eventDes = des;
+    public ObjectEvent(String n, String s, String e, String d, String l){
+        eventName = n;
+        eventStartDate = s;
+        eventEndDate = e;
+        eventDes = d;
+        eventLocation = l;
     }
 
     public String getEventName(){return eventName;}
-    public String getEventDate(){return eventDate;}
+    public String getEventStartDate() {return eventStartDate;}
+    public String getEventEndDate() {return eventEndDate;}
     public String getEventDes(){return eventDes;}
-
-    public String eventToString(){
-        return eventName + "\n" + eventDate +  "\n" + eventDes;
-    }
+    public String getEventLocation() {return eventLocation;}
 }

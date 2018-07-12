@@ -3,12 +3,13 @@
 
     <string name="submit">Submit</string>
 
-    <string name="eventName">EventName</string>
-    <string name="eventDate">EventDate</string>
-    <string name="eventDes">EventDes</string>
+    <string name="eventName">eventName</string>
+    <string name="eventStartDate">eventStartDate</string>
+    <string name="eventEndDate">eventEndDate</string>
+    <string name="eventDes">eventDes</string>
+    <string name="eventLocation">eventLocation</string>
     <string name="events">Events</string>
     <string name="controlEvent">Control Event</string>
-    <string name="searchEvent">Search Event</string>
 
     <string name="journals">Journals</string>
     <string name="news">News</string>

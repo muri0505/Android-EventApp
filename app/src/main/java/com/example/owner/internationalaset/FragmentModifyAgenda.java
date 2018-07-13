@@ -77,8 +77,12 @@ public class FragmentModifyAgenda extends Fragment {
                 people = agendaPeople.getText().toString();
 
                 agenda = new ObjectAgenda(name, institution, location, startTime, endTime, people);
-                if(getAgendaKey==null){getAgendaKey = firebaseHelper.helperAgenda(getEventKey,getSessionKey).push().getKey();}
-                firebaseHelper.helperAgendaKey(getEventKey,getSessionKey,getAgendaKey).setValue(agenda);
+                if(getAgendaKey==null) {
+                    getAgendaKey = firebaseHelper.helperAgenda(getEventKey, getSessionKey).push().getKey();
+                    firebaseHelper.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).setValue(agenda);
+                }else{
+                    firebaseHelper.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).updateChildren(agenda.toHashMap());
+                }
                 backToControl();
             }
         });

@@ -14,6 +14,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 /*
     fragment event information
     search database with event name, add new event if not exist, Fragment Event Modify if exist
@@ -29,6 +31,7 @@ public class FragmentModifyEvent extends Fragment {
     private EditText eventEndDate;
     private EditText eventDes;
     private EditText eventLocation;
+    private String eventImg = " ";
     private static final String TAG = "FragmentModifyEvent";
 
     public FragmentModifyEvent(){}
@@ -46,15 +49,15 @@ public class FragmentModifyEvent extends Fragment {
         getEventKey = getArguments().getString("eventKey");
 
         if(getEventKey != null){
-        firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                getEvent(dataSnapshot);
-            }
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });}else{mode.setText("Create Event");}
+            firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    getEvent(dataSnapshot);
+                }
+                public void onCancelled(DatabaseError databaseError) {
+                    System.out.println("The read failed: " + databaseError.getCode());
+                }
+            });}else{mode.setText("Create Event");}
 
         //create key and add event data/get key and modify event data
         Button edit = (Button) view.findViewById(R.id.edit);
@@ -65,10 +68,14 @@ public class FragmentModifyEvent extends Fragment {
                 String endDate = eventEndDate.getText().toString();
                 String des = eventDes.getText().toString();
                 String location = eventLocation.getText().toString();
-                event = new ObjectEvent(name, startDate, endDate, des, location);
+                event = new ObjectEvent(name, startDate, endDate, des, location,eventImg);
 
-                if(getEventKey==null){getEventKey = firebaseHelper.helperEvent().push().getKey();}
-                firebaseHelper.helperEventKey(getEventKey).setValue(event);
+                if(getEventKey==null){
+                    getEventKey = firebaseHelper.helperEvent().push().getKey();
+                    firebaseHelper.helperEventKey(getEventKey).setValue(event);
+                }else{
+                    firebaseHelper.helperEventKey(getEventKey).updateChildren(event.toHashMap());
+                }
                 backToControl();
             }
         });
@@ -96,7 +103,7 @@ public class FragmentModifyEvent extends Fragment {
                 eventEndDate.setText(e.getEventEndDate());
                 eventDes.setText(e.getEventDes());
                 eventLocation.setText(e.getEventLocation());
-
+                eventImg = e.getEventImg();
                 break;
             }
         }

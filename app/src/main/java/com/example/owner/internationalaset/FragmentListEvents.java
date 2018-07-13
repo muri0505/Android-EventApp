@@ -20,7 +20,7 @@ public class FragmentListEvents extends Fragment {
     private ListView listView;
     private ArrayList<ObjectEvent> eventList;
     private ArrayList<String> keyList;
-    private AdapterEvent adapter;
+    private Adapter adapter;
     private FirebaseHelper firebaseHelper = new FirebaseHelper();
     private Boolean controlMode = false;
     private static final String TAG = "FragmentListEvents";
@@ -45,7 +45,7 @@ public class FragmentListEvents extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
-        adapter = new AdapterEvent(getActivity(), R.layout.layout_list_event, eventList);
+        adapter = new Adapter(getActivity(), R.layout.layout_list_event, eventList);
         controlMode = getArguments().getBoolean("controlMode");
 
         //FirebaseDatabase

@@ -25,8 +25,17 @@ public class ObjectSession{
     public String getSessionEndTime() {return sessionEndTime;}
     public String getSessionDes() {return sessionDes;}
 
+    public HashMap<String,Object> toHashMap(){
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("sessionType",sessionType);
+        hashMap.put("sessionName",sessionName);
+        hashMap.put("sessionStartTime",sessionStartTime);
+        hashMap.put("sessionEndTime",sessionEndTime);
+        hashMap.put("sessionDes",sessionDes);
+        return hashMap;
+    }
+
     public String sessionToString(){
         return sessionType  + "\n" + sessionName + "\n" + sessionStartTime + "\n" + sessionEndTime + "\n" + sessionDes;
     }
-
 }

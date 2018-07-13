@@ -1,5 +1,7 @@
 package com.example.owner.internationalaset;
 
+import java.util.HashMap;
+
 public class ObjectAgenda {
     private String agendaName;
     private String agendaInstitution;
@@ -25,6 +27,17 @@ public class ObjectAgenda {
     public String getAgendaStartTime() {return agendaStartTime;}
     public String getAgendaEndTime() {return agendaEndTime;}
     public String getAgendaPeople() {return agendaPeople;}
+
+    public HashMap<String,Object> toHashMap(){
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("agendaName",agendaName);
+        hashMap.put("agendaInstitution",agendaInstitution);
+        hashMap.put("agendaLocation",agendaLocation);
+        hashMap.put("agendaStartTime",agendaStartTime);
+        hashMap.put("agendaEndTime",agendaEndTime);
+        hashMap.put("agendaPeople",agendaPeople);
+        return hashMap;
+    }
 
     public String agendaToString(){
         return agendaName + "\n" + agendaInstitution + "\n" + agendaLocation + "\n" +

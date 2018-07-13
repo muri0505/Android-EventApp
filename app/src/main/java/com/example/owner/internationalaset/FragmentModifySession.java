@@ -67,8 +67,13 @@ public class FragmentModifySession extends Fragment {
                 des = sessionDes.getText().toString();
 
                 session = new ObjectSession(type, name, startTime, endTime, des);
-                if(getSessionKey==null){getSessionKey = firebaseHelper.helperSession(getEventKey).push().getKey();}
-                firebaseHelper.helperSessionKey(getEventKey,getSessionKey).setValue(session);
+
+                if(getSessionKey==null) {
+                    getSessionKey = firebaseHelper.helperSession(getEventKey).push().getKey();
+                    firebaseHelper.helperSessionKey(getEventKey, getSessionKey).setValue(session);
+                }else{
+                    firebaseHelper.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
+                }
                 backToControl();
             }
         });

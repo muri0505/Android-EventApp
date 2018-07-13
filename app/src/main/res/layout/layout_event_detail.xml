@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/eventImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/eventName"
+        android:layout_below="@+id/eventImg"
+        style="@style/eventHeader"
+        android:text="@string/eventName" />
+
+    <RelativeLayout
+        android:id="@+id/date"
+        android:layout_below="@+id/eventName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/dateIcon"
+            android:src="@drawable/date"
+            style="@style/eventDetailIcon" />
+
+        <TextView
+            android:id="@+id/eventStartDate"
+            style="@style/eventDetail"
+            android:layout_toRightOf = "@id/dateIcon"
+            android:text="@string/eventStartDate" />
+
+        <TextView
+            android:id="@+id/eventEndDate"
+            style="@style/eventDetail"
+            android:layout_toRightOf = "@id/eventStartDate"
+            android:text="@string/eventEndDate" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/location"
+        android:layout_below="@+id/des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/locationIcon"
+            android:src="@drawable/location"
+            style="@style/eventDetailIcon" />
+
+        <TextView
+            android:id="@+id/eventLocation"
+            style="@style/eventDetail"
+            android:layout_toRightOf = "@id/locationIcon"
+            android:text="@string/eventLocation" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/des"
+        android:layout_below="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/desTitle"
+            style="@style/eventDetailTitle"
+            android:text="@string/des" />
+
+        <TextView
+            android:id="@+id/eventDes"
+            style="@style/eventDate"
+            android:layout_below="@+id/desTitle"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="15dp"
+            android:text="@string/eventDes" />
+    </RelativeLayout>
+</LinearLayout>

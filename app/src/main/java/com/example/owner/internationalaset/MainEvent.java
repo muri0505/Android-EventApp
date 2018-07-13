@@ -60,7 +60,7 @@ public class MainEvent extends AppCompatActivity {
     public void defaultFragment(){
         Bundle bundle = new Bundle();
         bundle.putString("eventKey", eventKey);
-        fragment = new FragmentMainEventDetail();
+        fragment = new FragmentEventDetail();
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
     }

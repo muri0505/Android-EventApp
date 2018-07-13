@@ -1,10 +1,17 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,25 +29,26 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         setContentView(R.layout.activity_home_page);
         fragment = null;
 
-        final Button events = (Button) findViewById(R.id.events);
-        events.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("controlMode", false);
-                fragment = new FragmentListEvents();
-                fragment.setArguments(bundle);
-                fragmentSwitch(fragment);
+        BottomNavigationView bottomNavigation = findViewById(R.id.toolbar);
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.events:
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("controlMode", false);
+                        fragment = new FragmentListEvents();
+                        fragment.setArguments(bundle);
+                        fragmentSwitch(fragment);
+                        break;
+                    case R.id.news:
+                        fragment = new FragmentControlPanel();
+                        fragmentSwitch(fragment);
+                        break;
+                    default:
+                }
+                return true;
             }
         });
-
-        final Button news = (Button) findViewById(R.id.news);
-        news.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                fragment = new FragmentControlPanel();
-                fragmentSwitch(fragment);
-            }
-        });
-
     }
 
     //fragment changes
@@ -52,4 +60,5 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
     }
 
     public void getEventKey(String k){eventKey = k;}
+
 }

@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,42 +11,11 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/toolbar"/>
 
-        <LinearLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height= "wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            style="?android:attr/buttonBarStyle">
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/home_bottom" />
 
-            <Button
-                android:id="@+id/news"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight = "1"
-                android:drawableStart="@drawable/news"
-                android:text="@string/news"
-                style="@style/bottomTool"/>
-
-            <Button
-                android:id="@+id/events"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight = "1"
-                android:drawableStart="@drawable/events"
-                android:text="@string/events"
-                style="@style/bottomTool"/>
-
-            <Button
-                android:id="@+id/journals"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight = "1"
-                android:drawableStart="@drawable/journal"
-                android:text="@string/journals"
-                style="@style/bottomTool"/>
-
-        </LinearLayout>
 </RelativeLayout>

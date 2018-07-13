@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/backlevel"
-        android:title="@string/backlevel"
-        app:showAsAction="never"/>
+        android:id="@+id/list"
+        android:title="@string/list"
+        app:showAsAction="always|withText"/>
 
     <item
-        android:id="@+id/backControl"
-        android:title="@string/backControl"
-        app:showAsAction="never"/>
+        android:id="@+id/control"
+        android:title="@string/control"
+        app:showAsAction="always|withText"/>
 
     <item
-        android:id="@+id/backHome"
-        android:title="@string/backHome"
-        app:showAsAction="never"/>
+        android:id="@+id/home"
+        android:title="@string/home"
+        app:showAsAction="always|withText"/>
 
 </menu>

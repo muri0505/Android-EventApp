@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
     search database with event name, add new event if not exist, Fragment Event Modify if exist
  */
 public class FragmentModifyEvent extends Fragment {
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private String getEventKey = null;
     private ObjectEvent event;
 
@@ -47,7 +47,7 @@ public class FragmentModifyEvent extends Fragment {
         getEventKey = getArguments().getString("eventKey");
 
         if(getEventKey != null){
-            firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
+            helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getEvent(dataSnapshot);
@@ -69,10 +69,10 @@ public class FragmentModifyEvent extends Fragment {
                 event = new ObjectEvent(name, startDate, endDate, des, location,eventImg);
 
                 if(getEventKey==null){
-                    getEventKey = firebaseHelper.helperEvent().push().getKey();
-                    firebaseHelper.helperEventKey(getEventKey).setValue(event);
+                    getEventKey = helperFirebase.helperEvent().push().getKey();
+                    helperFirebase.helperEventKey(getEventKey).setValue(event);
                 }else{
-                    firebaseHelper.helperEventKey(getEventKey).updateChildren(event.toHashMap());
+                    helperFirebase.helperEventKey(getEventKey).updateChildren(event.toHashMap());
                 }
                 backToControl();
             }

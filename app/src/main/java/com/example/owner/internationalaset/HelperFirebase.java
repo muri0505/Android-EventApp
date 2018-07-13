@@ -3,10 +3,10 @@ package com.example.owner.internationalaset;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class FirebaseHelper {
+public class HelperFirebase {
     private DatabaseReference mDatabase;
 
-    public FirebaseHelper(){
+    public HelperFirebase(){
         mDatabase= FirebaseDatabase.getInstance().getReference();
     }
 

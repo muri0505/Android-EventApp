@@ -21,7 +21,7 @@ public class FragmentListEvents extends Fragment {
     private ArrayList<ObjectEvent> eventList;
     private ArrayList<String> keyList;
     private Adapter adapter;
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private Boolean controlMode = false;
     private static final String TAG = "FragmentListEvents";
 
@@ -49,7 +49,7 @@ public class FragmentListEvents extends Fragment {
         controlMode = getArguments().getBoolean("controlMode");
 
         //FirebaseDatabase
-        firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
+        helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);

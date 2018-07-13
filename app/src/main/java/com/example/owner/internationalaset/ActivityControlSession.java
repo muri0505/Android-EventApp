@@ -5,13 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /*
@@ -19,11 +14,12 @@ import android.widget.Toast;
     default showing all sessions, create&edit button intent to FragmentModifySession, delete button to delete data
     level button intent to ActivityControlAgenda
 */
-public class ActivityControlSession extends AppCompatActivity implements FragmentListSession.FragmentSessionlistener{
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+public class ActivityControlSession extends HelperControl implements FragmentListSession.FragmentSessionlistener{
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
     private String eventKey = null;
     private String sessionKey = null;
+    private Bundle i;
     private static final String TAG = "ActivityControlSession";
 
     @Override
@@ -32,19 +28,17 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
         setContentView(R.layout.activity_control_fragment);
 
         //get&put database key
-        Bundle i = getIntent().getExtras();
+        i = getIntent().getExtras();
         eventKey = i.getString("eventKey");
         i.putString("eventKey", eventKey);
         Log.i(TAG,"Session list is under eventKey: "+eventKey);
 
-        //default fragment, showing all sessions
-        fragment = new FragmentListSession();
-        fragment.setArguments(i);
-        fragmentSwitch(fragment);
+        fragmentSwitch(defaultFragment());
+        toolbarTop(defaultFragment());
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -64,7 +58,7 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
                     case R.id.delete:
                         //button to delete, check session selected, delete selected session
                         if(validKey(sessionKey)){
-                            firebaseHelper.helperSessionKey(eventKey, sessionKey).removeValue();
+                            helperFirebase.helperSessionKey(eventKey, sessionKey).removeValue();
                             Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
                         }
                         break;
@@ -85,12 +79,12 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
         });
     }
 
-    //fragmentSwitch
-    public void fragmentSwitch(Fragment f) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment, f, "currentFragment");
-        transaction.commit();
+    //default fragment, showing all sessions
+    public Fragment defaultFragment(){
+        fragment = new FragmentListSession();
+        fragment.setArguments(i);
+        fragmentSwitch(fragment);
+        return fragment;
     }
 
     //FragmentListSession listener, get selected session key

@@ -23,7 +23,7 @@ public class FragmentListAgenda extends Fragment {
     private ArrayList<String> agendaList;
     private ArrayList<String> keyList;
     private ArrayAdapter<String> adapter;
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private HelperFirebase helperFirebase = new HelperFirebase();
 
     private String getEventKey = null;
     private String getSessionKey = null;
@@ -53,7 +53,7 @@ public class FragmentListAgenda extends Fragment {
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
         getSessionKey = getArguments().getString("sessionKey");
-        firebaseHelper.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
+        helperFirebase.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getAgenda(dataSnapshot);

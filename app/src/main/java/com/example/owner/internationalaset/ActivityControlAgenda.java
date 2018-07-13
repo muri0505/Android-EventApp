@@ -1,29 +1,24 @@
 package com.example.owner.internationalaset;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /*
     ActivityControlAgenda: admin agenda control, get eventKey&sessionKey from previous activity/fragment,
     default showing all agenda, create&edit button intent to FragmentModifyAgenda, delete button to delete data
 */
-public class ActivityControlAgenda extends AppCompatActivity implements FragmentListAgenda.FragmentAgendalistener{
-    FirebaseHelper firebaseHelper = new FirebaseHelper();
+public class ActivityControlAgenda extends HelperControl implements FragmentListAgenda.FragmentAgendalistener{
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
-    String eventKey = null;
-    String sessionKey = null;
-    String agendaKey = null;
+    private String eventKey = null;
+    private String sessionKey = null;
+    private String agendaKey = null;
+    private Bundle i;
     private static final String TAG = "ActivityControlAgenda";
 
     @Override
@@ -32,22 +27,19 @@ public class ActivityControlAgenda extends AppCompatActivity implements Fragment
         setContentView(R.layout.activity_control_fragment);
 
         //get&put database key
-        Bundle i = getIntent().getExtras();
+        i = getIntent().getExtras();
         eventKey = i.getString("eventKey");
         sessionKey = i.getString("sessionKey");
         i.putString("eventKey", eventKey);
         i.putString("sessionKey", sessionKey);
         Log.i(TAG,"Agenda list is under eventKey: "+eventKey + " sessionKey: " + sessionKey);
 
-        //default fragment, showing all agenda
-        fragment = new FragmentListAgenda();
-        fragment.setArguments(i);
-        fragmentSwitch(fragment);
-
+        fragmentSwitch(defaultFragment());
+        toolbarTop(defaultFragment());
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -67,7 +59,7 @@ public class ActivityControlAgenda extends AppCompatActivity implements Fragment
                     case R.id.delete:
                         //button to delete, check agenda selected, delete selected agenda
                         if(validKey(agendaKey)){
-                            firebaseHelper.helperAgendaKey(eventKey,sessionKey,agendaKey).removeValue();
+                            helperFirebase.helperAgendaKey(eventKey,sessionKey,agendaKey).removeValue();
                             Log.i(TAG,"Delete button clicked, agendaKey: " + agendaKey);
                         }
                         break;
@@ -79,15 +71,14 @@ public class ActivityControlAgenda extends AppCompatActivity implements Fragment
                 return true;
             }
         });
-
     }
 
-    //fragmentSwitch
-    public void fragmentSwitch(Fragment f) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment, f, "currentFragment");
-        transaction.commit();
+    //default fragment, showing all agenda
+    public Fragment defaultFragment(){
+        fragment = new FragmentListAgenda();
+        fragment.setArguments(i);
+        fragmentSwitch(fragment);
+        return fragment;
     }
 
     //FragmentListAgenda listener, get selected agenda key

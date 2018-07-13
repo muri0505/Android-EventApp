@@ -16,11 +16,11 @@
     <string name="addSession">Add Session</string>
 
     <!-- Control modify -->
-    <string name="backHome">Back To Home</string>
-    <string name="backControl">Back To Control</string>
-    <string name="backlevel">Back To Level</string>
-    <string name="back">Back</string>
+    <string name="home">Home</string>
+    <string name="control">Control Panel</string>
     <string name="level">Level</string>
+    <string name="list">List</string>
+    <string name="back">Back</string>
     <string name="mode">Mode</string>
     <string name="create">Create</string>
     <string name="edit">Edit</string>

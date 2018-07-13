@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentModifyAgenda extends Fragment {
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectAgenda agenda;
     private String getEventKey = null;
     private String getSessionKey = null;
@@ -53,7 +53,7 @@ public class FragmentModifyAgenda extends Fragment {
         getAgendaKey = getArguments().getString("agendaKey");
 
         if(getAgendaKey != null) {
-            firebaseHelper.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
+            helperFirebase.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getAgenda(dataSnapshot);
@@ -78,10 +78,10 @@ public class FragmentModifyAgenda extends Fragment {
 
                 agenda = new ObjectAgenda(name, institution, location, startTime, endTime, people);
                 if(getAgendaKey==null) {
-                    getAgendaKey = firebaseHelper.helperAgenda(getEventKey, getSessionKey).push().getKey();
-                    firebaseHelper.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).setValue(agenda);
+                    getAgendaKey = helperFirebase.helperAgenda(getEventKey, getSessionKey).push().getKey();
+                    helperFirebase.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).setValue(agenda);
                 }else{
-                    firebaseHelper.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).updateChildren(agenda.toHashMap());
+                    helperFirebase.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).updateChildren(agenda.toHashMap());
                 }
                 backToControl();
             }

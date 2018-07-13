@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -17,8 +14,8 @@ import android.widget.Toast;
     default showing all events, create&edit button intent to FragmentModifyEvent, delete button to delete data
     level button intent to ActivityControlSession
 */
-public class ActivityControlEvent extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener{
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+public class ActivityControlEvent extends HelperControl implements FragmentListEvents.FragmentEventslistener{
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
     private String eventKey = null;
     private static final String TAG = "ActivityControlEvent";
@@ -27,11 +24,13 @@ public class ActivityControlEvent extends AppCompatActivity implements FragmentL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_fragment);
-        defaultFragment();
+
+        fragmentSwitch(defaultFragment());
+        toolbarTop(defaultFragment());
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -51,7 +50,7 @@ public class ActivityControlEvent extends AppCompatActivity implements FragmentL
                     case R.id.delete:
                         //button to delete, check event selected, delete selected event
                         if (validKey(eventKey)) {
-                            firebaseHelper.helperEventKey(eventKey).removeValue();
+                            helperFirebase.helperEventKey(eventKey).removeValue();
                             Log.i(TAG, "Delete button clicked, eventKey: " + eventKey);
                         }
                         break;
@@ -72,20 +71,12 @@ public class ActivityControlEvent extends AppCompatActivity implements FragmentL
     }
 
     //default fragment, showing all events
-    public void defaultFragment(){
+    public Fragment defaultFragment(){
         Bundle bundle = new Bundle();
         bundle.putBoolean("controlMode", true);
         fragment = new FragmentListEvents();
         fragment.setArguments(bundle);
-        fragmentSwitch(fragment);
-    }
-
-    //fragmentSwitch
-    public void fragmentSwitch(Fragment f) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment, f, "currentFragment");
-        transaction.commit();
+        return fragment;
     }
 
     //FragmentListEvents listener, get selected event key

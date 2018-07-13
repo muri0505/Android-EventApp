@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class FragmentEventDetail extends Fragment {
     private String eventKey;
     private ArrayList<ObjectEvent> event;
-    private FirebaseHelper firebaseHelper;
+    private HelperFirebase helperFirebase;
     private Adapter adapter;
 
     private ListView listView;
@@ -32,11 +32,11 @@ public class FragmentEventDetail extends Fragment {
 
         eventKey = getArguments().getString("eventKey");
         event = new ArrayList<>();
-        firebaseHelper = new FirebaseHelper();
+        helperFirebase = new HelperFirebase();
         adapter = new Adapter(getActivity(),R.layout.layout_event_detail, event);
         listView = (ListView)view.findViewById(R.id.list) ;
 
-        firebaseHelper.helperEvent().addValueEventListener(new ValueEventListener() {
+        helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);

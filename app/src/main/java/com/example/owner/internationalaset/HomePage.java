@@ -8,12 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 /*
     activity general home page
@@ -30,6 +25,7 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         fragment = null;
 
         BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
+        HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -40,10 +36,9 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
                         fragment.setArguments(bundle);
                         fragmentSwitch(fragment);
                         break;
-                    case R.id.news:
-                        fragment = new FragmentControlPanel();
-                        fragmentSwitch(fragment);
-                        break;
+                    case R.id.control:
+                        Intent i = new Intent(HomePage.this, ActivityControlPanel.class);
+                        startActivity(i);
                     default:
                 }
                 return true;

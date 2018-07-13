@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class FragmentModifySession extends Fragment {
-    private FirebaseHelper firebaseHelper = new FirebaseHelper();
+    private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectSession session;
     private String getEventKey = null;
     private String getSessionKey = null;
@@ -44,7 +44,7 @@ public class FragmentModifySession extends Fragment {
         getSessionKey = getArguments().getString("sessionKey");
 
         if(getSessionKey != null) {
-            firebaseHelper.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
+            helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getSession(dataSnapshot);
@@ -69,10 +69,10 @@ public class FragmentModifySession extends Fragment {
                 session = new ObjectSession(type, name, startTime, endTime, des);
 
                 if(getSessionKey==null) {
-                    getSessionKey = firebaseHelper.helperSession(getEventKey).push().getKey();
-                    firebaseHelper.helperSessionKey(getEventKey, getSessionKey).setValue(session);
+                    getSessionKey = helperFirebase.helperSession(getEventKey).push().getKey();
+                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).setValue(session);
                 }else{
-                    firebaseHelper.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
+                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
                 }
                 backToControl();
             }

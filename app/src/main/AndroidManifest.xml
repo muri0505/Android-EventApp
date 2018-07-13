@@ -13,6 +13,7 @@
         <activity android:name=".ActivityControlEvent" />
         <activity android:name=".ActivityControlSession" />
         <activity android:name=".ActivityControlAgenda" />
+        <activity android:name=".ActivityControlPanel" />
 
         <activity android:name=".MainEvent"/>
         <activity android:name=".HomePage">

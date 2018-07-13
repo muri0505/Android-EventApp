@@ -2,11 +2,14 @@ package com.example.owner.internationalaset;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -39,50 +42,45 @@ public class ActivityControlSession extends AppCompatActivity implements Fragmen
         fragment.setArguments(i);
         fragmentSwitch(fragment);
 
-        //button to create new session, clean selected session key, intent to FragmentModifySession
-        Button create = (Button) findViewById(R.id.create);
-        create.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                sessionKey = null;
-                modifySession(eventKey,sessionKey);
-                Log.i(TAG,"Create button clicked, create new session");
-            }
-        });
-
-        //button to edit session, check session selected, intent to FragmentModifySession
-        Button edit = (Button) findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(sessionKey)){
-                    modifySession(eventKey, sessionKey);
-                    Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
+        //BottomNavigationView switch create, edit, delete and next level
+        BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.create:
+                        //button to create new session, clean selected session key, intent to FragmentModifySession
+                        sessionKey = null;
+                        modifySession(eventKey,sessionKey);
+                        Log.i(TAG,"Create button clicked, create new session");
+                        break;
+                    case R.id.edit:
+                        //button to edit session, check session selected, intent to FragmentModifySession
+                        if(validKey(sessionKey)){
+                            modifySession(eventKey, sessionKey);
+                            Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
+                        }
+                        break;
+                    case R.id.delete:
+                        //button to delete, check session selected, delete selected session
+                        if(validKey(sessionKey)){
+                            firebaseHelper.helperSessionKey(eventKey, sessionKey).removeValue();
+                            Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
+                        }
+                        break;
+                    case R.id.level:
+                        //check session select, intent to selected event's ActivityControlAgenda
+                        if(validKey(sessionKey)) {
+                            Intent i = new Intent(ActivityControlSession.this, ActivityControlAgenda.class);
+                            i.putExtra("eventKey", eventKey);
+                            i.putExtra("sessionKey", sessionKey);
+                            startActivity(i);
+                            Log.i(TAG,"Intent to ActivityControlAgenda with eventKey: "+ eventKey + " sessionKey: " + sessionKey);
+                        }
+                        break;
+                    default:
                 }
-            }
-        });
-
-        //button to delete, check session selected, delete selected session
-        Button delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(sessionKey)){
-                    firebaseHelper.helperSessionKey(eventKey, sessionKey).removeValue();
-                    Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
-                }
-            }
-        });
-
-        //check session select, intent to selected event's ActivityControlAgenda
-        Button level = (Button) findViewById(R.id.level);
-        level.setText("Agenda");
-        level.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(sessionKey)) {
-                    Intent i = new Intent(ActivityControlSession.this, ActivityControlAgenda.class);
-                    i.putExtra("eventKey", eventKey);
-                    i.putExtra("sessionKey", sessionKey);
-                    startActivity(i);
-                    Log.i(TAG,"Intent to ActivityControlAgenda with eventKey: "+ eventKey + " sessionKey: " + sessionKey);
-                }
+                return true;
             }
         });
     }

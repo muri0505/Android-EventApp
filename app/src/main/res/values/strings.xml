@@ -10,12 +10,16 @@
     <string name="events">Events</string>
     <string name="controlEvent">Control Event</string>
 
-    <!-- Home toolbar -->
+    <!-- Home toolbarHelper -->
     <string name="journals">Journals</string>
     <string name="news">News</string>
     <string name="addSession">Add Session</string>
 
     <!-- Control modify -->
+    <string name="backHome">Back To Home</string>
+    <string name="backControl">Back To Control</string>
+    <string name="backlevel">Back To Level</string>
+    <string name="back">Back</string>
     <string name="level">Level</string>
     <string name="mode">Mode</string>
     <string name="create">Create</string>
@@ -44,7 +48,7 @@
     <string name="des">Description</string>
     <string name="location">Location</string>
 
-    <!-- Main event toolbar -->
+    <!-- Main event toolbarHelper -->
     <string name="eventHome">Event Home</string>
 
     <!--  -->

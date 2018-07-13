@@ -2,13 +2,14 @@ package com.example.owner.internationalaset;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 /*
@@ -26,59 +27,57 @@ public class ActivityControlEvent extends AppCompatActivity implements FragmentL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_fragment);
+        defaultFragment();
 
-        //default fragment, showing all events
+        //BottomNavigationView switch create, edit, delete and next level
+        BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.create:
+                        //button to create new event, clean selected event key, intent to FragmentModifyEvent
+                        eventKey = null;
+                        modifyEvent(eventKey);
+                        Log.i(TAG, "Create button clicked, create new event");
+                        break;
+                    case R.id.edit:
+                        //button to edit event, check event selected, intent to FragmentModifyEvent
+                        if (validKey(eventKey)) {
+                            modifyEvent(eventKey);
+                            Log.i(TAG, "Edit button clicked, eventKey: " + eventKey);
+                        }
+                        break;
+                    case R.id.delete:
+                        //button to delete, check event selected, delete selected event
+                        if (validKey(eventKey)) {
+                            firebaseHelper.helperEventKey(eventKey).removeValue();
+                            Log.i(TAG, "Delete button clicked, eventKey: " + eventKey);
+                        }
+                        break;
+                    case R.id.level:
+                        //check event select, intent to selected event's ActivityControlSession
+                        if (validKey(eventKey)) {
+                            Intent i = new Intent(ActivityControlEvent.this, ActivityControlSession.class);
+                            i.putExtra("eventKey", eventKey);
+                            startActivity(i);
+                            Log.i(TAG, "Intent to ActivityControlSession with eventKey: " + eventKey);
+                        }
+                        break;
+                    default:
+                }
+                return true;
+            }
+        });
+    }
+
+    //default fragment, showing all events
+    public void defaultFragment(){
         Bundle bundle = new Bundle();
         bundle.putBoolean("controlMode", true);
         fragment = new FragmentListEvents();
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
-
-        //button to create new event, clean selected event key, intent to FragmentModifyEvent
-        Button create = (Button) findViewById(R.id.create);
-        create.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                eventKey = null;
-                modifyEvent(eventKey);
-                Log.i(TAG,"Create button clicked, create new event");
-            }
-        });
-
-        //button to edit event, check event selected, intent to FragmentModifyEvent
-        Button edit = (Button) findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(eventKey)){
-                    modifyEvent(eventKey);
-                    Log.i(TAG,"Edit button clicked, eventKey: " + eventKey);
-                }
-            }
-        });
-
-        //button to delete, check event selected, delete selected event
-        Button delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(eventKey)){
-                    firebaseHelper.helperEventKey(eventKey).removeValue();
-                    Log.i(TAG,"Delete button clicked, eventKey: " + eventKey);
-                }
-            }
-        });
-
-        //check event select, intent to selected event's ActivityControlSession
-        Button level = (Button) findViewById(R.id.level);
-        level.setText("Session");
-        level.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(eventKey)) {
-                    Intent i = new Intent(ActivityControlEvent.this, ActivityControlSession.class);
-                    i.putExtra("eventKey", eventKey);
-                    startActivity(i);
-                    Log.i(TAG,"Intent to ActivityControlSession with eventKey: " + eventKey);
-                }
-            }
-        });
     }
 
     //fragmentSwitch

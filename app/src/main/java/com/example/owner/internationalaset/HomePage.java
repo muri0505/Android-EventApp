@@ -29,7 +29,7 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         setContentView(R.layout.activity_home_page);
         fragment = null;
 
-        BottomNavigationView bottomNavigation = findViewById(R.id.toolbar);
+        BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {

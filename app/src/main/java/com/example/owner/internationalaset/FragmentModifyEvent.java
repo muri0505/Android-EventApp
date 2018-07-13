@@ -14,8 +14,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 /*
     fragment event information
     search database with event name, add new event if not exist, Fragment Event Modify if exist

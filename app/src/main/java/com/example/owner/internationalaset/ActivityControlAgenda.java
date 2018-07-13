@@ -1,11 +1,15 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,45 +44,42 @@ public class ActivityControlAgenda extends AppCompatActivity implements Fragment
         fragment.setArguments(i);
         fragmentSwitch(fragment);
 
-        //button to create new agenda, clean selected agenda key, intent to FragmentModifyAgenda
-        Button create = (Button) findViewById(R.id.create);
-        create.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                agendaKey = null;
-                modifyAgenda(eventKey,sessionKey,agendaKey);
-                Log.i(TAG,"Create button clicked, create new agenda");
-            }
-        });
 
-        //button to edit agenda, check agenda selected, intent to FragmentModifyAgenda
-        Button edit = (Button) findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(agendaKey)){
-                    modifyAgenda(eventKey,sessionKey,agendaKey);
-                    Log.i(TAG,"Edit button clicked, agendaKey: " + agendaKey);
+        //BottomNavigationView switch create, edit, delete and next level
+        BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigation);
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.create:
+                        //button to create new agenda, clean selected agenda key, intent to FragmentModifyAgenda
+                        agendaKey = null;
+                        modifyAgenda(eventKey,sessionKey,agendaKey);
+                        Log.i(TAG,"Create button clicked, create new agenda");
+                        break;
+                    case R.id.edit:
+                        //button to edit agenda, check agenda selected, intent to FragmentModifyAgenda
+                        if(validKey(agendaKey)){
+                            modifyAgenda(eventKey,sessionKey,agendaKey);
+                            Log.i(TAG,"Edit button clicked, agendaKey: " + agendaKey);
+                        }
+                        break;
+                    case R.id.delete:
+                        //button to delete, check agenda selected, delete selected agenda
+                        if(validKey(agendaKey)){
+                            firebaseHelper.helperAgendaKey(eventKey,sessionKey,agendaKey).removeValue();
+                            Log.i(TAG,"Delete button clicked, agendaKey: " + agendaKey);
+                        }
+                        break;
+                    case R.id.level:
+
+                        break;
+                    default:
                 }
+                return true;
             }
         });
 
-        //button to delete, check agenda selected, delete selected agenda
-        Button delete = (Button) findViewById(R.id.delete);
-        delete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(validKey(agendaKey)){
-                    firebaseHelper.helperAgendaKey(eventKey,sessionKey,agendaKey).removeValue();
-                    Log.i(TAG,"Delete button clicked, agendaKey: " + agendaKey);
-                }
-            }
-        });
-
-        //
-        Button level = (Button) findViewById(R.id.level);
-        level.setText("level");
-        level.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            }
-        });
     }
 
     //fragmentSwitch

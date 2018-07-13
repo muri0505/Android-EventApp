@@ -9,10 +9,10 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/toolbar"/>
+        android:layout_above="@+id/toolbarBottom"/>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

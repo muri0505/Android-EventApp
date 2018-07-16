@@ -13,8 +13,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-public class Adapter extends ArrayAdapter<ObjectEvent> {
+public class Adapter extends ArrayAdapter {
     ArrayList<ObjectEvent>  events;
+    ArrayList<ObjectAgenda>  agenda;
     int resource;
 
     public Adapter(Context context, int textViewResourceId) {
@@ -32,6 +33,7 @@ public class Adapter extends ArrayAdapter<ObjectEvent> {
         LayoutInflater i = LayoutInflater.from(getContext());
         View view = i.inflate(resource,null);
 
+        //event
         TextView eventName = (TextView) view.findViewById(R.id.eventName);
         TextView eventStartDate = (TextView) view.findViewById(R.id.eventStartDate);
         TextView eventEndDate = (TextView) view.findViewById(R.id.eventEndDate);
@@ -48,7 +50,21 @@ public class Adapter extends ArrayAdapter<ObjectEvent> {
 
         if(eventImg != null)
             Glide.with(getContext()).load(e.getEventImg()).into(eventImg);
+/*
+        //agenda
+        TextView agendaType = (TextView) view.findViewById(R.id.agendaType);
+        TextView agendaName = (TextView) view.findViewById(R.id.agendaName);
+        TextView agendaStartTime = (TextView) view.findViewById(R.id.agendaStartTime);
+        TextView agendaEndTime = (TextView) view.findViewById(R.id.agendaEndTime);
+        TextView agendaDes = (TextView) view.findViewById(R.id.agendaDes);
 
+        ObjectAgenda a = agenda.get(position);
+        setTextView(agendaType, a.getAgendaType());
+        setTextView(agendaName, a.getAgendaName());
+        setTextView(agendaStartTime, a.getAgendaStartTime());
+        setTextView(agendaEndTime, a.getAgendaEndTime());
+        setTextView(agendaDes, a.getAgendaDes());
+*/
         return view;
     }
 

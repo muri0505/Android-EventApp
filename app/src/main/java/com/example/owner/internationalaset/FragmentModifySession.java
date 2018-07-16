@@ -1,6 +1,5 @@
 package com.example.owner.internationalaset;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-
 
 /*
     FragmentModifySession: get eventKey&agendaKey&sessionKey from ActivityControlSession

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListEvents: showing all events with adapter, click on event to get eventKey,
+    intent to MainEvent if not control mode or ActivityControlEvent listens eventKey.
+*/
 public class FragmentListEvents extends Fragment {
     private ListView listView;
     private ArrayList<ObjectEvent> eventList;
@@ -27,6 +32,7 @@ public class FragmentListEvents extends Fragment {
 
     public FragmentListEvents(){}
 
+    //listener listens eventKey
     FragmentEventslistener listener;
     public interface FragmentEventslistener{
         public void getEventKey(String eventKey);
@@ -48,7 +54,7 @@ public class FragmentListEvents extends Fragment {
         adapter = new Adapter(getActivity(), R.layout.layout_list_event, eventList);
         controlMode = getArguments().getBoolean("controlMode");
 
-        //FirebaseDatabase
+        //get events from firebase
         helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,13 +66,15 @@ public class FragmentListEvents extends Fragment {
             }
         });
 
+        //show events in listview with adapter
         listView.setAdapter(adapter);
 
-        //click on event switch to activity event home page
+        //get selected eventKey and intent to MainEvent if not control mode
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
                 listener.getEventKey(key);
+                Log.i(TAG, "EventKey clicked " + key);
                 if(controlMode==false){
                     Intent i = new Intent(getActivity(), MainEvent.class);
                     i.putExtra("eventKey", key);
@@ -78,7 +86,7 @@ public class FragmentListEvents extends Fragment {
         return view;
     }
 
-    //get event data from database
+    //get events and eventKeys from firebase
     public void getEvent(DataSnapshot dataSnapshot){
         eventList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){

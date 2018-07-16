@@ -20,9 +20,9 @@ import java.util.ArrayList;
 
 public class FragmentListAgenda extends Fragment{
     private ListView listView;
-    private ArrayList<String> agendaList;
+    private ArrayList<ObjectAgenda> agendaList;
     private ArrayList<String> keyList;
-    private ArrayAdapter<String> adapter;
+    private Adapter adapter;
     private HelperFirebase helperFirebase = new HelperFirebase();
 
     private String getEventKey = null;
@@ -46,8 +46,9 @@ public class FragmentListAgenda extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_style, container, false);
         listView = (ListView) view.findViewById(R.id.list);
-        agendaList = new ArrayList<String>();
+        agendaList = new ArrayList<ObjectAgenda>();
         keyList = new ArrayList<String>();
+        //adapter = new Adapter(getActivity(), R.layout.layout_agenda_list, agendaList);
 
         getEventKey = getArguments().getString("eventKey");
         helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {
@@ -61,7 +62,7 @@ public class FragmentListAgenda extends Fragment{
             }
         });
 
-        showAgenda(agendaList);
+        listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
@@ -78,20 +79,8 @@ public class FragmentListAgenda extends Fragment{
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
             ObjectAgenda s = data.getValue(ObjectAgenda.class);
-            agendaList.add(s.agendaToString());
+            agendaList.add(s);
             keyList.add(key);
         }
-    }
-
-    public void showAgenda( ArrayList<String> list){
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setTextColor(Color.WHITE);
-                return view;
-            }
-        };
-        listView.setAdapter(adapter);
     }
 }

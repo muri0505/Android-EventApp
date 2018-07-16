@@ -20,14 +20,14 @@ import java.util.ArrayList;
 
 public class FragmentListSession extends Fragment {
     private ListView listView;
-    private ArrayList<String> sessionList;
+    private ArrayList<ObjectSession> sessionList;
     private ArrayList<String> keyList;
-    private ArrayAdapter<String> adapter;
+    private Adapter adapter;
     private HelperFirebase helperFirebase = new HelperFirebase();
+    private static final String TAG = "FragmentListSession";
 
     private String getEventKey = null;
     private String getAgendaKey = null;
-    private static final String TAG = "FragmentListSession";
 
     public FragmentListSession(){}
 
@@ -47,8 +47,9 @@ public class FragmentListSession extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_style, container, false);
         listView = (ListView) view.findViewById(R.id.list);
-        sessionList = new ArrayList<String>();
+        sessionList = new ArrayList<ObjectSession>();
         keyList = new ArrayList<String>();
+        //adapter = new Adapter(getActivity(), R.layout.layout_session_list, sessionList);
 
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
@@ -64,7 +65,7 @@ public class FragmentListSession extends Fragment {
             }
         });
 
-        showSession(sessionList);
+        listView.setAdapter(adapter);
 
         //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,22 +83,9 @@ public class FragmentListSession extends Fragment {
         sessionList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            ObjectSession a = data.getValue(ObjectSession.class);
-            sessionList.add(a.sessionToString());
+            ObjectSession s = data.getValue(ObjectSession.class);
+            sessionList.add(s);
             keyList.add(key);
         }
-    }
-
-    //show event data in list view
-    public void showSession( ArrayList<String> list){
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setTextColor(Color.WHITE);
-                return view;
-            }
-        };
-        listView.setAdapter(adapter);
     }
 }

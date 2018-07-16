@@ -24,9 +24,9 @@ public class FragmentListAgenda extends Fragment{
     private ArrayList<String> keyList;
     private Adapter adapter;
     private HelperFirebase helperFirebase = new HelperFirebase();
+    private static final String TAG = "FragmentListAgenda";
 
     private String getEventKey = null;
-    private static final String TAG = "FragmentListAgenda";
 
     public FragmentListAgenda(){}
 
@@ -48,7 +48,7 @@ public class FragmentListAgenda extends Fragment{
         listView = (ListView) view.findViewById(R.id.list);
         agendaList = new ArrayList<ObjectAgenda>();
         keyList = new ArrayList<String>();
-        //adapter = new Adapter(getActivity(), R.layout.layout_agenda_list, agendaList);
+        adapter = new Adapter(getActivity(), R.layout.layout_agenda_list, agendaList);
 
         getEventKey = getArguments().getString("eventKey");
         helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {

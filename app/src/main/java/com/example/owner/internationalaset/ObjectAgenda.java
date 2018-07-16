@@ -34,8 +34,4 @@ public class ObjectAgenda{
         hashMap.put("agendaDes",agendaDes);
         return hashMap;
     }
-
-    public String agendaToString(){
-        return agendaType  + "\n" + agendaName + "\n" + agendaStartTime + "\n" + agendaEndTime + "\n" + agendaDes;
-    }
 }

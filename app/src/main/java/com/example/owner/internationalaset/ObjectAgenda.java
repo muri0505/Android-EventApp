@@ -1,45 +1,41 @@
 package com.example.owner.internationalaset;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class ObjectAgenda {
+public class ObjectAgenda{
+    private String agendaType;
     private String agendaName;
-    private String agendaInstitution;
-    private String agendaLocation;
     private String agendaStartTime;
     private String agendaEndTime;
-    private String agendaPeople;
+    private String agendaDes;
 
     public ObjectAgenda(){}
-
-    public ObjectAgenda(String n, String i, String l, String s, String e, String p){
-        agendaName = n;
-        agendaInstitution = i;
-        agendaLocation = l;
-        agendaStartTime = s;
-        agendaEndTime = e;
-        agendaPeople = p;
+    public ObjectAgenda(String type, String name, String start, String end, String des){
+        agendaType = type;
+        agendaName = name;
+        agendaStartTime = start;
+        agendaEndTime = end;
+        agendaDes = des;
     }
 
+    public String getAgendaType() {return agendaType;}
     public String getAgendaName() {return agendaName;}
-    public String getAgendaInstitution() {return agendaInstitution;}
-    public String getAgendaLocation() {return agendaLocation;}
     public String getAgendaStartTime() {return agendaStartTime;}
     public String getAgendaEndTime() {return agendaEndTime;}
-    public String getAgendaPeople() {return agendaPeople;}
+    public String getAgendaDes() {return agendaDes;}
 
     public HashMap<String,Object> toHashMap(){
         HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("agendaType",agendaType);
         hashMap.put("agendaName",agendaName);
-        hashMap.put("agendaInstitution",agendaInstitution);
-        hashMap.put("agendaLocation",agendaLocation);
         hashMap.put("agendaStartTime",agendaStartTime);
         hashMap.put("agendaEndTime",agendaEndTime);
-        hashMap.put("agendaPeople",agendaPeople);
+        hashMap.put("agendaDes",agendaDes);
         return hashMap;
     }
 
     public String agendaToString(){
-        return agendaName + "\n" + agendaInstitution + "\n" + agendaLocation + "\n" +
-                agendaStartTime + "\n" + agendaEndTime + "\n" + agendaPeople;}
+        return agendaType  + "\n" + agendaName + "\n" + agendaStartTime + "\n" + agendaEndTime + "\n" + agendaDes;
+    }
 }

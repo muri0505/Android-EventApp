@@ -1,8 +1,10 @@
 package com.example.owner.internationalaset;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +16,26 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+
+/*
+    FragmentModifySession: get eventKey&agendaKey&sessionKey from ActivityControlSession
+    check valid sessionKey and get session from firebase or create new sessionKey and new session
+    Edit button to push update/new session, cancel button back to ActivityControlSession
+ */
 public class FragmentModifySession extends Fragment {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectSession session;
     private String getEventKey = null;
+    private String getAgendaKey = null;
     private String getSessionKey = null;
 
     private TextView mode;
-    private EditText sessionType;
     private EditText sessionName;
+    private EditText sessionInstitution;
+    private EditText sessionLocation;
     private EditText sessionStartTime;
     private EditText sessionEndTime;
-    private EditText sessionDes;
+    private EditText sessionPeople;
     private static final String TAG = "FragmentModifySession";
 
     public FragmentModifySession(){}
@@ -34,50 +44,63 @@ public class FragmentModifySession extends Fragment {
         View view = inflater.inflate(R.layout.fragment_modify_session, container, false);
 
         mode = (TextView) view.findViewById(R.id.mode);
-        sessionType= (EditText) view.findViewById(R.id.sessionType);
-        sessionName = (EditText) view.findViewById(R.id.sessionName);
+        sessionName= (EditText) view.findViewById(R.id.sessionName);
+        sessionInstitution = (EditText) view.findViewById(R.id.sessionInstitution);
+        sessionLocation = (EditText) view.findViewById(R.id.sessionLocation);
         sessionStartTime = (EditText) view.findViewById(R.id.sessionStartTime);
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
-        sessionDes = (EditText) view.findViewById(R.id.sessionDes);
+        sessionPeople = (EditText) view.findViewById(R.id.sessionPeople);
 
+        //get eventKey&agendaKey&sessionKey from ActivityControlSession
         getEventKey = getArguments().getString("eventKey");
+        getAgendaKey = getArguments().getString("agendaKey");
         getSessionKey = getArguments().getString("sessionKey");
+        Log.i(TAG,"Get eventKey, agendaKey and sessionKey from ActivityControlAgenda " + getEventKey + ", " + getAgendaKey + ", " + getSessionKey);
 
+        //check valid sessionKey to get session
         if(getSessionKey != null) {
-            helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
+            Log.i(TAG,"Mode: Edit Session");
+            helperFirebase.helperSession(getEventKey,getAgendaKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getSession(dataSnapshot);
                 }
-
                 public void onCancelled(DatabaseError databaseError) {
                     System.out.println("The read failed: " + databaseError.getCode());
                 }
             });
-        }else{mode.setText("Create Session");}
+        }else{
+            Log.i(TAG,"Mode: Create Session");
+            mode.setText("Create Session");
+        }
 
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String type, name,startTime, endTime, des;
-                type = sessionType.getText().toString();
+                //edit button to create current session
+                String name, institution, location, startTime, endTime, people;
                 name = sessionName.getText().toString();
+                institution = sessionInstitution.getText().toString();
+                location = sessionLocation.getText().toString();
                 startTime = sessionStartTime.getText().toString();
                 endTime = sessionEndTime.getText().toString();
-                des = sessionDes.getText().toString();
+                people = sessionPeople.getText().toString();
+                session = new ObjectSession(name, institution, location, startTime, endTime, people);
 
-                session = new ObjectSession(type, name, startTime, endTime, des);
-
+                //create new sessionKey and session or update session under exist sessionKey
                 if(getSessionKey==null) {
-                    getSessionKey = helperFirebase.helperSession(getEventKey).push().getKey();
-                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).setValue(session);
+                    getSessionKey = helperFirebase.helperSession(getEventKey, getAgendaKey).push().getKey();
+                    helperFirebase.helperSessionKey(getEventKey, getAgendaKey, getSessionKey).setValue(session);
+                    Log.i(TAG, "New sessionKey and session created. sessionKey: " + getSessionKey);
                 }else{
-                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
+                    helperFirebase.helperSessionKey(getEventKey, getAgendaKey, getSessionKey).updateChildren(session.toHashMap());
+                    Log.i(TAG, "session updated. sessionKey: " + getSessionKey);
                 }
                 backToControl();
             }
         });
 
+        //cancel button back to ActivityControlSession
         Button cancel = (Button) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -87,27 +110,30 @@ public class FragmentModifySession extends Fragment {
         return view;
     }
 
+    //get session from firebase with sessionKey and show in editText
     public void getSession(DataSnapshot dataSnapshot){
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
 
             if(key.equals(getSessionKey)) {
                 mode.setText("Edit Session");
-                ObjectSession s = (ObjectSession) data.getValue(ObjectSession.class);
-                sessionType.setText(s.getSessionType());
-                sessionName.setText(s.getSessionName());
-                sessionStartTime.setText(s.getSessionStartTime());
-                sessionEndTime.setText(s.getSessionEndTime());
-                sessionDes.setText(s.getSessionDes());
-
+                ObjectSession a = (ObjectSession) data.getValue(ObjectSession.class);
+                sessionName.setText(a.getSessionName());
+                sessionInstitution.setText(a.getSessionInstitution());
+                sessionLocation.setText(a.getSessionLocation());
+                sessionStartTime.setText(a.getSessionStartTime());
+                sessionEndTime.setText(a.getSessionEndTime());
+                sessionPeople.setText(a.getSessionPeople());
                 break;
             }
         }
     }
 
+    //Intent to ActivityControlSession, default showing session list
     public void backToControl(){
         Intent i = new Intent(getActivity(), ActivityControlSession.class);
         i.putExtra("eventKey",getEventKey);
+        i.putExtra("agendaKey",getAgendaKey);
         startActivity(i);
     }
 }

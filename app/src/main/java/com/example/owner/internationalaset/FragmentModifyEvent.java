@@ -3,6 +3,7 @@ package com.example.owner.internationalaset;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 /*
-    fragment event information
-    search database with event name, add new event if not exist, Fragment Event Modify if exist
+    FragmentModifyEvent: get eventKey from ActivityControlEvent
+    check valid eventKey and get event from firebase or create new eventKey and new event
+    Edit button to push update/new event, cancel button back to ActivityControlEvent
  */
 public class FragmentModifyEvent extends Fragment {
     private HelperFirebase helperFirebase = new HelperFirebase();
-    private String getEventKey = null;
     private ObjectEvent event;
+    private String getEventKey = null;
 
     private TextView mode;
     private EditText eventName;
@@ -44,9 +46,13 @@ public class FragmentModifyEvent extends Fragment {
         eventLocation = (EditText) view.findViewById(R.id.eventLocation);
         mode = (TextView) view.findViewById(R.id.mode);
 
+        //get eventKey from ActivityControlEvent
         getEventKey = getArguments().getString("eventKey");
+        Log.i(TAG,"Get eventKey from ActivityControlEvent " + getEventKey);
 
+        //check valid eventKey to get event
         if(getEventKey != null){
+            Log.i(TAG,"Mode: Edit Event");
             helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -55,12 +61,16 @@ public class FragmentModifyEvent extends Fragment {
                 public void onCancelled(DatabaseError databaseError) {
                     System.out.println("The read failed: " + databaseError.getCode());
                 }
-            });}else{mode.setText("Create Event");}
+            });
+        }else{
+            Log.i(TAG,"Mode: Create Event");
+            mode.setText("Create Event");
+        }
 
-        //create key and add event data/get key and modify event data
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                //edit button to create current event
                 String name = eventName.getText().toString();
                 String startDate = eventStartDate.getText().toString();
                 String endDate = eventEndDate.getText().toString();
@@ -68,16 +78,20 @@ public class FragmentModifyEvent extends Fragment {
                 String location = eventLocation.getText().toString();
                 event = new ObjectEvent(name, startDate, endDate, des, location,eventImg);
 
+                //create new eventKey and event or update event under exist eventKey
                 if(getEventKey==null){
                     getEventKey = helperFirebase.helperEvent().push().getKey();
                     helperFirebase.helperEventKey(getEventKey).setValue(event);
+                    Log.i(TAG, "New eventKey and event created. EventKey: " + getEventKey);
                 }else{
                     helperFirebase.helperEventKey(getEventKey).updateChildren(event.toHashMap());
+                    Log.i(TAG, "event updated. EventKey: " + getEventKey);
                 }
                 backToControl();
             }
         });
 
+        //cancel button back to ActivityControlEvent
         Button cancel = (Button) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -87,7 +101,7 @@ public class FragmentModifyEvent extends Fragment {
         return view;
     }
 
-    //search event name in database
+    //get event from firebase with eventKey and show in editText
     public void getEvent(DataSnapshot dataSnapshot){
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
@@ -107,8 +121,10 @@ public class FragmentModifyEvent extends Fragment {
         }
     }
 
+    //Intent to ActivityControlEvent, default showing event list
     public void backToControl(){
         Intent i = new Intent(getActivity(), ActivityControlEvent.class);
         startActivity(i);
+        Log.i(TAG, "Intent to ActivityControlEvent");
     }
 }

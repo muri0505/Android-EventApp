@@ -12,7 +12,7 @@ import android.widget.Toast;
 /*
     ActivityControlEvent: admin event control,
     default showing all events, create&edit button intent to FragmentModifyEvent, delete button to delete data
-    level button intent to ActivityControlSession
+    level button intent to ActivityControlAgenda
 */
 public class ActivityControlEvent extends HelperControl implements FragmentListEvents.FragmentEventslistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
@@ -25,11 +25,12 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_control_fragment);
 
+        //setup default&toolbar
         fragmentSwitch(defaultFragment());
-        toolbarTop(defaultFragment());
+        helperControl(defaultFragment(),"Event");
 
         //BottomNavigationView switch create, edit, delete and next level
-        BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
+        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -55,12 +56,12 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
                         }
                         break;
                     case R.id.level:
-                        //check event select, intent to selected event's ActivityControlSession
+                        //check event select, intent to selected event's ActivityControlAgenda
                         if (validKey(eventKey)) {
-                            Intent i = new Intent(ActivityControlEvent.this, ActivityControlSession.class);
+                            Intent i = new Intent(ActivityControlEvent.this, ActivityControlAgenda.class);
                             i.putExtra("eventKey", eventKey);
                             startActivity(i);
-                            Log.i(TAG, "Intent to ActivityControlSession with eventKey: " + eventKey);
+                            Log.i(TAG, "Intent to ActivityControlAgenda with eventKey: " + eventKey);
                         }
                         break;
                     default:
@@ -84,7 +85,7 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
         eventKey = k;
     }
 
-    //intent to FragmentModifyEvent
+    //Intent to FragmentModifyEvent
     public void modifyEvent(String eventKey){
         Bundle bundle = new Bundle();
         bundle.putString("eventKey", eventKey);
@@ -92,16 +93,5 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
         Log.i(TAG,"Intent to FragmentModifyEvent with eventKey: " + eventKey);
-    }
-
-    //check event selected
-    public boolean validKey(String key){
-        if(key == null){
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(ActivityControlEvent.this, "Please select a event", duration);
-            toast.show();
-            return false;
-        }
-        return true;
     }
 }

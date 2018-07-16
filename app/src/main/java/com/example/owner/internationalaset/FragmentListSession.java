@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListSession extends Fragment{
+public class FragmentListSession extends Fragment {
     private ListView listView;
     private ArrayList<String> sessionList;
     private ArrayList<String> keyList;
@@ -26,6 +26,7 @@ public class FragmentListSession extends Fragment{
     private HelperFirebase helperFirebase = new HelperFirebase();
 
     private String getEventKey = null;
+    private String getAgendaKey = null;
     private static final String TAG = "FragmentListSession";
 
     public FragmentListSession(){}
@@ -49,8 +50,10 @@ public class FragmentListSession extends Fragment{
         sessionList = new ArrayList<String>();
         keyList = new ArrayList<String>();
 
+        //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
-        helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
+        getAgendaKey = getArguments().getString("agendaKey");
+        helperFirebase.helperSession(getEventKey,getAgendaKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getSession(dataSnapshot);
@@ -63,6 +66,7 @@ public class FragmentListSession extends Fragment{
 
         showSession(sessionList);
 
+        //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
@@ -73,16 +77,18 @@ public class FragmentListSession extends Fragment{
         return view;
     }
 
+    //get event data from database
     public void getSession(DataSnapshot dataSnapshot){
         sessionList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            ObjectSession s = data.getValue(ObjectSession.class);
-            sessionList.add(s.sessionToString());
+            ObjectSession a = data.getValue(ObjectSession.class);
+            sessionList.add(a.sessionToString());
             keyList.add(key);
         }
     }
 
+    //show event data in list view
     public void showSession( ArrayList<String> list){
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
             public View getView(int position, View convertView, ViewGroup parent) {

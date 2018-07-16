@@ -1,9 +1,9 @@
 package com.example.owner.internationalaset;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +15,23 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-
-/**
- * A simple {@link Fragment} subclass.
+/*
+    FragmentModifyAgenda: get eventKey&agendaKey from ActivityControlAgenda
+    check valid agendaKey and get agenda from firebase or create new agendaKey and new agenda
+    Edit button to push update/new agenda, cancel button back to ActivityControlAgenda
  */
 public class FragmentModifyAgenda extends Fragment {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectAgenda agenda;
     private String getEventKey = null;
-    private String getSessionKey = null;
     private String getAgendaKey = null;
 
     private TextView mode;
+    private EditText agendaType;
     private EditText agendaName;
-    private EditText agendaInstitution;
-    private EditText agendaLocation;
     private EditText agendaStartTime;
     private EditText agendaEndTime;
-    private EditText agendaPeople;
+    private EditText agendaDes;
     private static final String TAG = "FragmentModifyAgenda";
 
     public FragmentModifyAgenda(){}
@@ -41,52 +40,60 @@ public class FragmentModifyAgenda extends Fragment {
         View view = inflater.inflate(R.layout.fragment_modify_agenda, container, false);
 
         mode = (TextView) view.findViewById(R.id.mode);
-        agendaName= (EditText) view.findViewById(R.id.agendaName);
-        agendaInstitution = (EditText) view.findViewById(R.id.agendaInstitution);
-        agendaLocation = (EditText) view.findViewById(R.id.agendaLocation);
+        agendaType= (EditText) view.findViewById(R.id.agendaType);
+        agendaName = (EditText) view.findViewById(R.id.agendaName);
         agendaStartTime = (EditText) view.findViewById(R.id.agendaStartTime);
         agendaEndTime = (EditText) view.findViewById(R.id.agendaEndTime);
-        agendaPeople = (EditText) view.findViewById(R.id.agendaPeople);
+        agendaDes = (EditText) view.findViewById(R.id.agendaDes);
 
+        //get eventKey&agendaKey from ActivityControlAgenda
         getEventKey = getArguments().getString("eventKey");
-        getSessionKey = getArguments().getString("sessionKey");
         getAgendaKey = getArguments().getString("agendaKey");
+        Log.i(TAG,"Get eventKey and agendaKey from ActivityControlAgenda " + getEventKey + ", " + getAgendaKey);
 
+        //check valid agendaKey to get agenda
         if(getAgendaKey != null) {
-            helperFirebase.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
+            Log.i(TAG,"Mode: Edit Agenda");
+            helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getAgenda(dataSnapshot);
                 }
-
                 public void onCancelled(DatabaseError databaseError) {
                     System.out.println("The read failed: " + databaseError.getCode());
                 }
             });
-        }else{mode.setText("Create Agenda");}
+        }else{
+            Log.i(TAG,"Mode: Create Agenda");
+            mode.setText("Create Agenda");
+        }
 
         Button edit = (Button) view.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String name, institution, location, startTime, endTime, people;
+                //edit button to create current agenda
+                String type, name,startTime, endTime, des;
+                type = agendaType.getText().toString();
                 name = agendaName.getText().toString();
-                institution = agendaInstitution.getText().toString();
-                location = agendaLocation.getText().toString();
                 startTime = agendaStartTime.getText().toString();
                 endTime = agendaEndTime.getText().toString();
-                people = agendaPeople.getText().toString();
+                des = agendaDes.getText().toString();
+                agenda = new ObjectAgenda(type, name, startTime, endTime, des);
 
-                agenda = new ObjectAgenda(name, institution, location, startTime, endTime, people);
+                //create new agendaKey and agenda or update agenda under exist agendaKey
                 if(getAgendaKey==null) {
-                    getAgendaKey = helperFirebase.helperAgenda(getEventKey, getSessionKey).push().getKey();
-                    helperFirebase.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).setValue(agenda);
+                    getAgendaKey = helperFirebase.helperAgenda(getEventKey).push().getKey();
+                    helperFirebase.helperAgendaKey(getEventKey, getAgendaKey).setValue(agenda);
+                    Log.i(TAG, "New agendaKey and agenda created. agendaKey: " + getAgendaKey);
                 }else{
-                    helperFirebase.helperAgendaKey(getEventKey, getSessionKey, getAgendaKey).updateChildren(agenda.toHashMap());
+                    helperFirebase.helperAgendaKey(getEventKey, getAgendaKey).updateChildren(agenda.toHashMap());
+                    Log.i(TAG, "agenda updated. agendaKey: " + getAgendaKey);
                 }
                 backToControl();
             }
         });
 
+        //cancel button back to ActivityControlAgenda
         Button cancel = (Button) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -96,29 +103,29 @@ public class FragmentModifyAgenda extends Fragment {
         return view;
     }
 
+    //get agenda from firebase with agendaKey and show in editText
     public void getAgenda(DataSnapshot dataSnapshot){
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
 
             if(key.equals(getAgendaKey)) {
                 mode.setText("Edit Agenda");
-                ObjectAgenda a = (ObjectAgenda) data.getValue(ObjectAgenda.class);
-                agendaName.setText(a.getAgendaName());
-                agendaInstitution.setText(a.getAgendaInstitution());
-                agendaLocation.setText(a.getAgendaLocation());
-                agendaStartTime.setText(a.getAgendaStartTime());
-                agendaEndTime.setText(a.getAgendaEndTime());
-                agendaPeople.setText(a.getAgendaPeople());
-
+                ObjectAgenda s = (ObjectAgenda) data.getValue(ObjectAgenda.class);
+                agendaType.setText(s.getAgendaType());
+                agendaName.setText(s.getAgendaName());
+                agendaStartTime.setText(s.getAgendaStartTime());
+                agendaEndTime.setText(s.getAgendaEndTime());
+                agendaDes.setText(s.getAgendaDes());
                 break;
             }
         }
     }
 
+    //Intent to ActivityControlAgenda, default showing agenda list
     public void backToControl(){
         Intent i = new Intent(getActivity(), ActivityControlAgenda.class);
         i.putExtra("eventKey",getEventKey);
-        i.putExtra("sessionKey",getSessionKey);
         startActivity(i);
+        Log.i(TAG, "Intent to ActivityControlAgenda");
     }
 }

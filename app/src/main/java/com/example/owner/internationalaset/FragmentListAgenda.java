@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListAgenda extends Fragment {
+public class FragmentListAgenda extends Fragment{
     private ListView listView;
     private ArrayList<String> agendaList;
     private ArrayList<String> keyList;
@@ -26,7 +26,6 @@ public class FragmentListAgenda extends Fragment {
     private HelperFirebase helperFirebase = new HelperFirebase();
 
     private String getEventKey = null;
-    private String getSessionKey = null;
     private static final String TAG = "FragmentListAgenda";
 
     public FragmentListAgenda(){}
@@ -50,10 +49,8 @@ public class FragmentListAgenda extends Fragment {
         agendaList = new ArrayList<String>();
         keyList = new ArrayList<String>();
 
-        //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
-        getSessionKey = getArguments().getString("sessionKey");
-        helperFirebase.helperAgenda(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
+        helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getAgenda(dataSnapshot);
@@ -66,7 +63,6 @@ public class FragmentListAgenda extends Fragment {
 
         showAgenda(agendaList);
 
-        //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
@@ -77,18 +73,16 @@ public class FragmentListAgenda extends Fragment {
         return view;
     }
 
-    //get event data from database
     public void getAgenda(DataSnapshot dataSnapshot){
         agendaList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            ObjectAgenda a = data.getValue(ObjectAgenda.class);
-            agendaList.add(a.agendaToString());
+            ObjectAgenda s = data.getValue(ObjectAgenda.class);
+            agendaList.add(s.agendaToString());
             keyList.add(key);
         }
     }
 
-    //show event data in list view
     public void showAgenda( ArrayList<String> list){
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list) {
             public View getView(int position, View convertView, ViewGroup parent) {

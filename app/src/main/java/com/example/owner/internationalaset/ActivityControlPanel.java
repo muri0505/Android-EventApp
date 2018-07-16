@@ -11,7 +11,7 @@ import android.widget.Button;
 
 /*
     fragment admin control panel
-    add/edit/delete events, session etc.
+    add/edit/delete events, agenda etc.
  */
 
 public class ActivityControlPanel extends AppCompatActivity {

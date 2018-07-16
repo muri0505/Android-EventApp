@@ -13,7 +13,7 @@
     <!-- Home toolbarHelper -->
     <string name="journals">Journals</string>
     <string name="news">News</string>
-    <string name="addSession">Add Session</string>
+    <string name="addAgenda">Add Agenda</string>
 
     <!-- Control modify -->
     <string name="home">Home</string>
@@ -27,21 +27,21 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
-    <!-- ObjectSession -->
-    <string name="sessionType">Session Type</string>
-    <string name="sessionName">Session Name</string>
-    <string name="sessionStartTime">Session Start Time</string>
-    <string name="sessionEndTime">Session End Time</string>
-    <string name="sessionDes">Session Des</string>
-    <string name="controlSession">Control Session</string>
-
-    <!-- ObjectAgenda-->
+    <!-- ObjectAgenda -->
+    <string name="agendaType">Agenda Type</string>
     <string name="agendaName">Agenda Name</string>
-    <string name="agendaInstitution">Agenda Institution</string>
-    <string name="agendaLocation">Agenda Location</string>
-    <string name="agendaStartTime">Agenda StartTime</string>
-    <string name="agendaEndTime">Agenda EndTime</string>
-    <string name="agendaPeople">Agenda People</string>
+    <string name="agendaStartTime">Agenda Start Time</string>
+    <string name="agendaEndTime">Agenda End Time</string>
+    <string name="agendaDes">Agenda Des</string>
+    <string name="controlAgenda">Control Agenda</string>
+
+    <!-- ObjectSession-->
+    <string name="sessionName">Session Name</string>
+    <string name="sessionInstitution">Session Institution</string>
+    <string name="sessionLocation">Session Location</string>
+    <string name="sessionStartTime">Session StartTime</string>
+    <string name="sessionEndTime">Session EndTime</string>
+    <string name="sessionPeople">Session People</string>
 
     <!-- Main event detail title -->
     <string name="date">Date</string>
@@ -50,8 +50,5 @@
 
     <!-- Main event toolbarHelper -->
     <string name="eventHome">Event Home</string>
-
-    <!--  -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

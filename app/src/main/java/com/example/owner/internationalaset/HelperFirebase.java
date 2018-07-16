@@ -14,23 +14,23 @@ public class HelperFirebase {
         return mDatabase.child("Events");
     }
 
-    public DatabaseReference helperSession(String eventKey){
-        return mDatabase.child("Events").child(eventKey).child("Sessions");
+    public DatabaseReference helperAgenda(String eventKey){
+        return mDatabase.child("Events").child(eventKey).child("Agendas");
     }
 
-    public DatabaseReference helperAgenda(String eventKey, String sessionKey){
-        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Agenda");
+    public DatabaseReference helperSession(String eventKey, String agendaKey){
+        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Session");
     }
 
     public DatabaseReference helperEventKey(String eventKey){
         return mDatabase.child("Events").child(eventKey);
     }
 
-    public DatabaseReference helperSessionKey(String eventKey, String sessionKey){
-        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey);
+    public DatabaseReference helperAgendaKey(String eventKey, String agendaKey){
+        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey);
     }
 
-    public DatabaseReference helperAgendaKey(String eventKey, String sessionKey, String agendaKey){
-        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Agenda").child(agendaKey);
+    public DatabaseReference helperSessionKey(String eventKey, String agendaKey, String sessionKey){
+        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Session").child(sessionKey);
     }
 }

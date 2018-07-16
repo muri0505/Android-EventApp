@@ -5,16 +5,22 @@
     <item
         android:id="@+id/list"
         android:title="@string/list"
-        app:showAsAction="always|withText"/>
+        android:icon="@drawable/list"
+        app:iconTint="@color/white"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/control"
+        android:icon="@drawable/control"
         android:title="@string/control"
-        app:showAsAction="always|withText"/>
+        app:iconTint="@color/white"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/home"
+        android:icon="@drawable/home"
         android:title="@string/home"
-        app:showAsAction="always|withText"/>
+        app:iconTint="@color/white"
+        app:showAsAction="always"/>
 
 </menu>

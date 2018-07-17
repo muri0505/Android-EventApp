@@ -11,13 +11,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter extends ArrayAdapter {
     ArrayList<?>  objects = null;
     ArrayList<ObjectEvent>  event = null;
     ArrayList<ObjectAgenda>  agenda = null;
     ArrayList<ObjectSession>  session = null;
+
+    ArrayList<String> date = new ArrayList<>();
     int resource;
 
     public Adapter(Context context, int textViewResourceId) {
@@ -35,9 +39,9 @@ public class Adapter extends ArrayAdapter {
         LayoutInflater i = LayoutInflater.from(getContext());
         View view = i.inflate(resource,null);
 
-        if(objects.get(0) instanceof ObjectEvent) event = (ArrayList<ObjectEvent>) objects;
-        if(objects.get(0) instanceof ObjectAgenda) agenda = (ArrayList<ObjectAgenda>) objects;
-        if(objects.get(0) instanceof ObjectAgenda) session = (ArrayList<ObjectSession>) objects;
+        if(objects.get(0) instanceof ObjectEvent){ event = (ArrayList<ObjectEvent>) objects;}
+        if(objects.get(0) instanceof ObjectAgenda){ agenda = (ArrayList<ObjectAgenda>) objects; }
+        if(objects.get(0) instanceof ObjectSession){ session = (ArrayList<ObjectSession>) objects;}
 
         //event
         if(event != null) {
@@ -61,6 +65,7 @@ public class Adapter extends ArrayAdapter {
 
         //agenda
         if(agenda != null) {
+            TextView agendaDate = (TextView) view.findViewById(R.id.agendaDate);
             TextView agendaType = (TextView) view.findViewById(R.id.agendaType);
             TextView agendaName = (TextView) view.findViewById(R.id.agendaName);
             TextView agendaStartTime = (TextView) view.findViewById(R.id.agendaStartTime);
@@ -68,12 +73,32 @@ public class Adapter extends ArrayAdapter {
             TextView agendaDes = (TextView) view.findViewById(R.id.agendaDes);
 
             ObjectAgenda a = agenda.get(position);
+            setTextView(agendaDate, a.getAgendaDate());
             setTextView(agendaType, a.getAgendaType());
             setTextView(agendaName, a.getAgendaName());
             setTextView(agendaStartTime, a.getAgendaStartTime());
             setTextView(agendaEndTime, a.getAgendaEndTime());
             setTextView(agendaDes, a.getAgendaDes());
         }
+
+        //session
+        if(session != null){
+            TextView sessionName = (TextView) view.findViewById(R.id.sessionName);
+            TextView sessionInstitution = (TextView) view.findViewById(R.id.sessionInstitution);
+            TextView sessionLocation = (TextView) view.findViewById(R.id.sessionLocation);
+            TextView sessionStartTime = (TextView) view.findViewById(R.id.sessionStartTime);
+            TextView sessionEndTime = (TextView) view.findViewById(R.id.sessionEndTime);
+            TextView sessionPeople = (TextView) view.findViewById(R.id.sessionPeople);
+
+            ObjectSession s = session.get(position);
+            setTextView(sessionName, s.getSessionName());
+            setTextView(sessionInstitution, s.getSessionInstitution());
+            setTextView(sessionLocation, s.getSessionLocation());
+            setTextView(sessionStartTime, s.getSessionStartTime());
+            setTextView(sessionEndTime, s.getSessionEndTime());
+            setTextView(sessionPeople, s.getSessionPeople());
+        }
+
         return view;
     }
 

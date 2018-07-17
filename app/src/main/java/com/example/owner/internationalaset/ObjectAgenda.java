@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ObjectAgenda{
+    private String agendaDate;
     private String agendaType;
     private String agendaName;
     private String agendaStartTime;
@@ -11,7 +12,8 @@ public class ObjectAgenda{
     private String agendaDes;
 
     public ObjectAgenda(){}
-    public ObjectAgenda(String type, String name, String start, String end, String des){
+    public ObjectAgenda(String date, String type, String name, String start, String end, String des){
+        agendaDate = date;
         agendaType = type;
         agendaName = name;
         agendaStartTime = start;
@@ -19,6 +21,7 @@ public class ObjectAgenda{
         agendaDes = des;
     }
 
+    public String getAgendaDate(){return agendaDate;}
     public String getAgendaType() {return agendaType;}
     public String getAgendaName() {return agendaName;}
     public String getAgendaStartTime() {return agendaStartTime;}
@@ -27,6 +30,7 @@ public class ObjectAgenda{
 
     public HashMap<String,Object> toHashMap(){
         HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("agendaDate",agendaDate);
         hashMap.put("agendaType",agendaType);
         hashMap.put("agendaName",agendaName);
         hashMap.put("agendaStartTime",agendaStartTime);

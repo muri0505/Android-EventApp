@@ -1,16 +1,14 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,8 +37,7 @@ public class FragmentListAgenda extends Fragment{
         super.onAttach(activity);
         try{
             listener = (FragmentListAgenda.FragmentAgendalistener) activity;
-        }catch(ClassCastException e){
-        }
+        }catch(ClassCastException e){}
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +45,7 @@ public class FragmentListAgenda extends Fragment{
         listView = (ListView) view.findViewById(R.id.list);
         agendaList = new ArrayList<ObjectAgenda>();
         keyList = new ArrayList<String>();
-        adapter = new Adapter(getActivity(), R.layout.layout_agenda_list, agendaList);
+        adapter = new Adapter(getActivity(), R.layout.layout_list_agenda, agendaList);
 
         getEventKey = getArguments().getString("eventKey");
         helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {

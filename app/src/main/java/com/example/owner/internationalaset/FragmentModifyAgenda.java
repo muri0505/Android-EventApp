@@ -27,6 +27,7 @@ public class FragmentModifyAgenda extends Fragment {
     private String getAgendaKey = null;
 
     private TextView mode;
+    private EditText agendaDate;
     private EditText agendaType;
     private EditText agendaName;
     private EditText agendaStartTime;
@@ -40,6 +41,7 @@ public class FragmentModifyAgenda extends Fragment {
         View view = inflater.inflate(R.layout.fragment_modify_agenda, container, false);
 
         mode = (TextView) view.findViewById(R.id.mode);
+        agendaDate= (EditText) view.findViewById(R.id.agendaDate);
         agendaType= (EditText) view.findViewById(R.id.agendaType);
         agendaName = (EditText) view.findViewById(R.id.agendaName);
         agendaStartTime = (EditText) view.findViewById(R.id.agendaStartTime);
@@ -72,13 +74,14 @@ public class FragmentModifyAgenda extends Fragment {
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //edit button to create current agenda
-                String type, name,startTime, endTime, des;
+                String date, type, name,startTime, endTime, des;
+                date = agendaDate.getText().toString();
                 type = agendaType.getText().toString();
                 name = agendaName.getText().toString();
                 startTime = agendaStartTime.getText().toString();
                 endTime = agendaEndTime.getText().toString();
                 des = agendaDes.getText().toString();
-                agenda = new ObjectAgenda(type, name, startTime, endTime, des);
+                agenda = new ObjectAgenda(date, type, name, startTime, endTime, des);
 
                 //create new agendaKey and agenda or update agenda under exist agendaKey
                 if(getAgendaKey==null) {
@@ -111,6 +114,7 @@ public class FragmentModifyAgenda extends Fragment {
             if(key.equals(getAgendaKey)) {
                 mode.setText("Edit Agenda");
                 ObjectAgenda s = (ObjectAgenda) data.getValue(ObjectAgenda.class);
+                agendaDate.setText(s.getAgendaDate());
                 agendaType.setText(s.getAgendaType());
                 agendaName.setText(s.getAgendaName());
                 agendaStartTime.setText(s.getAgendaStartTime());

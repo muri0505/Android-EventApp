@@ -33,7 +33,7 @@ public class FragmentEventDetail extends Fragment {
         eventKey = getArguments().getString("eventKey");
         event = new ArrayList<>();
         helperFirebase = new HelperFirebase();
-        adapter = new Adapter(getActivity(),R.layout.layout_event_detail, event);
+        adapter = new Adapter(getActivity(),R.layout.layout_detail_event, event);
         listView = (ListView)view.findViewById(R.id.list) ;
 
         helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {

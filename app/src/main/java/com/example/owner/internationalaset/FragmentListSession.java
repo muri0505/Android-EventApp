@@ -49,7 +49,7 @@ public class FragmentListSession extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         sessionList = new ArrayList<ObjectSession>();
         keyList = new ArrayList<String>();
-        //adapter = new Adapter(getActivity(), R.layout.layout_session_list, sessionList);
+        adapter = new Adapter(getActivity(), R.layout.layout_list_session, sessionList);
 
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");

@@ -19,6 +19,14 @@
             android:text="@string/mode" />
 
         <EditText
+            android:id="@+id/agendaDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:hint="@string/agendaDate" />
+
+        <EditText
             android:id="@+id/agendaType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -28,6 +28,7 @@
     <string name="cancel">Cancel</string>
 
     <!-- ObjectAgenda -->
+    <string name="agendaDate">Agenda Date</string>
     <string name="agendaType">Agenda Type</string>
     <string name="agendaName">Agenda Name</string>
     <string name="agendaStartTime">Agenda Start Time</string>

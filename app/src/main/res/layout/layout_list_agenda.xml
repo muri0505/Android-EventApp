@@ -39,7 +39,7 @@
         <TextView
             android:id="@+id/agendaType"
             android:text="@string/agendaType"
-            style="@style/agendaBody"/>
+            style="@style/agendaType"/>
 
         <TextView
             android:id="@+id/agendaDes"

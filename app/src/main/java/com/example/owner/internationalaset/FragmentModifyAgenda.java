@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
     check valid agendaKey and get agenda from firebase or create new agendaKey and new agenda
     Edit button to push update/new agenda, cancel button back to ActivityControlAgenda
  */
-public class FragmentModifyAgenda extends Fragment {
+public class FragmentModifyAgenda extends HelperDateTime {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectAgenda agenda;
     private String getEventKey = null;
@@ -28,7 +29,7 @@ public class FragmentModifyAgenda extends Fragment {
 
     private TextView mode;
     private EditText agendaDate;
-    private EditText agendaType;
+    private Spinner agendaType;
     private EditText agendaName;
     private EditText agendaStartTime;
     private EditText agendaEndTime;
@@ -42,11 +43,30 @@ public class FragmentModifyAgenda extends Fragment {
 
         mode = (TextView) view.findViewById(R.id.mode);
         agendaDate= (EditText) view.findViewById(R.id.agendaDate);
-        agendaType= (EditText) view.findViewById(R.id.agendaType);
+        agendaType= (Spinner) view.findViewById(R.id.agendaType);
         agendaName = (EditText) view.findViewById(R.id.agendaName);
         agendaStartTime = (EditText) view.findViewById(R.id.agendaStartTime);
         agendaEndTime = (EditText) view.findViewById(R.id.agendaEndTime);
         agendaDes = (EditText) view.findViewById(R.id.agendaDes);
+
+        agendaDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(agendaDate);
+            }
+        });
+        agendaStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTime(agendaStartTime);
+            }
+        });
+        agendaEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTime(agendaEndTime);
+            }
+        });
 
         //get eventKey&agendaKey from ActivityControlAgenda
         getEventKey = getArguments().getString("eventKey");
@@ -76,7 +96,7 @@ public class FragmentModifyAgenda extends Fragment {
                 //edit button to create current agenda
                 String date, type, name,startTime, endTime, des;
                 date = agendaDate.getText().toString();
-                type = agendaType.getText().toString();
+                type = agendaType.getSelectedItem().toString();
                 name = agendaName.getText().toString();
                 startTime = agendaStartTime.getText().toString();
                 endTime = agendaEndTime.getText().toString();
@@ -115,7 +135,7 @@ public class FragmentModifyAgenda extends Fragment {
                 mode.setText("Edit Agenda");
                 ObjectAgenda s = (ObjectAgenda) data.getValue(ObjectAgenda.class);
                 agendaDate.setText(s.getAgendaDate());
-                agendaType.setText(s.getAgendaType());
+                agendaType.setSelection(spinnerPos(s.getAgendaType()));
                 agendaName.setText(s.getAgendaName());
                 agendaStartTime.setText(s.getAgendaStartTime());
                 agendaEndTime.setText(s.getAgendaEndTime());
@@ -131,5 +151,13 @@ public class FragmentModifyAgenda extends Fragment {
         i.putExtra("eventKey",getEventKey);
         startActivity(i);
         Log.i(TAG, "Intent to ActivityControlAgenda");
+    }
+
+    public int spinnerPos(String type){
+        for(int i = 0; i < agendaType.getCount(); i++){
+            if (agendaType.getItemAtPosition(i).toString().equals(type))
+                    return i;
+        }
+        return 0;
     }
 }

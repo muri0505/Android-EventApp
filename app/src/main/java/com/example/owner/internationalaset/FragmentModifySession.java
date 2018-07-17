@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
     check valid sessionKey and get session from firebase or create new sessionKey and new session
     Edit button to push update/new session, cancel button back to ActivityControlSession
  */
-public class FragmentModifySession extends Fragment {
+public class FragmentModifySession extends HelperDateTime {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectSession session;
     private String getEventKey = null;
@@ -48,6 +48,17 @@ public class FragmentModifySession extends Fragment {
         sessionStartTime = (EditText) view.findViewById(R.id.sessionStartTime);
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
         sessionPeople = (EditText) view.findViewById(R.id.sessionPeople);
+
+        sessionStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {setTime(sessionStartTime);    }
+        });
+        sessionEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTime(sessionEndTime);
+            }
+        });
 
         //get eventKey&agendaKey&sessionKey from ActivityControlSession
         getEventKey = getArguments().getString("eventKey");

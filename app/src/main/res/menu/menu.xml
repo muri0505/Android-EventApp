@@ -6,4 +6,9 @@
         android:title="@string/eventHome"
         android:icon="@drawable/home"/>
 
+    <item
+        android:id="@+id/agenda"
+        android:title="@string/agenda"
+        android:icon="@drawable/home"/>
+
 </menu>

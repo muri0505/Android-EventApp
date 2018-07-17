@@ -1,6 +1,9 @@
 package com.example.owner.internationalaset;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.util.Calendar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
     check valid eventKey and get event from firebase or create new eventKey and new event
     Edit button to push update/new event, cancel button back to ActivityControlEvent
  */
-public class FragmentModifyEvent extends Fragment {
+public class FragmentModifyEvent extends HelperDateTime{
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectEvent event;
     private String getEventKey = null;
@@ -45,6 +50,19 @@ public class FragmentModifyEvent extends Fragment {
         eventDes = (EditText) view.findViewById(R.id.eventDes);
         eventLocation = (EditText) view.findViewById(R.id.eventLocation);
         mode = (TextView) view.findViewById(R.id.mode);
+
+        eventStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(eventStartDate);
+            }
+        });
+        eventEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(eventEndDate);
+            }
+        });
 
         //get eventKey from ActivityControlEvent
         getEventKey = getArguments().getString("eventKey");

@@ -29,7 +29,8 @@ public class MainEvent extends AppCompatActivity {
         Intent i = getIntent();
         eventKey = i.getStringExtra("eventKey");
 
-        defaultFragment();
+        fragment = new FragmentEventDetail();
+        withEventKey(fragment);
 
         navigationView.setNavigationItemSelectedListener(
             new NavigationView.OnNavigationItemSelectedListener() {
@@ -41,7 +42,13 @@ public class MainEvent extends AppCompatActivity {
                     if(menuItem.isChecked()){
                         switch (menuItem.getItemId()) {
                             case R.id.eventHome:
-                                defaultFragment();
+                                fragment = new FragmentEventDetail();
+                                withEventKey(fragment);
+                                break;
+                            case R.id.agenda:
+                                fragment = new FragmentListAgenda();
+                                withEventKey(fragment);
+                                break;
                         }
                     }
                     return true;
@@ -57,11 +64,10 @@ public class MainEvent extends AppCompatActivity {
         transaction.commit();
     }
 
-    public void defaultFragment(){
+    public void withEventKey(Fragment f){
         Bundle bundle = new Bundle();
         bundle.putString("eventKey", eventKey);
-        fragment = new FragmentEventDetail();
-        fragment.setArguments(bundle);
-        fragmentSwitch(fragment);
+        f.setArguments(bundle);
+        fragmentSwitch(f);
     }
 }

@@ -1,9 +1,9 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,7 @@ public class FragmentListAgenda extends Fragment{
     private ListView listView;
     private ArrayList<ObjectAgenda> agendaList;
     private ArrayList<String> keyList;
-    private Adapter adapter;
+    private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
     private static final String TAG = "FragmentListAgenda";
 
@@ -45,21 +45,21 @@ public class FragmentListAgenda extends Fragment{
         listView = (ListView) view.findViewById(R.id.list);
         agendaList = new ArrayList<ObjectAgenda>();
         keyList = new ArrayList<String>();
-        adapter = new Adapter(getActivity(), R.layout.layout_list_agenda, agendaList);
+        adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_agenda, agendaList);
 
         getEventKey = getArguments().getString("eventKey");
         helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getAgenda(dataSnapshot);
-                adapter.notifyDataSetChanged();
+                adapterListView.notifyDataSetChanged();
             }
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapterListView);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {

@@ -82,7 +82,7 @@ public class ActivityControlAgenda extends HelperControl implements FragmentList
 
     //default fragment, showing all agendas
     public Fragment defaultFragment(){
-        fragment = new FragmentListAgenda();
+        fragment = new FragmentListAgendaTab();
         fragment.setArguments(i);
         fragmentSwitch(fragment);
         return fragment;

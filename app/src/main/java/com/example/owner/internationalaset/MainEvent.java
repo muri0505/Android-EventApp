@@ -46,7 +46,7 @@ public class MainEvent extends AppCompatActivity {
                                 withEventKey(fragment);
                                 break;
                             case R.id.agenda:
-                                fragment = new FragmentListAgenda();
+                                fragment = new FragmentListAgendaTab();
                                 withEventKey(fragment);
                                 break;
                         }

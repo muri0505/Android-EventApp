@@ -18,14 +18,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 /*
-    FragmentListEvents: showing all events with adapter, click on event to get eventKey,
+    FragmentListEvents: showing all events with adapterListView, click on event to get eventKey,
     intent to MainEvent if not control mode or ActivityControlEvent listens eventKey.
 */
 public class FragmentListEvents extends Fragment {
     private ListView listView;
     private ArrayList<ObjectEvent> eventList;
     private ArrayList<String> keyList;
-    private Adapter adapter;
+    private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
     private Boolean controlMode = false;
     private static final String TAG = "FragmentListEvents";
@@ -51,7 +51,7 @@ public class FragmentListEvents extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
-        adapter = new Adapter(getActivity(), R.layout.layout_list_event, eventList);
+        adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_event, eventList);
         controlMode = getArguments().getBoolean("controlMode");
 
         //get events from firebase
@@ -59,15 +59,15 @@ public class FragmentListEvents extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);
-                adapter.notifyDataSetChanged();
+                adapterListView.notifyDataSetChanged();
             }
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
 
-        //show events in listview with adapter
-        listView.setAdapter(adapter);
+        //show events in listview with adapterListView
+        listView.setAdapter(adapterListView);
 
         //get selected eventKey and intent to MainEvent if not control mode
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

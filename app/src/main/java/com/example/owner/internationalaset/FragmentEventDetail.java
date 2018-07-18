@@ -20,7 +20,7 @@ public class FragmentEventDetail extends Fragment {
     private String eventKey;
     private ArrayList<ObjectEvent> event;
     private HelperFirebase helperFirebase;
-    private Adapter adapter;
+    private AdapterListView adapterListView;
 
     private ListView listView;
 
@@ -33,21 +33,21 @@ public class FragmentEventDetail extends Fragment {
         eventKey = getArguments().getString("eventKey");
         event = new ArrayList<>();
         helperFirebase = new HelperFirebase();
-        adapter = new Adapter(getActivity(),R.layout.layout_detail_event, event);
+        adapterListView = new AdapterListView(getActivity(),R.layout.layout_detail_event, event);
         listView = (ListView)view.findViewById(R.id.list) ;
 
         helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 getEvent(dataSnapshot);
-                adapter.notifyDataSetChanged();
+                adapterListView.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapterListView);
         return view;
     }
 

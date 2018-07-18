@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HelperDateTime extends Fragment {
@@ -61,8 +62,8 @@ public class HelperDateTime extends Fragment {
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-            month = month + 1;
-            String date = year + "-" + month + "-" + day;
+            String[] switchMonth = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+            String date = switchMonth[month] + " " + day +  " " + year;
             editText.setText(date);
         }
     };

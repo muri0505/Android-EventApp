@@ -1,16 +1,13 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +19,7 @@ public class FragmentListSession extends Fragment {
     private ListView listView;
     private ArrayList<ObjectSession> sessionList;
     private ArrayList<String> keyList;
-    private Adapter adapter;
+    private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
     private static final String TAG = "FragmentListSession";
 
@@ -49,7 +46,7 @@ public class FragmentListSession extends Fragment {
         listView = (ListView) view.findViewById(R.id.list);
         sessionList = new ArrayList<ObjectSession>();
         keyList = new ArrayList<String>();
-        adapter = new Adapter(getActivity(), R.layout.layout_list_session, sessionList);
+        adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_session, sessionList);
 
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
@@ -58,14 +55,14 @@ public class FragmentListSession extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 getSession(dataSnapshot);
-                adapter.notifyDataSetChanged();
+                adapterListView.notifyDataSetChanged();
             }
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapterListView);
 
         //click on event switch to activity event home page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

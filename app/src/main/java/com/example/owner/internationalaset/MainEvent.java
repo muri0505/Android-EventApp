@@ -12,10 +12,11 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-public class MainEvent extends AppCompatActivity {
+public class MainEvent extends AppCompatActivity implements FragmentListAgenda.FragmentAgendalistener{
     private DrawerLayout menu;
     private ArrayList<ObjectEvent> event;
     private String eventKey;
+    private String agendaKey;
     private Fragment fragment;
 
     @Override
@@ -46,7 +47,7 @@ public class MainEvent extends AppCompatActivity {
                                 withEventKey(fragment);
                                 break;
                             case R.id.agenda:
-                                fragment = new FragmentListAgendaTab();
+                                fragment = new FragmentListAgenda();
                                 withEventKey(fragment);
                                 break;
                         }
@@ -67,7 +68,10 @@ public class MainEvent extends AppCompatActivity {
     public void withEventKey(Fragment f){
         Bundle bundle = new Bundle();
         bundle.putString("eventKey", eventKey);
+        bundle.putBoolean("controlMode", false);
         f.setArguments(bundle);
         fragmentSwitch(f);
     }
+
+    public void getAgendaKey(String k){agendaKey = k;}
 }

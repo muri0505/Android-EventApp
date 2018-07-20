@@ -23,6 +23,7 @@ public class FragmentListAgendaTab extends Fragment{
     ArrayList<String> agendaDate;
     HelperFirebase helperFirebase = new HelperFirebase();
     Bundle bundle = new Bundle();
+    boolean controlMode = false;
 
     private FragmentTabHost fragmentTabHost;
 
@@ -31,7 +32,9 @@ public class FragmentListAgendaTab extends Fragment{
         fragmentTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_list_style);
 
         eventKey = getArguments().getString("eventKey");
+        controlMode = getArguments().getBoolean("controlMode");
         bundle.putString("eventKey", eventKey);
+        bundle.putBoolean("controlMode", controlMode);
 
         agendaDate = new ArrayList<String>();
         helperFirebase.helperAgenda(eventKey).addValueEventListener(new ValueEventListener() {

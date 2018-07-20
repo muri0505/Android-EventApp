@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.EventObject;
@@ -18,6 +20,7 @@ public class AdapterListView extends ArrayAdapter {
     ObjectEvent event = null;
     ObjectAgenda agenda = null;
     ObjectSession session = null;
+    ObjectKeynote keynote = null;
     int resource;
 
     public AdapterListView(Context context, int textViewResourceId) {
@@ -77,17 +80,36 @@ public class AdapterListView extends ArrayAdapter {
         if(getObject(position) instanceof ObjectSession) {
             session = (ObjectSession)getObject(position);
             TextView sessionName = (TextView) view.findViewById(R.id.sessionName);
-            TextView sessionInstitution = (TextView) view.findViewById(R.id.sessionInstitution);
+            TextView sessionPresenter = (TextView) view.findViewById(R.id.sessionPresenter);
+            TextView sessionAuthor = (TextView) view.findViewById(R.id.sessionAuthor);
             TextView sessionLocation = (TextView) view.findViewById(R.id.sessionLocation);
             TextView sessionStartTime = (TextView) view.findViewById(R.id.sessionStartTime);
             TextView sessionEndTime = (TextView) view.findViewById(R.id.sessionEndTime);
-            TextView sessionPeople = (TextView) view.findViewById(R.id.sessionPeople);
             setTextView(sessionName, session.getSessionName());
-            setTextView(sessionInstitution, session.getSessionInstitution());
+            setPresenter(sessionPresenter, session.getSessionPresenter());
+            setAuthor(sessionAuthor, session.getSessionAuthor());
             setTextView(sessionLocation, session.getSessionLocation());
             setTextView(sessionStartTime, session.getSessionStartTime());
             setTextView(sessionEndTime, session.getSessionEndTime());
-            setTextView(sessionPeople, session.getSessionPeople());
+        }
+
+        if(getObject(position) instanceof ObjectKeynote){
+            keynote = (ObjectKeynote) getObject(position);
+            TextView keynoteName = (TextView) view.findViewById(R.id.keynoteName);
+            TextView keynotePresenter = (TextView) view.findViewById(R.id.keynotePresenter);
+            TextView keynoteInstitution = (TextView) view.findViewById(R.id.keynoteInstitution);
+            TextView keynoteDes = (TextView) view.findViewById(R.id.keynoteDes);
+            TextView keynoteStartTime = (TextView) view.findViewById(R.id.keynoteStartTime);
+            TextView keynoteEndTime = (TextView) view.findViewById(R.id.keynoteEndTime);
+            ImageView keynoteImg = (ImageView) view.findViewById(R.id.keynoteImge);
+            setTextView(keynoteName, keynote.getKeynoteName());
+            setTextView(keynotePresenter, keynote.getKeynotePresenter());
+            setTextView(keynoteInstitution, keynote.getKeynoteInstitution());
+            setTextView(keynoteDes, keynote.getKeynoteDes());
+            setTextView(keynoteStartTime, keynote.getKeynoteStartTime());
+            setTo(keynoteEndTime, keynote.getKeynoteEndTime());
+            if (keynoteImg != null)
+                Glide.with(getContext()).load(keynote.getKeynoteImg()).into(keynoteImg);
         }
 
         return view;
@@ -110,4 +132,23 @@ public class AdapterListView extends ArrayAdapter {
             }
         }
     }
+
+    public void setPresenter(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText("Presenter: " + string);
+            }
+        }
+    }
+
+    public void setAuthor(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText("Author: " + string);
+            }
+        }
+    }
+
 }

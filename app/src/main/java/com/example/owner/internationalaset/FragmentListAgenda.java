@@ -1,9 +1,12 @@
 package com.example.owner.internationalaset;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +25,11 @@ public class FragmentListAgenda extends Fragment{
     private ArrayList<String> keyList;
     private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
+    private Boolean controlMode = false;
     private static final String TAG = "FragmentListAgenda";
 
     private String getEventKey = null;
+    private String agendaKey;
 
     public FragmentListAgenda(){}
 
@@ -47,7 +52,9 @@ public class FragmentListAgenda extends Fragment{
         keyList = new ArrayList<String>();
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_agenda, agendaList);
 
+        controlMode = getArguments().getBoolean("controlMode");
         getEventKey = getArguments().getString("eventKey");
+
         helperFirebase.helperAgenda(getEventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -63,8 +70,30 @@ public class FragmentListAgenda extends Fragment{
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
-                String key = keyList.get(pos);
-                listener.getAgendaKey(key);
+                agendaKey = keyList.get(pos);
+                listener.getAgendaKey(agendaKey);
+
+                if(controlMode==false){
+                    helperFirebase.helperAgendaKey(getEventKey, agendaKey).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String type = dataSnapshot.child("agendaType").getValue().toString();
+                            //switch agenda type
+                            switch (type){
+                                case "General":
+                                    break;
+                                case "Session":
+                                    fragmentSwitch(new FragmentListSession());
+                                    break;
+                                case "Keynote Lecture":
+                                    fragmentSwitch(new FragmentListKeynote());
+                                    break;
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {}
+                    });
+                }
             }
         });
 
@@ -79,5 +108,17 @@ public class FragmentListAgenda extends Fragment{
             agendaList.add(s);
             keyList.add(key);
         }
+    }
+
+    //fragmentSwitch
+    public void fragmentSwitch(Fragment f) {
+        Bundle bundle = new Bundle();
+        bundle.putString("eventKey", getEventKey);
+        bundle.putString("agendaKey",agendaKey);
+        f.setArguments(bundle);
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment, f, "currentFragment");
+        transaction.commit();
     }
 }

@@ -42,13 +42,13 @@
             style="@style/agendaBody"/>
 
         <TextView
-            android:id="@+id/sessionInstitution"
-            android:text="@string/sessionInstitution"
+            android:id="@+id/sessionPresenter"
+            android:text="@string/sessionPresenter"
             style="@style/agendaBody"/>
 
         <TextView
-            android:id="@+id/sessionPeople"
-            android:text="@string/sessionPeople"
+            android:id="@+id/sessionAuthor"
+            android:text="@string/sessionAuthor"
             style="@style/agendaBody"/>
     </LinearLayout>
 </LinearLayout>

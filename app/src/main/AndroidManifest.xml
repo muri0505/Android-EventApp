@@ -10,20 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ActivityControlEvent">
+        <activity android:name=".ActivityControlEvent"/>
+        <activity android:name=".ActivityControlKeynote" />
+        <activity android:name=".ActivityControlSession" />
+        <activity android:name=".ActivityControlAgenda" />
+        <activity android:name=".ActivityControlPanel" />
+        <activity android:name=".MainEvent"/>
+
+        <activity android:name=".HomePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".ActivityControlSession" />
-        <activity android:name=".ActivityControlAgenda" />
-        <activity android:name=".ActivityControlPanel" />
-
-        <activity android:name=".MainEvent"/>
-        <activity android:name=".HomePage">
-
         </activity>
 
     </application>

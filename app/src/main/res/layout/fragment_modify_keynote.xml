@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentModifySession">
+    tools:context=".FragmentModifyKeynote">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -18,58 +18,58 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/mode" />
-z
+        z
         <EditText
-            android:id="@+id/sessionName"
+            android:id="@+id/keynoteName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:inputType="text"
-            android:hint="@string/sessionName" />
+            android:hint="@string/keynoteName" />
 
         <EditText
-            android:id="@+id/sessionPresenter"
+            android:id="@+id/keynotePresenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/sessionPresenter"
+            android:hint="@string/keynotePresenter"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/sessionAuthor"
+            android:id="@+id/keynoteInstitution"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/sessionAuthor"
+            android:hint="@string/keynoteInstitution"
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/sessionLocation"
+            android:id="@+id/keynoteDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:hint="@string/sessionLocation" />
+            android:hint="@string/keynoteDes" />
 
         <EditText
-            android:id="@+id/sessionStartTime"
+            android:id="@+id/keynoteStartTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/sessionStartTime"
+            android:hint="@string/keynoteStartTime"
             android:inputType="time" />
 
         <EditText
-            android:id="@+id/sessionEndTime"
+            android:id="@+id/keynoteEndTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/sessionEndTime"
+            android:hint="@string/keynoteEndTime"
             android:inputType="time" />
 
         <Button

@@ -9,10 +9,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 /*
     ActivityControlAgenda: admin agenda control, get eventKey from previous activity/fragment,
     default showing all agendas, create&edit button intent to FragmentModifyAgenda, delete button to delete data
-    level button intent to ActivityControlSession
+    level button intent to session/keynote/general/opening/closing activity
 */
 public class ActivityControlAgenda extends HelperControl implements FragmentListAgenda.FragmentAgendalistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
@@ -64,13 +69,28 @@ public class ActivityControlAgenda extends HelperControl implements FragmentList
                         }
                         break;
                     case R.id.level:
-                        //check agenda select, intent to selected event's ActivityControlSession
+                        //check agenda select, intent to selected event's Activity based on agenda type
                         if(validKey(agendaKey)) {
-                            Intent i = new Intent(ActivityControlAgenda.this, ActivityControlSession.class);
-                            i.putExtra("eventKey", eventKey);
-                            i.putExtra("agendaKey", agendaKey);
-                            startActivity(i);
-                            Log.i(TAG,"Intent to ActivityControlSession with eventKey: "+ eventKey + " agendaKey: " + agendaKey);
+                            helperFirebase.helperAgendaKey(eventKey, agendaKey).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                     String type = dataSnapshot.child("agendaType").getValue().toString();
+                                     //switch agenda type
+                                     switch (type){
+                                         case "General":
+                                             break;
+                                         case "Session":
+                                             typeIntent(ActivityControlSession.class, eventKey, agendaKey);
+                                             break;
+                                         case "Keynote Lecture":
+                                             typeIntent(ActivityControlKeynote.class, eventKey, agendaKey);
+                                             break;
+                                     }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {}
+                            });
                         }
                         break;
                     default:
@@ -82,7 +102,8 @@ public class ActivityControlAgenda extends HelperControl implements FragmentList
 
     //default fragment, showing all agendas
     public Fragment defaultFragment(){
-        fragment = new FragmentListAgendaTab();
+        fragment = new FragmentListAgenda();
+        i.putBoolean("controlMode", true);
         fragment.setArguments(i);
         fragmentSwitch(fragment);
         return fragment;
@@ -101,5 +122,14 @@ public class ActivityControlAgenda extends HelperControl implements FragmentList
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
         Log.i(TAG,"Intent to FragmentModifyAgenda with eventKey:" + eventKey + " agendaKey: " + agendaKey);
+    }
+
+    //Intent to agenda type control
+    public void typeIntent(Class activity, String eKey, String aKey){
+        Intent i = new Intent(this, activity);
+        i.putExtra("eventKey", eKey);
+        i.putExtra("agendaKey", aKey);
+        startActivity(i);
+        Log.i(TAG,"Intent to " + activity + " with eventKey: "+ eKey + " agendaKey: " + aKey);
     }
 }

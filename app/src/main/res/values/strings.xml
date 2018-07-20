@@ -43,11 +43,19 @@
 
     <!-- ObjectSession-->
     <string name="sessionName">Session Name</string>
-    <string name="sessionInstitution">Session Institution</string>
+    <string name="sessionPresenter">Session Presenter</string>
+    <string name="sessionAuthor">Session Author</string>
     <string name="sessionLocation">Session Location</string>
     <string name="sessionStartTime">Session StartTime</string>
     <string name="sessionEndTime">Session EndTime</string>
-    <string name="sessionPeople">Session People</string>
+
+    <!-- ObjectKeynote-->
+    <string name="keynoteName">Keynote Name</string>
+    <string name="keynotePresenter">Keynote Presenter</string>
+    <string name="keynoteInstitution">Keynote Institution</string>
+    <string name="keynoteDes">Keynote Des</string>
+    <string name="keynoteStartTime">Keynote StartTime</string>
+    <string name="keynoteEndTime">Keynote EndTime</string>
 
     <!-- Main event detail title -->
     <string name="date">Date</string>

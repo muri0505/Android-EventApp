@@ -29,11 +29,11 @@ public class FragmentModifySession extends HelperDateTime {
 
     private TextView mode;
     private EditText sessionName;
-    private EditText sessionInstitution;
+    private EditText sessionPresenter;
+    private EditText sessionAuthor;
     private EditText sessionLocation;
     private EditText sessionStartTime;
     private EditText sessionEndTime;
-    private EditText sessionPeople;
     private static final String TAG = "FragmentModifySession";
 
     public FragmentModifySession(){}
@@ -43,11 +43,11 @@ public class FragmentModifySession extends HelperDateTime {
 
         mode = (TextView) view.findViewById(R.id.mode);
         sessionName= (EditText) view.findViewById(R.id.sessionName);
-        sessionInstitution = (EditText) view.findViewById(R.id.sessionInstitution);
+        sessionPresenter= (EditText) view.findViewById(R.id.sessionPresenter);
+        sessionAuthor= (EditText) view.findViewById(R.id.sessionAuthor);
         sessionLocation = (EditText) view.findViewById(R.id.sessionLocation);
         sessionStartTime = (EditText) view.findViewById(R.id.sessionStartTime);
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
-        sessionPeople = (EditText) view.findViewById(R.id.sessionPeople);
 
         sessionStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +87,14 @@ public class FragmentModifySession extends HelperDateTime {
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //edit button to create current session
-                String name, institution, location, startTime, endTime, people;
+                String name, presenter, author , location, startTime, endTime;
                 name = sessionName.getText().toString();
-                institution = sessionInstitution.getText().toString();
+                presenter = sessionPresenter.getText().toString();
+                author = sessionAuthor.getText().toString();
                 location = sessionLocation.getText().toString();
                 startTime = sessionStartTime.getText().toString();
                 endTime = sessionEndTime.getText().toString();
-                people = sessionPeople.getText().toString();
-                session = new ObjectSession(name, institution, location, startTime, endTime, people);
+                session = new ObjectSession(name, presenter, author, location, startTime, endTime);
 
                 //create new sessionKey and session or update session under exist sessionKey
                 if(getSessionKey==null) {
@@ -128,11 +128,11 @@ public class FragmentModifySession extends HelperDateTime {
                 mode.setText("Edit Session");
                 ObjectSession a = (ObjectSession) data.getValue(ObjectSession.class);
                 sessionName.setText(a.getSessionName());
-                sessionInstitution.setText(a.getSessionInstitution());
+                sessionPresenter.setText(a.getSessionPresenter());
+                sessionAuthor.setText(a.getSessionAuthor());
                 sessionLocation.setText(a.getSessionLocation());
                 sessionStartTime.setText(a.getSessionStartTime());
                 sessionEndTime.setText(a.getSessionEndTime());
-                sessionPeople.setText(a.getSessionPeople());
                 break;
             }
         }

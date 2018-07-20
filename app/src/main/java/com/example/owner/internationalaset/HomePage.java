@@ -14,9 +14,9 @@ import android.view.MenuItem;
     activity general home page
  */
 
-public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener{
+public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener,
+        FragmentListKeynote.FragmentKeynotelistener,FragmentListSession.FragmentSessionlistener{
     private Fragment fragment;
-    private String eventKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         transaction.commit();
     }
 
-    public void getEventKey(String k){eventKey = k;}
-
+    public void getEventKey(String k){}
+    public void getKeynoteKey(String k){}
+    public void getSessionKey(String k){}
 }

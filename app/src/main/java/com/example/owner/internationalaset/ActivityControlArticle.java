@@ -6,15 +6,20 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class ActivityControlKeynote extends HelperControl implements FragmentListKeynote.FragmentKeynotelistener{
+/*
+    ActivityControlArticle: admin article control, get eventKey&sessionKey from previous activity/fragment,
+    default showing all article, create&edit button intent to FragmentModifyArticle, delete button to delete data
+*/
+public class ActivityControlArticle extends HelperControl implements FragmentListArticle.FragmentArticlelistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
     private String eventKey = null;
     private String sessionKey = null;
-    private String keynoteKey = null;
+    private String articleKey = null;
     private Bundle i;
-    private static final String TAG = "ActivityControlKeynote";
+    private static final String TAG = "ActivityControlArticle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +32,11 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
         sessionKey = i.getString("sessionKey");
         i.putString("eventKey", eventKey);
         i.putString("sessionKey", sessionKey);
-        Log.i(TAG,"Keynote is under eventKey: "+eventKey + " sessionKey: " + sessionKey);
+        Log.i(TAG,"Article list is under eventKey: "+eventKey + " sessionKey: " + sessionKey);
 
         //setup default&toolbar
         fragmentSwitch(defaultFragment());
-        helperControl(defaultFragment(),"Keynote");
+        helperControl(defaultFragment(),"Article");
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
@@ -40,23 +45,23 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.create:
-                        //button to create new keynote, clean selected keynote key, intent to FragmentModifyKeynote
-                        keynoteKey = null;
-                        modifyKeynote(eventKey,sessionKey,keynoteKey);
-                        Log.i(TAG,"Create button clicked, create new keyNote");
+                        //button to create new article, clean selected article key, intent to FragmentModifyArticle
+                        articleKey = null;
+                        modifyArticle(eventKey,sessionKey,articleKey);
+                        Log.i(TAG,"Create button clicked, create new article");
                         break;
                     case R.id.edit:
-                        //button to edit keynote, check keynote selected, intent to FragmentModifyKeynote
-                        if(validKey(keynoteKey)){
-                            modifyKeynote(eventKey,sessionKey,keynoteKey);
-                            Log.i(TAG,"Edit button clicked, keynoteKey: " + keynoteKey);
+                        //button to edit article, check article selected, intent to FragmentModifyArticle
+                        if(validKey(articleKey)){
+                            modifyArticle(eventKey,sessionKey,articleKey);
+                            Log.i(TAG,"Edit button clicked, articleKey: " + articleKey);
                         }
                         break;
                     case R.id.delete:
-                        //button to delete, check keynote selected, delete selected keynote
-                        if(validKey(keynoteKey)){
-                            helperFirebase.helperKeynoteKey(eventKey,sessionKey,keynoteKey).removeValue();
-                            Log.i(TAG,"Delete button clicked, keynotKey: " + keynoteKey);
+                        //button to delete, check article selected, delete selected article
+                        if(validKey(articleKey)){
+                            helperFirebase.helperArticleKey(eventKey,sessionKey,articleKey).removeValue();
+                            Log.i(TAG,"Delete button clicked, articleKey: " + articleKey);
                         }
                         break;
                     case R.id.level:
@@ -69,29 +74,29 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
         });
     }
 
-    //default fragment, showing all keynote
+    //default fragment, showing all article
     public Fragment defaultFragment(){
-        fragment = new FragmentListKeynote();
+        fragment = new FragmentListArticle();
         fragment.setArguments(i);
         fragmentSwitch(fragment);
         return fragment;
     }
 
-    //FragmentListKeynote listener, get selected keynote key
-    public void getKeynoteKey(String k){keynoteKey = k;}
+    //FragmentListArticle listener, get selected article key
+    public void getArticleKey(String k){articleKey = k;}
 
-    //Intent to FragmentModifyKeynote
-    public void modifyKeynote(String eventKey, String sessionKey, String keynoteKey){
+    //Intent to FragmentModifyArticle
+    public void modifyArticle(String eventKey, String sessionKey, String articleKey){
         Bundle bundle = new Bundle();
         bundle.putBoolean("controlMode", true);
         bundle.putString("eventKey", eventKey);
         bundle.putString("sessionKey", sessionKey);
-        bundle.putString("keynoteKey", keynoteKey);
+        bundle.putString("articleKey", articleKey);
 
-        fragment = new FragmentModifyKeynote();
+        fragment = new FragmentModifyArticle();
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
-        Log.i(TAG,"Intent to FragmentModifyKeynote with eventKey: " + eventKey + " sessionKey: " + sessionKey + "keynoteKey: " + keynoteKey);
+        Log.i(TAG,"Intent to FragmentModifyArticle with eventKey: " + eventKey + " sessionKey: " + sessionKey + "articleKey: " + articleKey);
     }
 }
 

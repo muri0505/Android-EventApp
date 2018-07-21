@@ -15,28 +15,28 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListKeynote extends Fragment {
+public class FragmentListArticle extends Fragment {
     private ListView listView;
-    private ArrayList<ObjectKeynote> keynoteList;
+    private ArrayList<ObjectArticle> articleList;
     private ArrayList<String> keyList;
     private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
-    private static final String TAG = "FragmentListKeynote";
+    private static final String TAG = "FragmentListArticle";
 
     private String getEventKey = null;
     private String getSessionKey = null;
 
-    public FragmentListKeynote(){}
+    public FragmentListArticle(){}
 
-    FragmentListKeynote.FragmentKeynotelistener listener;
-    public interface FragmentKeynotelistener{
-        public void getKeynoteKey(String keynoteKey);
+    FragmentListArticle.FragmentArticlelistener listener;
+    public interface FragmentArticlelistener{
+        public void getArticleKey(String articleKey);
     }
 
     public void onAttach(Activity activity){
         super.onAttach(activity);
         try{
-            listener = (FragmentListKeynote.FragmentKeynotelistener) activity;
+            listener = (FragmentListArticle.FragmentArticlelistener) activity;
         }catch(ClassCastException e){
         }
     }
@@ -44,17 +44,17 @@ public class FragmentListKeynote extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_style, container, false);
         listView = (ListView) view.findViewById(R.id.list);
-        keynoteList = new ArrayList<ObjectKeynote>();
+        articleList = new ArrayList<ObjectArticle>();
         keyList = new ArrayList<String>();
-        adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_keynote, keynoteList);
+        adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_article, articleList);
 
         //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
         getSessionKey = getArguments().getString("sessionKey");
-        helperFirebase.helperKeynote(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
+        helperFirebase.helperArticle(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                getKeynote(dataSnapshot);
+                getArticle(dataSnapshot);
                 adapterListView.notifyDataSetChanged();
             }
             public void onCancelled(DatabaseError databaseError) {
@@ -68,7 +68,7 @@ public class FragmentListKeynote extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
-                listener.getKeynoteKey(key);
+                listener.getArticleKey(key);
             }
         });
 
@@ -76,12 +76,12 @@ public class FragmentListKeynote extends Fragment {
     }
 
     //get event data from database
-    public void getKeynote(DataSnapshot dataSnapshot){
-        keynoteList.clear();
+    public void getArticle(DataSnapshot dataSnapshot){
+        articleList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
-            ObjectKeynote s = data.getValue(ObjectKeynote.class);
-            keynoteList.add(s);
+            ObjectArticle s = data.getValue(ObjectArticle.class);
+            articleList.add(s);
             keyList.add(key);
         }
     }

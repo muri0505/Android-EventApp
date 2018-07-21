@@ -18,8 +18,8 @@ import java.util.EventObject;
 public class AdapterListView extends ArrayAdapter {
     ArrayList<?>  objects = null;
     ObjectEvent event = null;
-    ObjectAgenda agenda = null;
     ObjectSession session = null;
+    ObjectArticle article = null;
     ObjectKeynote keynote = null;
     int resource;
 
@@ -61,36 +61,36 @@ public class AdapterListView extends ArrayAdapter {
                 Glide.with(getContext()).load(event.getEventImg()).into(eventImg);
         }
 
-        if(getObject(position) instanceof ObjectAgenda){
-            agenda = (ObjectAgenda) getObject(position);
-            TextView agendaDate = (TextView) view.findViewById(R.id.agendaDate);
-            TextView agendaType = (TextView) view.findViewById(R.id.agendaType);
-            TextView agendaName = (TextView) view.findViewById(R.id.agendaName);
-            TextView agendaStartTime = (TextView) view.findViewById(R.id.agendaStartTime);
-            TextView agendaEndTime = (TextView) view.findViewById(R.id.agendaEndTime);
-            TextView agendaDes = (TextView) view.findViewById(R.id.agendaDes);
-            setTextView(agendaType, agenda.getAgendaType());
-            setTextView(agendaName, agenda.getAgendaName());
-            setTextView(agendaStartTime, agenda.getAgendaStartTime());
-            setTextView(agendaEndTime, agenda.getAgendaEndTime());
-            setTextView(agendaDes, agenda.getAgendaDes());
-            setTextView(agendaDate, agenda.getAgendaDate());
-        }
-
-        if(getObject(position) instanceof ObjectSession) {
-            session = (ObjectSession)getObject(position);
+        if(getObject(position) instanceof ObjectSession){
+            session = (ObjectSession) getObject(position);
+            TextView sessionDate = (TextView) view.findViewById(R.id.sessionDate);
+            TextView sessionType = (TextView) view.findViewById(R.id.sessionType);
             TextView sessionName = (TextView) view.findViewById(R.id.sessionName);
-            TextView sessionPresenter = (TextView) view.findViewById(R.id.sessionPresenter);
-            TextView sessionAuthor = (TextView) view.findViewById(R.id.sessionAuthor);
-            TextView sessionLocation = (TextView) view.findViewById(R.id.sessionLocation);
             TextView sessionStartTime = (TextView) view.findViewById(R.id.sessionStartTime);
             TextView sessionEndTime = (TextView) view.findViewById(R.id.sessionEndTime);
+            TextView sessionDes = (TextView) view.findViewById(R.id.sessionDes);
+            setTextView(sessionType, session.getSessionType());
             setTextView(sessionName, session.getSessionName());
-            setPresenter(sessionPresenter, session.getSessionPresenter());
-            setAuthor(sessionAuthor, session.getSessionAuthor());
-            setTextView(sessionLocation, session.getSessionLocation());
             setTextView(sessionStartTime, session.getSessionStartTime());
             setTextView(sessionEndTime, session.getSessionEndTime());
+            setTextView(sessionDes, session.getSessionDes());
+            setTextView(sessionDate, session.getSessionDate());
+        }
+
+        if(getObject(position) instanceof ObjectArticle) {
+            article = (ObjectArticle)getObject(position);
+            TextView articleName = (TextView) view.findViewById(R.id.articleName);
+            TextView articlePresenter = (TextView) view.findViewById(R.id.articlePresenter);
+            TextView articleAuthor = (TextView) view.findViewById(R.id.articleAuthor);
+            TextView articleLocation = (TextView) view.findViewById(R.id.articleLocation);
+            TextView articleStartTime = (TextView) view.findViewById(R.id.articleStartTime);
+            TextView articleEndTime = (TextView) view.findViewById(R.id.articleEndTime);
+            setTextView(articleName, article.getArticleName());
+            setPresenter(articlePresenter, article.getArticlePresenter());
+            setAuthor(articleAuthor, article.getArticleAuthor());
+            setTextView(articleLocation, article.getArticleLocation());
+            setTextView(articleStartTime, article.getArticleStartTime());
+            setTextView(articleEndTime, article.getArticleEndTime());
         }
 
         if(getObject(position) instanceof ObjectKeynote){

@@ -63,7 +63,7 @@
         <item name="android:layout_marginTop">15dp</item>
     </style>
 
-    <style name="agendaTitle">
+    <style name="sessionTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18dp</item>
@@ -72,7 +72,7 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
-    <style name="agendaBody">
+    <style name="sessionBody">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14dp</item>
@@ -81,7 +81,7 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
-    <style name="agendaType">
+    <style name="sessionType">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14dp</item>
@@ -90,7 +90,7 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
-    <style name="agendaTime">
+    <style name="sessionTime">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14dp</item>

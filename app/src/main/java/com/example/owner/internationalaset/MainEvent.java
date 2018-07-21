@@ -12,11 +12,11 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-public class MainEvent extends AppCompatActivity implements FragmentListAgenda.FragmentAgendalistener{
+public class MainEvent extends AppCompatActivity implements FragmentListSession.FragmentSessionlistener{
     private DrawerLayout menu;
     private ArrayList<ObjectEvent> event;
     private String eventKey;
-    private String agendaKey;
+    private String sessionKey;
     private Fragment fragment;
 
     @Override
@@ -46,8 +46,8 @@ public class MainEvent extends AppCompatActivity implements FragmentListAgenda.F
                                 fragment = new FragmentEventDetail();
                                 withEventKey(fragment);
                                 break;
-                            case R.id.agenda:
-                                fragment = new FragmentListAgenda();
+                            case R.id.session:
+                                fragment = new FragmentListSession();
                                 withEventKey(fragment);
                                 break;
                         }
@@ -73,5 +73,5 @@ public class MainEvent extends AppCompatActivity implements FragmentListAgenda.F
         fragmentSwitch(f);
     }
 
-    public void getAgendaKey(String k){agendaKey = k;}
+    public void getSessionKey(String k){sessionKey = k;}
 }

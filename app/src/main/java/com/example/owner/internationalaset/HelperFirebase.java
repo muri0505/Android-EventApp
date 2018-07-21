@@ -18,27 +18,27 @@ public class HelperFirebase {
         return mDatabase.child("Events").child(eventKey);
     }
 
-    public DatabaseReference helperAgenda(String eventKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas");
+    public DatabaseReference helperSession(String eventKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions");
     }
 
-    public DatabaseReference helperAgendaKey(String eventKey, String agendaKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey);
+    public DatabaseReference helperSessionKey(String eventKey, String sessionKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey);
     }
 
-    public DatabaseReference helperSession(String eventKey, String agendaKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Session");
+    public DatabaseReference helperArticle(String eventKey, String sessionKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Article");
     }
 
-    public DatabaseReference helperSessionKey(String eventKey, String agendaKey, String sessionKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Session").child(sessionKey);
+    public DatabaseReference helperArticleKey(String eventKey, String sessionKey, String articleKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Article").child(articleKey);
     }
 
-    public DatabaseReference helperKeynote(String eventKey, String agendaKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Keynote");
+    public DatabaseReference helperKeynote(String eventKey, String sessionKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Keynote");
     }
 
-    public DatabaseReference helperKeynoteKey(String eventKey, String agendaKey, String keynoteKey){
-        return mDatabase.child("Events").child(eventKey).child("Agendas").child(agendaKey).child("Keynote").child(keynoteKey);
+    public DatabaseReference helperKeynoteKey(String eventKey, String sessionKey, String keynoteKey){
+        return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Keynote").child(keynoteKey);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.owner.internationalaset;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,15 +9,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 /*
-    ActivityControlSession: admin session control, get eventKey&agendaKey from previous activity/fragment,
-    default showing all session, create&edit button intent to FragmentModifySession, delete button to delete data
+    ActivityControlSession: admin session control, get eventKey from previous activity/fragment,
+    default showing all sessions, create&edit button intent to FragmentModifySession, delete button to delete data
+    level button intent to article/keynote/general/opening/closing activity
 */
 public class ActivityControlSession extends HelperControl implements FragmentListSession.FragmentSessionlistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
     private String eventKey = null;
-    private String agendaKey = null;
     private String sessionKey = null;
     private Bundle i;
     private static final String TAG = "ActivityControlSession";
@@ -29,14 +35,12 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         //get&put database key
         i = getIntent().getExtras();
         eventKey = i.getString("eventKey");
-        agendaKey = i.getString("agendaKey");
         i.putString("eventKey", eventKey);
-        i.putString("agendaKey", agendaKey);
-        Log.i(TAG,"Session list is under eventKey: "+eventKey + " agendaKey: " + agendaKey);
+        Log.i(TAG,"Session list is under eventKey: "+eventKey);
 
         //setup default&toolbar
         fragmentSwitch(defaultFragment());
-        helperControl(defaultFragment(),"Session");
+        helperControl(defaultFragment(),"Agenda");
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
@@ -47,25 +51,47 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
                     case R.id.create:
                         //button to create new session, clean selected session key, intent to FragmentModifySession
                         sessionKey = null;
-                        modifySession(eventKey,agendaKey,sessionKey);
+                        modifySession(eventKey,sessionKey);
                         Log.i(TAG,"Create button clicked, create new session");
                         break;
                     case R.id.edit:
                         //button to edit session, check session selected, intent to FragmentModifySession
                         if(validKey(sessionKey)){
-                            modifySession(eventKey,agendaKey,sessionKey);
+                            modifySession(eventKey, sessionKey);
                             Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
                         }
                         break;
                     case R.id.delete:
                         //button to delete, check session selected, delete selected session
                         if(validKey(sessionKey)){
-                            helperFirebase.helperSessionKey(eventKey,agendaKey,sessionKey).removeValue();
+                            helperFirebase.helperSessionKey(eventKey, sessionKey).removeValue();
                             Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
                         }
                         break;
                     case R.id.level:
+                        //check session select, intent to selected event's Activity based on session type
+                        if(validKey(sessionKey)) {
+                            helperFirebase.helperSessionKey(eventKey, sessionKey).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                     String type = dataSnapshot.child("sessionType").getValue().toString();
+                                     //switch session type
+                                     switch (type){
+                                         case "General":
+                                             break;
+                                         case "Article":
+                                             typeIntent(ActivityControlArticle.class, eventKey, sessionKey);
+                                             break;
+                                         case "Keynote Lecture":
+                                             typeIntent(ActivityControlKeynote.class, eventKey, sessionKey);
+                                             break;
+                                     }
+                                }
 
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {}
+                            });
+                        }
                         break;
                     default:
                 }
@@ -74,9 +100,10 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         });
     }
 
-    //default fragment, showing all session
+    //default fragment, showing all sessions
     public Fragment defaultFragment(){
         fragment = new FragmentListSession();
+        i.putBoolean("controlMode", true);
         fragment.setArguments(i);
         fragmentSwitch(fragment);
         return fragment;
@@ -86,17 +113,23 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
     public void getSessionKey(String k){sessionKey = k;}
 
     //Intent to FragmentModifySession
-    public void modifySession(String eventKey, String agendaKey, String sessionKey){
+    public void modifySession(String eventKey, String sessionKey){
         Bundle bundle = new Bundle();
-        bundle.putBoolean("controlMode", true);
         bundle.putString("eventKey", eventKey);
-        bundle.putString("agendaKey", agendaKey);
         bundle.putString("sessionKey", sessionKey);
 
         fragment = new FragmentModifySession();
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
-        Log.i(TAG,"Intent to FragmentModifySession with eventKey: " + eventKey + " agendaKey: " + agendaKey + "sessionKey: " + sessionKey);
+        Log.i(TAG,"Intent to FragmentModifySession with eventKey:" + eventKey + " sessionKey: " + sessionKey);
+    }
+
+    //Intent to session type control
+    public void typeIntent(Class activity, String eKey, String aKey){
+        Intent i = new Intent(this, activity);
+        i.putExtra("eventKey", eKey);
+        i.putExtra("sessionKey", aKey);
+        startActivity(i);
+        Log.i(TAG,"Intent to " + activity + " with eventKey: "+ eKey + " sessionKey: " + aKey);
     }
 }
-

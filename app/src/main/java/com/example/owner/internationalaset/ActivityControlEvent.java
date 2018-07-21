@@ -12,7 +12,7 @@ import android.widget.Toast;
 /*
     ActivityControlEvent: admin event control,
     default showing all events, create&edit button intent to FragmentModifyEvent, delete button to delete data
-    level button intent to ActivityControlAgenda
+    level button intent to ActivityControlSession
 */
 public class ActivityControlEvent extends HelperControl implements FragmentListEvents.FragmentEventslistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
@@ -56,12 +56,12 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
                         }
                         break;
                     case R.id.level:
-                        //check event select, intent to selected event's ActivityControlAgenda
+                        //check event select, intent to selected event's ActivityControlSession
                         if (validKey(eventKey)) {
-                            Intent i = new Intent(ActivityControlEvent.this, ActivityControlAgenda.class);
+                            Intent i = new Intent(ActivityControlEvent.this, ActivityControlSession.class);
                             i.putExtra("eventKey", eventKey);
                             startActivity(i);
-                            Log.i(TAG, "Intent to ActivityControlAgenda with eventKey: " + eventKey);
+                            Log.i(TAG, "Intent to ActivityControlSession with eventKey: " + eventKey);
                         }
                         break;
                     default:

@@ -20,7 +20,7 @@ public class HelperControl extends AppCompatActivity {
     private Fragment fragment;
     private String level;
     private String eventKey;
-    private String agendaKey;
+    private String sessionKey;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

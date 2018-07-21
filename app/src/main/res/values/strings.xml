@@ -13,7 +13,7 @@
     <!-- Home toolbarHelper -->
     <string name="journals">Journals</string>
     <string name="news">News</string>
-    <string name="addAgenda">Add Agenda</string>
+    <string name="addSession">Add Session</string>
 
     <!-- Control modify -->
     <string name="home">Home</string>
@@ -27,27 +27,27 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
-    <!-- ObjectAgenda -->
-    <string name="agendaDate">Agenda Date</string>
-    <string name="agendaType">Agenda Type</string>
-    <string name="agendaName">Agenda Name</string>
-    <string name="agendaStartTime">Agenda Start Time</string>
-    <string name="agendaEndTime">Agenda End Time</string>
-    <string name="agendaDes">Agenda Des</string>
-    <string name="controlAgenda">Control Agenda</string>
-    <array name="agendaTypeChoice">
+    <!-- ObjectSession -->
+    <string name="sessionDate">Session Date</string>
+    <string name="sessionType">Session Type</string>
+    <string name="sessionName">Session Name</string>
+    <string name="sessionStartTime">Session Start Time</string>
+    <string name="sessionEndTime">Session End Time</string>
+    <string name="sessionDes">Session Des</string>
+    <string name="controlSession">Control Session</string>
+    <array name="sessionTypeChoice">
         <item>General</item>
         <item>Keynote Lecture</item>
-        <item>Session</item>
+        <item>Article</item>
     </array>
 
-    <!-- ObjectSession-->
-    <string name="sessionName">Session Name</string>
-    <string name="sessionPresenter">Session Presenter</string>
-    <string name="sessionAuthor">Session Author</string>
-    <string name="sessionLocation">Session Location</string>
-    <string name="sessionStartTime">Session StartTime</string>
-    <string name="sessionEndTime">Session EndTime</string>
+    <!-- ObjectArticle-->
+    <string name="articleName">Article Name</string>
+    <string name="articlePresenter">Article Presenter</string>
+    <string name="articleAuthor">Article Author</string>
+    <string name="articleLocation">Article Location</string>
+    <string name="articleStartTime">Article StartTime</string>
+    <string name="articleEndTime">Article EndTime</string>
 
     <!-- ObjectKeynote-->
     <string name="keynoteName">Keynote Name</string>
@@ -64,6 +64,6 @@
 
     <!-- Main event toolbarHelper -->
     <string name="eventHome">Event Home</string>
-    <string name="agenda">Agenda</string>
+    <string name="session">Session</string>
 
 </resources>

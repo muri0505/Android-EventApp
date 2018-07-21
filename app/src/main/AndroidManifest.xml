@@ -12,8 +12,8 @@
 
         <activity android:name=".ActivityControlEvent"/>
         <activity android:name=".ActivityControlKeynote" />
+        <activity android:name=".ActivityControlArticle" />
         <activity android:name=".ActivityControlSession" />
-        <activity android:name=".ActivityControlAgenda" />
         <activity android:name=".ActivityControlPanel" />
         <activity android:name=".MainEvent"/>
 

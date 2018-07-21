@@ -18,7 +18,7 @@ public class FragmentModifyKeynote extends HelperDateTime {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectKeynote keynote;
     private String getEventKey = null;
-    private String getAgendaKey = null;
+    private String getSessionKey = null;
     private String getKeynoteKey = null;
 
     private TextView mode;
@@ -55,16 +55,16 @@ public class FragmentModifyKeynote extends HelperDateTime {
             }
         });
 
-        //get eventKey&agendaKey&keynoteKey from ActivityControlKeynote
+        //get eventKey&sessionKey&keynoteKey from ActivityControlKeynote
         getEventKey = getArguments().getString("eventKey");
-        getAgendaKey = getArguments().getString("agendaKey");
+        getSessionKey = getArguments().getString("sessionKey");
         getKeynoteKey = getArguments().getString("keynoteKey");
-        Log.i(TAG,"Get eventKey, agendaKey and keynoteKey from ActivityControlAgenda " + getEventKey + ", " + getAgendaKey + ", " + getKeynoteKey);
+        Log.i(TAG,"Get eventKey, sessionKey and keynoteKey from ActivityControlSession " + getEventKey + ", " + getSessionKey + ", " + getKeynoteKey);
 
         //check valid keynoteKey to get keynote
         if(getKeynoteKey != null) {
             Log.i(TAG,"Mode: Edit Keynote");
-            helperFirebase.helperKeynote(getEventKey,getAgendaKey).addValueEventListener(new ValueEventListener() {
+            helperFirebase.helperKeynote(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     getKeynote(dataSnapshot);
@@ -93,11 +93,11 @@ public class FragmentModifyKeynote extends HelperDateTime {
 
                 //create new keynoteKey and keynote or update keynote under exist keynoteKey
                 if(getKeynoteKey==null) {
-                    getKeynoteKey = helperFirebase.helperKeynote(getEventKey, getAgendaKey).push().getKey();
-                    helperFirebase.helperKeynoteKey(getEventKey, getAgendaKey, getKeynoteKey).setValue(keynote);
+                    getKeynoteKey = helperFirebase.helperKeynote(getEventKey, getSessionKey).push().getKey();
+                    helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).setValue(keynote);
                     Log.i(TAG, "New keynoteKey and keynote created. keynoteKey: " + getKeynoteKey);
                 }else{
-                    helperFirebase.helperKeynoteKey(getEventKey, getAgendaKey, getKeynoteKey).updateChildren(keynote.toHashMap());
+                    helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).updateChildren(keynote.toHashMap());
                     Log.i(TAG, "keynote updated. keynoteKey: " + getKeynoteKey);
                 }
                 backToControl();
@@ -138,7 +138,7 @@ public class FragmentModifyKeynote extends HelperDateTime {
     public void backToControl(){
         Intent i = new Intent(getActivity(), ActivityControlKeynote.class);
         i.putExtra("eventKey",getEventKey);
-        i.putExtra("agendaKey",getAgendaKey);
+        i.putExtra("sessionKey",getSessionKey);
         startActivity(i);
     }
 }

@@ -18,9 +18,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class FragmentListAgendaTab extends Fragment{
+public class FragmentListSessionTab extends Fragment{
     String eventKey;
-    ArrayList<String> agendaDate;
+    ArrayList<String> sessionDate;
     HelperFirebase helperFirebase = new HelperFirebase();
     Bundle bundle = new Bundle();
     boolean controlMode = false;
@@ -36,16 +36,16 @@ public class FragmentListAgendaTab extends Fragment{
         bundle.putString("eventKey", eventKey);
         bundle.putBoolean("controlMode", controlMode);
 
-        agendaDate = new ArrayList<String>();
-        helperFirebase.helperAgenda(eventKey).addValueEventListener(new ValueEventListener() {
+        sessionDate = new ArrayList<String>();
+        helperFirebase.helperSession(eventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data : dataSnapshot.getChildren()){
-                    ObjectAgenda s = data.getValue(ObjectAgenda.class);
+                    ObjectSession s = data.getValue(ObjectSession.class);
 
-                    if(!agendaDate.contains(s.getAgendaDate())) {
-                        agendaDate.add(s.getAgendaDate());
-                        fragmentTabHost.addTab(fragmentTabHost.newTabSpec(s.getAgendaDate()).setIndicator(s.getAgendaDate()),FragmentListAgenda.class, bundle);
+                    if(!sessionDate.contains(s.getSessionDate())) {
+                        sessionDate.add(s.getSessionDate());
+                        fragmentTabHost.addTab(fragmentTabHost.newTabSpec(s.getSessionDate()).setIndicator(s.getSessionDate()),FragmentListSession.class, bundle);
                     }
                 }
             }

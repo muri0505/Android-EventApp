@@ -13,14 +13,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sessionStartTime"
-            android:text="@string/sessionStartTime"
+            android:id="@+id/articleStartTime"
+            android:text="@string/articleStartTime"
             android:layout_marginTop="27dp"
             style="@style/sessionTime"/>
 
         <TextView
-            android:id="@+id/sessionEndTime"
-            android:text="@string/sessionEndTime"
+            android:id="@+id/articleEndTime"
+            android:text="@string/articleEndTime"
             style="@style/sessionTime"/>
 
     </LinearLayout>
@@ -32,19 +32,23 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/sessionName"
-            android:text="@string/sessionName"
+            android:id="@+id/articleName"
+            android:text="@string/articleName"
             style="@style/sessionTitle"/>
 
         <TextView
-            android:id="@+id/sessionType"
-            android:text="@string/sessionType"
-            style="@style/sessionType"/>
-
-        <TextView
-            android:id="@+id/sessionDes"
-            android:text="@string/sessionDes"
+            android:id="@+id/articleLocation"
+            android:text="@string/articleLocation"
             style="@style/sessionBody"/>
 
+        <TextView
+            android:id="@+id/articlePresenter"
+            android:text="@string/articlePresenter"
+            style="@style/sessionBody"/>
+
+        <TextView
+            android:id="@+id/articleAuthor"
+            android:text="@string/articleAuthor"
+            style="@style/sessionBody"/>
     </LinearLayout>
 </LinearLayout>

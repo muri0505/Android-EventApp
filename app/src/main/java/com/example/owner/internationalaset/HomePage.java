@@ -15,7 +15,7 @@ import android.view.MenuItem;
  */
 
 public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener,
-        FragmentListKeynote.FragmentKeynotelistener,FragmentListSession.FragmentSessionlistener{
+        FragmentListKeynote.FragmentKeynotelistener,FragmentListArticle.FragmentArticlelistener{
     private Fragment fragment;
 
     @Override
@@ -56,5 +56,5 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
 
     public void getEventKey(String k){}
     public void getKeynoteKey(String k){}
-    public void getSessionKey(String k){}
+    public void getArticleKey(String k){}
 }

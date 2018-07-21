@@ -74,7 +74,6 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
     //default fragment, showing all events
     public Fragment defaultFragment(){
         Bundle bundle = new Bundle();
-        bundle.putBoolean("controlMode", true);
         fragment = new FragmentListEvents();
         fragment.setArguments(bundle);
         return fragment;

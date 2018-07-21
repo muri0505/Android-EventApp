@@ -88,7 +88,6 @@ public class ActivityControlArticle extends HelperControl implements FragmentLis
     //Intent to FragmentModifyArticle
     public void modifyArticle(String eventKey, String sessionKey, String articleKey){
         Bundle bundle = new Bundle();
-        bundle.putBoolean("controlMode", true);
         bundle.putString("eventKey", eventKey);
         bundle.putString("sessionKey", sessionKey);
         bundle.putString("articleKey", articleKey);

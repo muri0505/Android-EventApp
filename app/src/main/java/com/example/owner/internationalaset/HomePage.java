@@ -31,7 +31,6 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
                 switch (item.getItemId()) {
                     case R.id.events:
                         Bundle bundle = new Bundle();
-                        bundle.putBoolean("controlMode", false);
                         fragment = new FragmentListEvents();
                         fragment.setArguments(bundle);
                         fragmentSwitch(fragment);
@@ -54,7 +53,12 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         transaction.commit();
     }
 
-    public void getEventKey(String k){}
+    public void getEventKey(String k){
+        Intent i = new Intent(HomePage.this, MainEvent.class);
+        i.putExtra("eventKey", k);
+        startActivity(i);
+    }
+
     public void getKeynoteKey(String k){}
     public void getArticleKey(String k){}
 }

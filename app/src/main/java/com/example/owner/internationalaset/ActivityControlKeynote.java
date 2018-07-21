@@ -83,7 +83,6 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
     //Intent to FragmentModifyKeynote
     public void modifyKeynote(String eventKey, String sessionKey, String keynoteKey){
         Bundle bundle = new Bundle();
-        bundle.putBoolean("controlMode", true);
         bundle.putString("eventKey", eventKey);
         bundle.putString("sessionKey", sessionKey);
         bundle.putString("keynoteKey", keynoteKey);

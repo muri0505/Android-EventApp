@@ -27,7 +27,6 @@ public class FragmentListEvents extends Fragment {
     private ArrayList<String> keyList;
     private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
-    private Boolean controlMode = false;
     private static final String TAG = "FragmentListEvents";
 
     public FragmentListEvents(){}
@@ -52,7 +51,6 @@ public class FragmentListEvents extends Fragment {
         eventList = new ArrayList<ObjectEvent>();
         keyList = new ArrayList<String>();
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_event, eventList);
-        controlMode = getArguments().getBoolean("controlMode");
 
         //get events from firebase
         helperFirebase.helperEvent().addValueEventListener(new ValueEventListener() {
@@ -75,11 +73,6 @@ public class FragmentListEvents extends Fragment {
                 String key = keyList.get(pos);
                 listener.getEventKey(key);
                 Log.i(TAG, "EventKey clicked " + key);
-                if(controlMode==false){
-                    Intent i = new Intent(getActivity(), MainEvent.class);
-                    i.putExtra("eventKey", key);
-                    startActivity(i);
-                }
             }
         });
 

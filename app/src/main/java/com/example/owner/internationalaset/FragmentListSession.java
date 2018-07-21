@@ -25,7 +25,6 @@ public class FragmentListSession extends Fragment{
     private ArrayList<String> keyList;
     private AdapterListView adapterListView;
     private HelperFirebase helperFirebase = new HelperFirebase();
-    private Boolean controlMode = false;
     private static final String TAG = "FragmentListSession";
 
     private String getEventKey = null;
@@ -52,7 +51,6 @@ public class FragmentListSession extends Fragment{
         keyList = new ArrayList<String>();
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_session, sessionList);
 
-        controlMode = getArguments().getBoolean("controlMode");
         getEventKey = getArguments().getString("eventKey");
 
         helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
@@ -72,28 +70,6 @@ public class FragmentListSession extends Fragment{
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 sessionKey = keyList.get(pos);
                 listener.getSessionKey(sessionKey);
-
-                if(controlMode==false){
-                    helperFirebase.helperSessionKey(getEventKey, sessionKey).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            String type = dataSnapshot.child("sessionType").getValue().toString();
-                            //switch session type
-                            switch (type){
-                                case "General":
-                                    break;
-                                case "Article":
-                                    fragmentSwitch(new FragmentListArticle());
-                                    break;
-                                case "Keynote Lecture":
-                                    fragmentSwitch(new FragmentListKeynote());
-                                    break;
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {}
-                    });
-                }
             }
         });
 

@@ -7,8 +7,8 @@
         android:icon="@drawable/home"/>
 
     <item
-        android:id="@+id/session"
-        android:title="@string/session"
+        android:id="@+id/agenda"
+        android:title="@string/agenda"
         android:icon="@drawable/home"/>
 
 </menu>

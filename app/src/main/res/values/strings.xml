@@ -64,6 +64,6 @@
 
     <!-- Main event toolbarHelper -->
     <string name="eventHome">Event Home</string>
-    <string name="session">Session</string>
+    <string name="agenda">Agenda</string>
 
 </resources>

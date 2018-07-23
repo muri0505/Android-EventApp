@@ -18,7 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class MainEvent extends AppCompatActivity implements FragmentListSession.FragmentSessionlistener{
+public class MainEvent extends AppCompatActivity implements FragmentListSession.FragmentSessionlistener,
+        FragmentListArticle.FragmentArticlelistener, FragmentListKeynote.FragmentKeynotelistener{
     private DrawerLayout menu;
     private ArrayList<ObjectEvent> event;
     private String eventKey;
@@ -129,4 +130,6 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
             });
         }
 
+        public void getKeynoteKey(String k){}
+        public void getArticleKey(String k){}
 }

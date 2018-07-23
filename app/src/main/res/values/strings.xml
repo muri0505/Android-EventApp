@@ -7,6 +7,7 @@
     <string name="eventEndDate">eventEndDate</string>
     <string name="eventDes">eventDes</string>
     <string name="eventLocation">eventLocation</string>
+    <string name="eventVenue">eventVenue</string>
     <string name="events">Events</string>
     <string name="controlEvent">Control Event</string>
 
@@ -39,6 +40,8 @@
         <item>General</item>
         <item>Keynote Lecture</item>
         <item>Article</item>
+        <item>Official Opening</item>
+        <item>Official Closing</item>
     </array>
 
     <!-- ObjectArticle-->

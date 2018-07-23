@@ -36,6 +36,7 @@ public class FragmentModifyEvent extends HelperDateTime{
     private EditText eventEndDate;
     private EditText eventDes;
     private EditText eventLocation;
+    private EditText eventVenue;
     private String eventImg = " ";
     private static final String TAG = "FragmentModifyEvent";
 
@@ -49,6 +50,7 @@ public class FragmentModifyEvent extends HelperDateTime{
         eventEndDate = (EditText) view.findViewById(R.id.eventEndDate);
         eventDes = (EditText) view.findViewById(R.id.eventDes);
         eventLocation = (EditText) view.findViewById(R.id.eventLocation);
+        eventVenue = (EditText) view.findViewById(R.id.eventVenue);
         mode = (TextView) view.findViewById(R.id.mode);
 
         eventStartDate.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +96,8 @@ public class FragmentModifyEvent extends HelperDateTime{
                 String endDate = eventEndDate.getText().toString();
                 String des = eventDes.getText().toString();
                 String location = eventLocation.getText().toString();
-                event = new ObjectEvent(name, startDate, endDate, des, location,eventImg);
+                String venue = eventVenue.getText().toString();
+                event = new ObjectEvent(name, startDate, endDate, des, location, venue, eventImg);
 
                 //create new eventKey and event or update event under exist eventKey
                 if(getEventKey==null){
@@ -133,6 +136,7 @@ public class FragmentModifyEvent extends HelperDateTime{
                 eventEndDate.setText(e.getEventEndDate());
                 eventDes.setText(e.getEventDes());
                 eventLocation.setText(e.getEventLocation());
+                eventVenue.setText(e.getEventVenue());
                 eventImg = e.getEventImg();
                 break;
             }

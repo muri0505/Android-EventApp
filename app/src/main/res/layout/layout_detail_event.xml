@@ -61,6 +61,24 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/venue"
+        android:layout_below="@+id/location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/venueIcon"
+            android:src="@drawable/venue"
+            style="@style/eventDetailIcon" />
+
+        <TextView
+            android:id="@+id/eventVenue"
+            style="@style/eventDetail"
+            android:layout_toRightOf = "@id/venueIcon"
+            android:text="@string/eventVenue" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/des"
         android:layout_below="@+id/date"
         android:layout_width="match_parent"

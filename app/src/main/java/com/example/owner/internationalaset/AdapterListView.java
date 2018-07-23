@@ -2,6 +2,7 @@ package com.example.owner.internationalaset;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -57,12 +58,14 @@ public class AdapterListView extends ArrayAdapter {
             TextView eventEndDate = (TextView) view.findViewById(R.id.eventEndDate);
             final TextView eventDes = (TextView) view.findViewById(R.id.eventDes);
             TextView eventLocation = (TextView) view.findViewById(R.id.eventLocation);
+            TextView eventVenue = (TextView) view.findViewById(R.id.eventVenue);
             ImageView eventImg = (ImageView) view.findViewById(R.id.eventImg);
 
             setTextView(eventName, event.getEventName());
             setTextView(eventStartDate, event.getEventStartDate());
             setTo(eventEndDate, event.getEventEndDate());
             setTextView(eventDes, event.getEventDes());
+            setTextView(eventVenue,event.getEventVenue());
             setTextView(eventLocation, event.getEventLocation());
 
             if (eventImg != null)

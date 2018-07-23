@@ -29,6 +29,7 @@ public class FragmentListSession extends Fragment{
 
     private String getEventKey = null;
     private String sessionKey;
+    private String sessionDate;
 
     public FragmentListSession(){}
 
@@ -52,6 +53,7 @@ public class FragmentListSession extends Fragment{
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_session, sessionList);
 
         getEventKey = getArguments().getString("eventKey");
+        sessionDate = getArguments().getString("sessionDate");
 
         helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,8 +83,10 @@ public class FragmentListSession extends Fragment{
         for(DataSnapshot data : dataSnapshot.getChildren()){
             String key = data.getKey();
             ObjectSession s = data.getValue(ObjectSession.class);
-            sessionList.add(s);
-            keyList.add(key);
+            if (s.getSessionDate().equals(sessionDate)) {
+                sessionList.add(s);
+                keyList.add(key);
+            }
         }
     }
 

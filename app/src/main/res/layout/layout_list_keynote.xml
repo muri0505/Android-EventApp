@@ -67,6 +67,17 @@
     <TextView
         android:id="@+id/keynoteDes"
         style ="@style/keynoteDes"
+        android:maxLines="3"
         android:text="@string/keynoteDes"/>
+
+    <TextView
+        android:id="@+id/keynoteExp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/keynoteDes"
+        android:visibility="invisible"
+        />
 
 </LinearLayout>

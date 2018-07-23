@@ -102,7 +102,7 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
 
     //default fragment, showing all sessions
     public Fragment defaultFragment(){
-        fragment = new FragmentListSession();
+        fragment = new FragmentListSessionTab();
         fragment.setArguments(i);
         fragmentSwitch(fragment);
         return fragment;

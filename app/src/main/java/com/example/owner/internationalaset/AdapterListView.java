@@ -1,6 +1,9 @@
 package com.example.owner.internationalaset;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,10 @@ public class AdapterListView extends ArrayAdapter {
     ObjectArticle article = null;
     ObjectKeynote keynote = null;
     int resource;
+
+    boolean span = false;
+    TextView eventExp;
+    TextView keynoteExp;
 
     public AdapterListView(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -61,13 +68,29 @@ public class AdapterListView extends ArrayAdapter {
             if (eventImg != null)
                 Glide.with(getContext()).load(event.getEventImg()).into(eventImg);
 
-            if(eventDes != null){
-                eventDes.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
+            View.OnClickListener eventListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (span == false){
+                        eventDes.setMaxLines(3);
+                        eventExp.setText("read more");
+                        span = true;
+                    }else{
+                        eventDes.setMaxLines(eventDes.getLayout().getLineCount());
+                        eventExp.setText("read less");
+                        span = false;
                     }
-                });
+                }
+            };
+
+            if(eventDes != null){
+                eventExp = (TextView) view.findViewById(R.id.eventExp);
+                if(eventExp != null) {
+                    eventExp.setVisibility(View.VISIBLE);
+                    eventExp.setText("read more");
+                    eventExp.setOnClickListener(eventListener);
+                    eventDes.setOnClickListener(eventListener);
+                }
             }
         }
 
@@ -108,7 +131,7 @@ public class AdapterListView extends ArrayAdapter {
             TextView keynoteName = (TextView) view.findViewById(R.id.keynoteName);
             TextView keynotePresenter = (TextView) view.findViewById(R.id.keynotePresenter);
             TextView keynoteInstitution = (TextView) view.findViewById(R.id.keynoteInstitution);
-            TextView keynoteDes = (TextView) view.findViewById(R.id.keynoteDes);
+            final TextView keynoteDes = (TextView) view.findViewById(R.id.keynoteDes);
             TextView keynoteStartTime = (TextView) view.findViewById(R.id.keynoteStartTime);
             TextView keynoteEndTime = (TextView) view.findViewById(R.id.keynoteEndTime);
             ImageView keynoteImg = (ImageView) view.findViewById(R.id.keynoteImge);
@@ -120,6 +143,31 @@ public class AdapterListView extends ArrayAdapter {
             setTo(keynoteEndTime, keynote.getKeynoteEndTime());
             if (keynoteImg != null)
                 Glide.with(getContext()).load(keynote.getKeynoteImg()).into(keynoteImg);
+
+            View.OnClickListener keynoteListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (span == false){
+                        keynoteDes.setMaxLines(3);
+                        keynoteExp.setText("read more");
+                        span = true;
+                    }else{
+                        keynoteDes.setMaxLines(keynoteDes.getLayout().getLineCount());
+                        keynoteExp.setText("read less");
+                        span = false;
+                    }
+                }
+            };
+
+            if(keynoteDes != null){
+                keynoteExp = (TextView) view.findViewById(R.id.keynoteExp);
+                if(keynoteExp != null) {
+                    keynoteExp.setVisibility(View.VISIBLE);
+                    keynoteExp.setText("read more");
+                    keynoteExp.setOnClickListener(keynoteListener);
+                    keynoteDes.setOnClickListener(keynoteListener);
+                }
+            }
         }
 
         return view;

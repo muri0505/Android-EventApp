@@ -22,7 +22,7 @@ public class FragmentListSessionTab extends Fragment{
     String eventKey;
     ArrayList<String> sessionDate;
     HelperFirebase helperFirebase = new HelperFirebase();
-    Bundle bundle = new Bundle();
+    Bundle bundle;
 
     private FragmentTabHost fragmentTabHost;
 
@@ -31,7 +31,6 @@ public class FragmentListSessionTab extends Fragment{
         fragmentTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_list_style);
 
         eventKey = getArguments().getString("eventKey");
-        bundle.putString("eventKey", eventKey);
 
         sessionDate = new ArrayList<String>();
         helperFirebase.helperSession(eventKey).addValueEventListener(new ValueEventListener() {
@@ -42,6 +41,10 @@ public class FragmentListSessionTab extends Fragment{
 
                     if(!sessionDate.contains(s.getSessionDate())) {
                         sessionDate.add(s.getSessionDate());
+
+                        bundle = new Bundle();
+                        bundle.putString("eventKey", eventKey);
+                        bundle.putString("sessionDate", s.getSessionDate());
                         fragmentTabHost.addTab(fragmentTabHost.newTabSpec(s.getSessionDate()).setIndicator(s.getSessionDate()),FragmentListSession.class, bundle);
                     }
                 }

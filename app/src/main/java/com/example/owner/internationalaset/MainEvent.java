@@ -66,7 +66,7 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
                                 withEventKey(fragment);
                                 break;
                             case R.id.agenda:
-                                fragment = new FragmentListSession();
+                                fragment = new FragmentListSessionTab();
                                 withEventKey(fragment);
                                 break;
                         }

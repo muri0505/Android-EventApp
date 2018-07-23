@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -23,15 +24,23 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
     private String eventKey;
     private String sessionKey;
     private Fragment fragment;
-    private HelperFirebase helperFirebase = new HelperFirebase();
+    private HelperFirebase helperFirebase;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_event);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         menu = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.menu);
+
+        helperFirebase = new HelperFirebase();
+        toggle = new ActionBarDrawerToggle(this, menu, R.string.navigation_drawer_open, R.string.navigation_drawer_close){};
+
+        menu.setDrawerListener(toggle);
+        toggle.syncState();
 
         Intent i = getIntent();
         eventKey = i.getStringExtra("eventKey");
@@ -48,6 +57,10 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
 
                     if(menuItem.isChecked()){
                         switch (menuItem.getItemId()) {
+                            case R.id.homePage:
+                                Intent i = new Intent(MainEvent.this, HomePage.class);
+                                startActivity(i);
+                                break;
                             case R.id.eventHome:
                                 fragment = new FragmentEventDetail();
                                 withEventKey(fragment);
@@ -61,6 +74,12 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
                     return true;
                 }
             });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (toggle.onOptionsItemSelected(item)){return true;}
+        return super.onOptionsItemSelected(item);
     }
 
     //fragmentSwitch
@@ -90,7 +109,6 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
                     bundle.putString("eventKey", eventKey);
                     bundle.putString("sessionKey", sessionKey);
 
-                    //switch session type
                     switch (type){
                         case "General":
                             break;

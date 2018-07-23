@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/home"
+        android:icon="@drawable/homepage"
         android:title="@string/home"
         app:iconTint="@color/white"
         app:showAsAction="always"/>

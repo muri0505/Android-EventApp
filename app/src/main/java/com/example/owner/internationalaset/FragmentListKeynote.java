@@ -64,7 +64,7 @@ public class FragmentListKeynote extends Fragment {
 
         listView.setAdapter(adapterListView);
 
-        //click on event switch to activity event home page
+        //click on event switch to activity event homepage page
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);

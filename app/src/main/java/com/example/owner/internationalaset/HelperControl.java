@@ -33,7 +33,7 @@ public class HelperControl extends AppCompatActivity {
         return true;
     }
 
-    //toolbar helps to show current list, intent to home and control panel
+    //toolbar helps to show current list, intent to homepage and control panel
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.control:

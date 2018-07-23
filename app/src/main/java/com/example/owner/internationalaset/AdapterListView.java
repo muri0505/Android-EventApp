@@ -1,6 +1,7 @@
 package com.example.owner.internationalaset;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class AdapterListView extends ArrayAdapter {
             TextView eventName = (TextView) view.findViewById(R.id.eventName);
             TextView eventStartDate = (TextView) view.findViewById(R.id.eventStartDate);
             TextView eventEndDate = (TextView) view.findViewById(R.id.eventEndDate);
-            TextView eventDes = (TextView) view.findViewById(R.id.eventDes);
+            final TextView eventDes = (TextView) view.findViewById(R.id.eventDes);
             TextView eventLocation = (TextView) view.findViewById(R.id.eventLocation);
             ImageView eventImg = (ImageView) view.findViewById(R.id.eventImg);
 
@@ -59,6 +60,15 @@ public class AdapterListView extends ArrayAdapter {
 
             if (eventImg != null)
                 Glide.with(getContext()).load(event.getEventImg()).into(eventImg);
+
+            if(eventDes != null){
+                eventDes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+            }
         }
 
         if(getObject(position) instanceof ObjectSession){

@@ -2,13 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/homePage"
+        android:title="@string/homePage"
+        android:icon="@drawable/homepage"/>
+
+    <item
         android:id="@+id/eventHome"
         android:title="@string/eventHome"
-        android:icon="@drawable/home"/>
+        android:icon="@drawable/eventhome"/>
 
     <item
         android:id="@+id/agenda"
         android:title="@string/agenda"
-        android:icon="@drawable/home"/>
+        android:icon="@drawable/agenda"/>
 
 </menu>

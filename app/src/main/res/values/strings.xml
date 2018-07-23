@@ -65,5 +65,8 @@
     <!-- Main event toolbarHelper -->
     <string name="eventHome">Event Home</string>
     <string name="agenda">Agenda</string>
+    <string name="homePage">Home Page</string>
+    <string name="navigation_drawer_open">navigation_drawer_open</string>
+    <string name="navigation_drawer_close">navigation_drawer_close</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package com.example.owner.internationalaset;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
 import java.util.Calendar;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +42,7 @@ public class FragmentModifyEvent extends HelperDateTime{
     private EditText eventLocation;
     private EditText eventVenue;
     private String eventImg = " ";
+    private String emptyName;
     private static final String TAG = "FragmentModifyEvent";
 
     public FragmentModifyEvent(){}
@@ -100,16 +105,28 @@ public class FragmentModifyEvent extends HelperDateTime{
                 String venue = eventVenue.getText().toString();
                 event = new ObjectEvent(name, startDate, endDate, des, location, venue, eventImg);
 
-                //create new eventKey and event or update event under exist eventKey
-                if(getEventKey==null){
-                    getEventKey = helperFirebase.helperEvent().push().getKey();
-                    helperFirebase.helperEventKey(getEventKey).setValue(event);
-                    Log.i(TAG, "New eventKey and event created. EventKey: " + getEventKey);
-                }else{
-                    helperFirebase.helperEventKey(getEventKey).updateChildren(event.toHashMap());
-                    Log.i(TAG, "event updated. EventKey: " + getEventKey);
+                //event validation
+                if (empty(name, "Event Name") || empty(startDate, "Event Start Date") || empty(des, "Event Description")
+                        || empty(location, "Event Location") || empty(venue, "Event Venue")) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(emptyName +" cannot be empty")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                } else {
+                    //create new eventKey and event or update event under exist eventKey
+                    if (getEventKey == null) {
+                        getEventKey = helperFirebase.helperEvent().push().getKey();
+                        helperFirebase.helperEventKey(getEventKey).setValue(event);
+                        Log.i(TAG, "New eventKey and event created. EventKey: " + getEventKey);
+                    } else {
+                        helperFirebase.helperEventKey(getEventKey).updateChildren(event.toHashMap());
+                        Log.i(TAG, "event updated. EventKey: " + getEventKey);
+                    }
+                    backToControl();
                 }
-                backToControl();
             }
         });
 
@@ -149,5 +166,11 @@ public class FragmentModifyEvent extends HelperDateTime{
         Intent i = new Intent(getActivity(), ActivityControlEvent.class);
         startActivity(i);
         Log.i(TAG, "Intent to ActivityControlEvent");
+    }
+
+    //check object empty attribute
+    public boolean empty(String text, String name){
+        emptyName = name;
+        return text.equals(null)||text.equals("");
     }
 }

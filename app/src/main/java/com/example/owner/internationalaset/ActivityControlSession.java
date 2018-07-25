@@ -25,6 +25,7 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
     private String eventKey = null;
     private String sessionKey = null;
     private Bundle i;
+    private BottomNavigationView bottomNavigation;
     private static final String TAG = "ActivityControlSession";
 
     @Override
@@ -43,7 +44,7 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         helperControl(defaultFragment(),"Agenda");
 
         //BottomNavigationView switch create, edit, delete and next level
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation = findViewById(R.id.bottomNavigation);
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -77,7 +78,17 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
                                  String type = dataSnapshot.child("sessionType").getValue().toString();
                                  //switch session type
                                  switch (type){
+                                     case "Official Opening":
+                                         Toast toast = Toast.makeText(ActivityControlSession.this, "No detail available" , Toast.LENGTH_SHORT);
+                                         toast.show();
+                                         break;
+                                     case "Official Closing":
+                                         toast = Toast.makeText(ActivityControlSession.this, "No detail available" , Toast.LENGTH_SHORT);
+                                         toast.show();
+                                         break;
                                      case "General":
+                                         toast = Toast.makeText(ActivityControlSession.this, "No detail available" , Toast.LENGTH_SHORT);
+                                         toast.show();
                                          break;
                                      case "Article":
                                          typeIntent(ActivityControlArticle.class, eventKey, sessionKey);
@@ -95,12 +106,12 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
                     break;
                 default:
             }
-            return true;
+                return true;
             }
         });
     }
 
-    //default fragment, showing all sessions group by session date and switch with tabs
+    //default fragment, showing all sessions
     public Fragment defaultFragment(){
         fragment = new FragmentListSessionTab();
         fragment.setArguments(i);
@@ -109,7 +120,21 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
     }
 
     //FragmentListSession listener, get selected session key
-    public void getSessionKey(String k){sessionKey = k;}
+    public void getSessionKey(String k){
+        sessionKey = k;
+
+        //bottomNavigation level setup, show level when Article/Keynote Lecture selected
+        helperFirebase.helperSessionKey(eventKey, sessionKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String type = dataSnapshot.child("sessionType").getValue().toString();
+                bottomNavigation.getMenu().findItem(R.id.level).setTitle(type);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+    }
 
     //Intent to FragmentModifySession
     public void modifySession(String eventKey, String sessionKey){
@@ -130,17 +155,5 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         i.putExtra("sessionKey", aKey);
         startActivity(i);
         Log.i(TAG,"Intent to " + activity + " with eventKey: "+ eKey + " sessionKey: " + aKey);
-    }
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.i(TAG, "start");
-    }
-
-    @Override
-    protected  void onStop(){
-        super.onStop();
-        Log.i(TAG, "stop");
     }
 }

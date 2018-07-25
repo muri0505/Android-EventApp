@@ -2,12 +2,12 @@
     <string name="app_name">InternationalASET</string>
 
     <!-- ObjectEvent -->
-    <string name="eventName">eventName</string>
-    <string name="eventStartDate">eventStartDate</string>
-    <string name="eventEndDate">eventEndDate</string>
-    <string name="eventDes">eventDes</string>
-    <string name="eventLocation">eventLocation</string>
-    <string name="eventVenue">eventVenue</string>
+    <string name="eventName">Event Name</string>
+    <string name="eventStartDate">Event Start Date</string>
+    <string name="eventEndDate">Event End Date</string>
+    <string name="eventDes">Event Description</string>
+    <string name="eventLocation">Event Location</string>
+    <string name="eventVenue">Event Venue</string>
     <string name="events">Events</string>
     <string name="controlEvent">Control Event</string>
 
@@ -34,7 +34,7 @@
     <string name="sessionName">Session Name</string>
     <string name="sessionStartTime">Session Start Time</string>
     <string name="sessionEndTime">Session End Time</string>
-    <string name="sessionDes">Session Des</string>
+    <string name="sessionDes">Session Description</string>
     <string name="controlSession">Control Session</string>
     <array name="sessionTypeChoice">
         <item>General</item>
@@ -56,7 +56,7 @@
     <string name="keynoteName">Keynote Name</string>
     <string name="keynotePresenter">Keynote Presenter</string>
     <string name="keynoteInstitution">Keynote Institution</string>
-    <string name="keynoteDes">Keynote Des</string>
+    <string name="keynoteDes">Keynote Description</string>
     <string name="keynoteStartTime">Keynote StartTime</string>
     <string name="keynoteEndTime">Keynote EndTime</string>
 

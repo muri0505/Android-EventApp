@@ -15,7 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
+/*
+    FragmentEventDeatil: showing event detail information in MainEvent
+ */
 public class FragmentEventDetail extends Fragment {
     private String eventKey;
     private ArrayList<ObjectEvent> event;

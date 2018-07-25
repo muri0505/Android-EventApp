@@ -40,6 +40,7 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.getMenu().removeItem(R.id.level);
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -63,9 +64,6 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
                             helperFirebase.helperKeynoteKey(eventKey,sessionKey,keynoteKey).removeValue();
                             Log.i(TAG,"Delete button clicked, keynotKey: " + keynoteKey);
                         }
-                        break;
-                    case R.id.level:
-
                         break;
                     default:
                 }

@@ -40,6 +40,7 @@ public class ActivityControlArticle extends HelperControl implements FragmentLis
 
         //BottomNavigationView switch create, edit, delete and next level
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
+        bottomNavigation.getMenu().removeItem(R.id.level);
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -63,9 +64,6 @@ public class ActivityControlArticle extends HelperControl implements FragmentLis
                             helperFirebase.helperArticleKey(eventKey,sessionKey,articleKey).removeValue();
                             Log.i(TAG,"Delete button clicked, articleKey: " + articleKey);
                         }
-                        break;
-                    case R.id.level:
-
                         break;
                     default:
                 }

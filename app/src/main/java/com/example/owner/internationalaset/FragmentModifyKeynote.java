@@ -1,5 +1,7 @@
 package com.example.owner.internationalaset;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +36,7 @@ public class FragmentModifyKeynote extends HelperDateTime {
     private EditText keynoteStartTime;
     private EditText keynoteEndTime;
     private String keynoteImg = "";
+    private String emptyName;
     private static final String TAG = "FragmentModifyKeynote";
 
     public FragmentModifyKeynote(){}
@@ -88,7 +91,7 @@ public class FragmentModifyKeynote extends HelperDateTime {
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //edit button to create current keynote
-                String name, presenter, institution , des, startTime, endTime;
+                String name, presenter, institution, des, startTime, endTime;
                 name = keynoteName.getText().toString();
                 presenter = keynotePresenter.getText().toString();
                 institution = keynoteInstitution.getText().toString();
@@ -97,16 +100,28 @@ public class FragmentModifyKeynote extends HelperDateTime {
                 endTime = keynoteEndTime.getText().toString();
                 keynote = new ObjectKeynote(name, presenter, institution, des, startTime, endTime, keynoteImg);
 
-                //create new keynoteKey and keynote or update keynote under exist keynoteKey
-                if(getKeynoteKey==null) {
-                    getKeynoteKey = helperFirebase.helperKeynote(getEventKey, getSessionKey).push().getKey();
-                    helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).setValue(keynote);
-                    Log.i(TAG, "New keynoteKey and keynote created. keynoteKey: " + getKeynoteKey);
-                }else{
-                    helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).updateChildren(keynote.toHashMap());
-                    Log.i(TAG, "keynote updated. keynoteKey: " + getKeynoteKey);
+                //keynote validation
+                if (empty(name, "Keynote Name") || empty(presenter, "Keynote Presenter") || empty(institution, "Keynote Institution")
+                        || empty(des, "Keynote Description") || empty(startTime, "Keynote StartTime") ) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(emptyName + " cannot be empty")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                } else {
+                    //create new keynoteKey and keynote or update keynote under exist keynoteKey
+                    if (getKeynoteKey == null) {
+                        getKeynoteKey = helperFirebase.helperKeynote(getEventKey, getSessionKey).push().getKey();
+                        helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).setValue(keynote);
+                        Log.i(TAG, "New keynoteKey and keynote created. keynoteKey: " + getKeynoteKey);
+                    } else {
+                        helperFirebase.helperKeynoteKey(getEventKey, getSessionKey, getKeynoteKey).updateChildren(keynote.toHashMap());
+                        Log.i(TAG, "keynote updated. keynoteKey: " + getKeynoteKey);
+                    }
+                    backToControl();
                 }
-                backToControl();
             }
         });
 
@@ -146,5 +161,11 @@ public class FragmentModifyKeynote extends HelperDateTime {
         i.putExtra("eventKey",getEventKey);
         i.putExtra("sessionKey",getSessionKey);
         startActivity(i);
+    }
+
+    //check object empty attribute
+    public boolean empty(String text, String name){
+        emptyName = name;
+        return text.equals(null)||text.equals("");
     }
 }

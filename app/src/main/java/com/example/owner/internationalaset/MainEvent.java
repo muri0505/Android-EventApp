@@ -135,6 +135,16 @@ public class MainEvent extends AppCompatActivity implements FragmentListSession.
                         fragment.setArguments(bundle);
                         fragmentSwitch(fragment);
                         break;
+                    case "Official Opening":
+                        fragment = new FragmentListOpenClose();
+                        fragment.setArguments(bundle);
+                        fragmentSwitch(fragment);
+                        break;
+                    case "Official Closing":
+                        fragment = new FragmentListOpenClose();
+                        fragment.setArguments(bundle);
+                        fragmentSwitch(fragment);
+                        break;
                 }
             }
             @Override

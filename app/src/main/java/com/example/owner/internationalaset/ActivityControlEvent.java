@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -69,6 +70,9 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
                 return true;
             }
         });
+
+        //bottomNavigation level setup
+        bottomNavigation.getMenu().findItem(R.id.level).setTitle("session");
     }
 
     //default fragment, showing all events

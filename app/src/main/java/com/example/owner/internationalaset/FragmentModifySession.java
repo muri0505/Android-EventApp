@@ -1,5 +1,7 @@
 package com.example.owner.internationalaset;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +36,7 @@ public class FragmentModifySession extends HelperDateTime {
     private EditText sessionStartTime;
     private EditText sessionEndTime;
     private EditText sessionDes;
+    private String emptyName;
     private static final String TAG = "FragmentModifySession";
 
     public FragmentModifySession(){}
@@ -93,7 +96,7 @@ public class FragmentModifySession extends HelperDateTime {
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //edit button to create current session
-                String date, type, name,startTime, endTime, des;
+                String date, type, name, startTime, endTime, des;
                 date = sessionDate.getText().toString();
                 type = sessionType.getSelectedItem().toString();
                 name = sessionName.getText().toString();
@@ -102,16 +105,28 @@ public class FragmentModifySession extends HelperDateTime {
                 des = sessionDes.getText().toString();
                 session = new ObjectSession(date, type, name, startTime, endTime, des);
 
-                //create new sessionKey and session or update session under exist sessionKey
-                if(getSessionKey==null) {
-                    getSessionKey = helperFirebase.helperSession(getEventKey).push().getKey();
-                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).setValue(session);
-                    Log.i(TAG, "New sessionKey and session created. sessionKey: " + getSessionKey);
-                }else{
-                    helperFirebase.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
-                    Log.i(TAG, "session updated. sessionKey: " + getSessionKey);
+                //session validation
+                if (empty(date, "Session Date") || empty(type, "Session Type") || empty(name, "Session Name")
+                        || empty(startTime, "Session Start Time") || empty(des, "Session Description")) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(emptyName + " cannot be empty")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                } else {
+                    //create new sessionKey and session or update session under exist sessionKey
+                    if (getSessionKey == null) {
+                        getSessionKey = helperFirebase.helperSession(getEventKey).push().getKey();
+                        helperFirebase.helperSessionKey(getEventKey, getSessionKey).setValue(session);
+                        Log.i(TAG, "New sessionKey and session created. sessionKey: " + getSessionKey);
+                    } else {
+                        helperFirebase.helperSessionKey(getEventKey, getSessionKey).updateChildren(session.toHashMap());
+                        Log.i(TAG, "session updated. sessionKey: " + getSessionKey);
+                    }
+                    backToControl();
                 }
-                backToControl();
             }
         });
 
@@ -159,5 +174,11 @@ public class FragmentModifySession extends HelperDateTime {
                     return i;
         }
         return 0;
+    }
+
+    //check object empty attribute
+    public boolean empty(String text, String name){
+        emptyName = name;
+        return text.equals(null)||text.equals("");
     }
 }

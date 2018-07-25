@@ -1,5 +1,7 @@
 package com.example.owner.internationalaset;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +36,7 @@ public class FragmentModifyArticle extends HelperDateTime {
     private EditText articleLocation;
     private EditText articleStartTime;
     private EditText articleEndTime;
+    private String emptyName;
     private static final String TAG = "FragmentModifyArticle";
 
     public FragmentModifyArticle(){}
@@ -88,7 +91,7 @@ public class FragmentModifyArticle extends HelperDateTime {
         edit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //edit button to create current article
-                String name, presenter, author , location, startTime, endTime;
+                String name, presenter, author, location, startTime, endTime;
                 name = articleName.getText().toString();
                 presenter = articlePresenter.getText().toString();
                 author = articleAuthor.getText().toString();
@@ -97,16 +100,28 @@ public class FragmentModifyArticle extends HelperDateTime {
                 endTime = articleEndTime.getText().toString();
                 article = new ObjectArticle(name, presenter, author, location, startTime, endTime);
 
-                //create new articleKey and article or update article under exist articleKey
-                if(getArticleKey==null) {
-                    getArticleKey = helperFirebase.helperArticle(getEventKey, getSessionKey).push().getKey();
-                    helperFirebase.helperArticleKey(getEventKey, getSessionKey, getArticleKey).setValue(article);
-                    Log.i(TAG, "New articleKey and article created. articleKey: " + getArticleKey);
-                }else{
-                    helperFirebase.helperArticleKey(getEventKey, getSessionKey, getArticleKey).updateChildren(article.toHashMap());
-                    Log.i(TAG, "article updated. articleKey: " + getArticleKey);
+                //article validation
+                if (empty(name, "Article Name") || empty(presenter, "Article Presenter") || empty(author, "Article Author") ||
+                        empty(location, "Article Location") || empty(startTime, "Article StartTime")) {
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(emptyName + " cannot be empty")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
+                } else {
+                    //create new articleKey and article or update article under exist articleKey
+                    if (getArticleKey == null) {
+                        getArticleKey = helperFirebase.helperArticle(getEventKey, getSessionKey).push().getKey();
+                        helperFirebase.helperArticleKey(getEventKey, getSessionKey, getArticleKey).setValue(article);
+                        Log.i(TAG, "New articleKey and article created. articleKey: " + getArticleKey);
+                    } else {
+                        helperFirebase.helperArticleKey(getEventKey, getSessionKey, getArticleKey).updateChildren(article.toHashMap());
+                        Log.i(TAG, "article updated. articleKey: " + getArticleKey);
+                    }
+                    backToControl();
                 }
-                backToControl();
             }
         });
 
@@ -145,5 +160,11 @@ public class FragmentModifyArticle extends HelperDateTime {
         i.putExtra("eventKey",getEventKey);
         i.putExtra("sessionKey",getSessionKey);
         startActivity(i);
+    }
+
+    //check object empty attribute
+    public boolean empty(String text, String name){
+        emptyName = name;
+        return text.equals(null)||text.equals("");
     }
 }

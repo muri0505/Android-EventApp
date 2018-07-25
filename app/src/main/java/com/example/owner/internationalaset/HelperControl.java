@@ -25,7 +25,7 @@ public class HelperControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    // Inflate control toolbar menu, set title
+    // Inflate control toolbar event_menu, set title
     public boolean onCreateOptionsMenu(Menu menu) {
         setTitle(level + " Control");
         getMenuInflater().inflate(R.menu.control_top, menu);

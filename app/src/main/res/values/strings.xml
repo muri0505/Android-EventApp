@@ -72,4 +72,8 @@
     <string name="navigation_drawer_open">navigation_drawer_open</string>
     <string name="navigation_drawer_close">navigation_drawer_close</string>
 
+    <!--HomePage user Login-->
+    <string name="login">Login</string>
+    <string name="profile">Profile</string>
+    <string name="create_account">Create Account</string>
 </resources>

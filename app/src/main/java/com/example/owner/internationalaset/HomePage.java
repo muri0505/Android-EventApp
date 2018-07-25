@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -52,6 +53,23 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
                 return true;
             }
         });
+
+        //navigationView switch fragment
+        NavigationView navigationView = findViewById(R.id.user);
+        navigationView.setNavigationItemSelectedListener(
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
+                    menuItem.setChecked(true);
+
+                    if(menuItem.isChecked()){
+                        switch (menuItem.getItemId()) {
+
+                        }
+                    }
+                    return true;
+                }
+            });
     }
 
     //fragment changes

@@ -49,6 +49,7 @@ public class FragmentModifyArticle extends HelperDateTime {
         articleStartTime = (EditText) view.findViewById(R.id.articleStartTime);
         articleEndTime = (EditText) view.findViewById(R.id.articleEndTime);
 
+        //input keyboard format
         articleStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {setTime(articleStartTime);    }

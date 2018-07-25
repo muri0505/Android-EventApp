@@ -18,12 +18,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListSessionTab: get sessions data from firebase and group sessions with session date,
+    add tabs with new date, pass date to FragmentListSession to show that date's session list
+ */
 public class FragmentListSessionTab extends Fragment{
-    String eventKey;
-    ArrayList<String> sessionDate;
-    HelperFirebase helperFirebase = new HelperFirebase();
-    Bundle bundle;
-
+    private String eventKey;
+    private ArrayList<String> sessionDate;
+    private HelperFirebase helperFirebase = new HelperFirebase();
+    private Bundle bundle;
     private FragmentTabHost fragmentTabHost;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +34,9 @@ public class FragmentListSessionTab extends Fragment{
         fragmentTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_list_style);
 
         eventKey = getArguments().getString("eventKey");
-
         sessionDate = new ArrayList<String>();
+
+        //get sessions data check if is new date, add new tabs if its new
         helperFirebase.helperSession(eventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

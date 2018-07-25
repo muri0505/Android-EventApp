@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.MenuItem;
 
+/*
+    ActivityControlKeynote: admin keynote control, get eventKey&sessionKey from previous activity/fragment,
+    default showing all keynotes, create&edit button intent to FragmentModifyKeynote, delete button to delete data
+*/
+
 public class ActivityControlKeynote extends HelperControl implements FragmentListKeynote.FragmentKeynotelistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;
@@ -91,6 +96,18 @@ public class ActivityControlKeynote extends HelperControl implements FragmentLis
         fragment.setArguments(bundle);
         fragmentSwitch(fragment);
         Log.i(TAG,"Intent to FragmentModifyKeynote with eventKey: " + eventKey + " sessionKey: " + sessionKey + "keynoteKey: " + keynoteKey);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
     }
 }
 

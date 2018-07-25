@@ -12,6 +12,9 @@ import android.widget.TimePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/*
+    HelperDateTime: keyboard input format using in control modify
+ */
 public class HelperDateTime extends Fragment {
     EditText editText;
 

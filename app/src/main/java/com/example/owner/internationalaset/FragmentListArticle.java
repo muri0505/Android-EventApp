@@ -15,6 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListArticle: showing all articles with adapterListView, click on article to get articleKey,
+*/
 public class FragmentListArticle extends Fragment {
     private ListView listView;
     private ArrayList<ObjectArticle> articleList;
@@ -28,6 +31,7 @@ public class FragmentListArticle extends Fragment {
 
     public FragmentListArticle(){}
 
+    //listener listens articleKey
     FragmentListArticle.FragmentArticlelistener listener;
     public interface FragmentArticlelistener{
         public void getArticleKey(String articleKey);
@@ -48,9 +52,10 @@ public class FragmentListArticle extends Fragment {
         keyList = new ArrayList<String>();
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_article, articleList);
 
-        //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
         getSessionKey = getArguments().getString("sessionKey");
+
+        //get articles from firebase
         helperFirebase.helperArticle(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -62,9 +67,10 @@ public class FragmentListArticle extends Fragment {
             }
         });
 
+        //show articles in listview with adapterListView
         listView.setAdapter(adapterListView);
 
-        //click on event switch to activity event home page
+        //click on article get articleKey
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
@@ -75,7 +81,7 @@ public class FragmentListArticle extends Fragment {
         return view;
     }
 
-    //get event data from database
+    //get articles data from firebase
     public void getArticle(DataSnapshot dataSnapshot){
         articleList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){

@@ -1,9 +1,11 @@
 package com.example.owner.internationalaset;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,11 @@ import android.widget.Button;
 
 /*
     fragment admin control panel
-    add/edit/delete events, session etc.
+    add/edit/delete firebase data.
  */
 
 public class ActivityControlPanel extends AppCompatActivity {
+    private static final String TAG = "ActivityControlPanel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +41,17 @@ public class ActivityControlPanel extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
     }
 }

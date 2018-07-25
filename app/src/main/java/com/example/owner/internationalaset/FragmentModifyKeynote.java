@@ -14,6 +14,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+/*
+    FragmentModifyKeynote: get eventKey&sessionKey&keynoteKey from ActivityControlKeynote
+    check valid keynoteKey and get keynote from firebase or create new keynoteKey and new keynote
+    Edit button to push update/new keynote, cancel button back to ActivityControlKeynote
+ */
 public class FragmentModifyKeynote extends HelperDateTime {
     private HelperFirebase helperFirebase = new HelperFirebase();
     private ObjectKeynote keynote;
@@ -44,6 +49,7 @@ public class FragmentModifyKeynote extends HelperDateTime {
         keynoteStartTime = (EditText) view.findViewById(R.id.keynoteStartTime);
         keynoteEndTime = (EditText) view.findViewById(R.id.keynoteEndTime);
 
+        //input keyboard format
         keynoteStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {setTime(keynoteStartTime);    }

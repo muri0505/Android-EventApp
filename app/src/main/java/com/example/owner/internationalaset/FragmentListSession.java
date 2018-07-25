@@ -19,6 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListSession: showing all sessions with adapterListView, click on session to get sessionKey,
+    intent to type fragment(article/keynote/opening/closing) if not control mode or ActivityControlSession listens sessionKey.
+*/
 public class FragmentListSession extends Fragment{
     private ListView listView;
     private ArrayList<ObjectSession> sessionList;
@@ -33,6 +37,7 @@ public class FragmentListSession extends Fragment{
 
     public FragmentListSession(){}
 
+    //listener listens sessionKey
     FragmentListSession.FragmentSessionlistener listener;
     public interface FragmentSessionlistener{
         public void getSessionKey(String sessionKey);
@@ -55,6 +60,7 @@ public class FragmentListSession extends Fragment{
         getEventKey = getArguments().getString("eventKey");
         sessionDate = getArguments().getString("sessionDate");
 
+        //get sessions from firebase
         helperFirebase.helperSession(getEventKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,8 +72,10 @@ public class FragmentListSession extends Fragment{
             }
         });
 
+        //show sessions in listview with adapterListView
         listView.setAdapter(adapterListView);
 
+        //get selected sessionKey and intent to type fragment if not control mode
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 sessionKey = keyList.get(pos);
@@ -78,6 +86,7 @@ public class FragmentListSession extends Fragment{
         return view;
     }
 
+    //get sessions and sessionKeys from firebase
     public void getSession(DataSnapshot dataSnapshot){
         sessionList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){
@@ -88,17 +97,5 @@ public class FragmentListSession extends Fragment{
                 keyList.add(key);
             }
         }
-    }
-
-    //fragmentSwitch
-    public void fragmentSwitch(Fragment f) {
-        Bundle bundle = new Bundle();
-        bundle.putString("eventKey", getEventKey);
-        bundle.putString("sessionKey",sessionKey);
-        f.setArguments(bundle);
-        FragmentManager manager = getFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment, f, "currentFragment");
-        transaction.commit();
     }
 }

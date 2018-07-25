@@ -47,60 +47,60 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.create:
-                        //button to create new session, clean selected session key, intent to FragmentModifySession
-                        sessionKey = null;
-                        modifySession(eventKey,sessionKey);
-                        Log.i(TAG,"Create button clicked, create new session");
-                        break;
-                    case R.id.edit:
-                        //button to edit session, check session selected, intent to FragmentModifySession
-                        if(validKey(sessionKey)){
-                            modifySession(eventKey, sessionKey);
-                            Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
-                        }
-                        break;
-                    case R.id.delete:
-                        //button to delete, check session selected, delete selected session
-                        if(validKey(sessionKey)){
-                            helperFirebase.helperSessionKey(eventKey, sessionKey).removeValue();
-                            Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
-                        }
-                        break;
-                    case R.id.level:
-                        //check session select, intent to selected event's Activity based on session type
-                        if(validKey(sessionKey)) {
-                            helperFirebase.helperSessionKey(eventKey, sessionKey).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                     String type = dataSnapshot.child("sessionType").getValue().toString();
-                                     //switch session type
-                                     switch (type){
-                                         case "General":
-                                             break;
-                                         case "Article":
-                                             typeIntent(ActivityControlArticle.class, eventKey, sessionKey);
-                                             break;
-                                         case "Keynote Lecture":
-                                             typeIntent(ActivityControlKeynote.class, eventKey, sessionKey);
-                                             break;
-                                     }
-                                }
+            switch (item.getItemId()) {
+                case R.id.create:
+                    //button to create new session, clean selected session key, intent to FragmentModifySession
+                    sessionKey = null;
+                    modifySession(eventKey,sessionKey);
+                    Log.i(TAG,"Create button clicked, create new session");
+                    break;
+                case R.id.edit:
+                    //button to edit session, check session selected, intent to FragmentModifySession
+                    if(validKey(sessionKey)){
+                        modifySession(eventKey, sessionKey);
+                        Log.i(TAG,"Edit button clicked, sessionKey: " + sessionKey);
+                    }
+                    break;
+                case R.id.delete:
+                    //button to delete, check session selected, delete selected session
+                    if(validKey(sessionKey)){
+                        helperFirebase.helperSessionKey(eventKey, sessionKey).removeValue();
+                        Log.i(TAG,"Delete button clicked, sessionKey: " + sessionKey);
+                    }
+                    break;
+                case R.id.level:
+                    //check session select, intent to selected event's Activity based on session type
+                    if(validKey(sessionKey)) {
+                        helperFirebase.helperSessionKey(eventKey, sessionKey).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                 String type = dataSnapshot.child("sessionType").getValue().toString();
+                                 //switch session type
+                                 switch (type){
+                                     case "General":
+                                         break;
+                                     case "Article":
+                                         typeIntent(ActivityControlArticle.class, eventKey, sessionKey);
+                                         break;
+                                     case "Keynote Lecture":
+                                         typeIntent(ActivityControlKeynote.class, eventKey, sessionKey);
+                                         break;
+                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {}
-                            });
-                        }
-                        break;
-                    default:
-                }
-                return true;
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {}
+                        });
+                    }
+                    break;
+                default:
+            }
+            return true;
             }
         });
     }
 
-    //default fragment, showing all sessions
+    //default fragment, showing all sessions group by session date and switch with tabs
     public Fragment defaultFragment(){
         fragment = new FragmentListSessionTab();
         fragment.setArguments(i);
@@ -130,5 +130,17 @@ public class ActivityControlSession extends HelperControl implements FragmentLis
         i.putExtra("sessionKey", aKey);
         startActivity(i);
         Log.i(TAG,"Intent to " + activity + " with eventKey: "+ eKey + " sessionKey: " + aKey);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
     }
 }

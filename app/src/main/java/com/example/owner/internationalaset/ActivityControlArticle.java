@@ -97,5 +97,17 @@ public class ActivityControlArticle extends HelperControl implements FragmentLis
         fragmentSwitch(fragment);
         Log.i(TAG,"Intent to FragmentModifyArticle with eventKey: " + eventKey + " sessionKey: " + sessionKey + "articleKey: " + articleKey);
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
+    }
 }
 

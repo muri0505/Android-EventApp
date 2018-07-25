@@ -19,8 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class HelperControl extends AppCompatActivity {
     private Fragment fragment;
     private String level;
-    private String eventKey;
-    private String sessionKey;
+    private String TAG;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

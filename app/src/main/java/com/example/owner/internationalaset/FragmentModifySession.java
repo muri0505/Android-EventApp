@@ -49,6 +49,7 @@ public class FragmentModifySession extends HelperDateTime {
         sessionEndTime = (EditText) view.findViewById(R.id.sessionEndTime);
         sessionDes = (EditText) view.findViewById(R.id.sessionDes);
 
+        //input keyboard format
         sessionDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,9 +58,7 @@ public class FragmentModifySession extends HelperDateTime {
         });
         sessionStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                setTime(sessionStartTime);
-            }
+            public void onClick(View view) {setTime(sessionStartTime);    }
         });
         sessionEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +152,7 @@ public class FragmentModifySession extends HelperDateTime {
         Log.i(TAG, "Intent to ActivityControlSession");
     }
 
+    //get session type
     public int spinnerPos(String type){
         for(int i = 0; i < sessionType.getCount(); i++){
             if (sessionType.getItemAtPosition(i).toString().equals(type))

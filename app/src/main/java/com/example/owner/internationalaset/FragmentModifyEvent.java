@@ -53,6 +53,7 @@ public class FragmentModifyEvent extends HelperDateTime{
         eventVenue = (EditText) view.findViewById(R.id.eventVenue);
         mode = (TextView) view.findViewById(R.id.mode);
 
+        //input keyboard format
         eventStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -7,6 +7,10 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
+/*
+    HelperBottomNavigationView
+    fixed BottomNavigationView when showing more than three items
+ */
 public class HelperBottomNavigationView {
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);

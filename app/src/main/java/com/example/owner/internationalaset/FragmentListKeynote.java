@@ -15,6 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListKeynote: showing all keynotes with adapterListView, click on keynote to get keynoteKey,
+*/
 public class FragmentListKeynote extends Fragment {
     private ListView listView;
     private ArrayList<ObjectKeynote> keynoteList;
@@ -28,6 +31,7 @@ public class FragmentListKeynote extends Fragment {
 
     public FragmentListKeynote(){}
 
+    //listener listens keynoteKey
     FragmentListKeynote.FragmentKeynotelistener listener;
     public interface FragmentKeynotelistener{
         public void getKeynoteKey(String keynoteKey);
@@ -48,9 +52,10 @@ public class FragmentListKeynote extends Fragment {
         keyList = new ArrayList<String>();
         adapterListView = new AdapterListView(getActivity(), R.layout.layout_list_keynote, keynoteList);
 
-        //FirebaseDatabase
         getEventKey = getArguments().getString("eventKey");
         getSessionKey = getArguments().getString("sessionKey");
+
+        //get keynotes from firebase
         helperFirebase.helperKeynote(getEventKey,getSessionKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -62,9 +67,10 @@ public class FragmentListKeynote extends Fragment {
             }
         });
 
+        //show keynotes in listview with adapterListView
         listView.setAdapter(adapterListView);
 
-        //click on event switch to activity event homepage page
+        //click on keynote get keynoteKey
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapter, View v, int pos, long a) {
                 String key = keyList.get(pos);
@@ -75,7 +81,7 @@ public class FragmentListKeynote extends Fragment {
         return view;
     }
 
-    //get event data from database
+    //get keynotes data from firebase
     public void getKeynote(DataSnapshot dataSnapshot){
         keynoteList.clear();
         for(DataSnapshot data : dataSnapshot.getChildren()){

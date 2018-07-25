@@ -20,6 +20,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.EventObject;
 
+/*
+    AdapterListView: listView adapter
+ */
 public class AdapterListView extends ArrayAdapter {
     ArrayList<?>  objects = null;
     ObjectEvent event = null;
@@ -68,9 +71,11 @@ public class AdapterListView extends ArrayAdapter {
             setTextView(eventVenue,event.getEventVenue());
             setTextView(eventLocation, event.getEventLocation());
 
+            //show image with Glide
             if (eventImg != null)
                 Glide.with(getContext()).load(event.getEventImg()).into(eventImg);
 
+            //expand textView listener
             View.OnClickListener eventListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,6 +91,7 @@ public class AdapterListView extends ArrayAdapter {
                 }
             };
 
+            //set textView with expand listener
             if(eventDes != null){
                 eventExp = (TextView) view.findViewById(R.id.eventExp);
                 if(eventExp != null) {
@@ -144,9 +150,12 @@ public class AdapterListView extends ArrayAdapter {
             setTextView(keynoteDes, keynote.getKeynoteDes());
             setTextView(keynoteStartTime, keynote.getKeynoteStartTime());
             setTo(keynoteEndTime, keynote.getKeynoteEndTime());
+
+            //show image with Glide
             if (keynoteImg != null)
                 Glide.with(getContext()).load(keynote.getKeynoteImg()).into(keynoteImg);
 
+            //expand textView listener
             View.OnClickListener keynoteListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -162,6 +171,7 @@ public class AdapterListView extends ArrayAdapter {
                 }
             };
 
+            //set textView with expand listener
             if(keynoteDes != null){
                 keynoteExp = (TextView) view.findViewById(R.id.keynoteExp);
                 if(keynoteExp != null) {

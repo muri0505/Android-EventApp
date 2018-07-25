@@ -93,4 +93,16 @@ public class ActivityControlEvent extends HelperControl implements FragmentListE
         fragmentSwitch(fragment);
         Log.i(TAG,"Intent to FragmentModifyEvent with eventKey: " + eventKey);
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
+    }
 }

@@ -8,15 +8,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 /*
-    activity general home page
+    activity home page
+
+    BottomNavigationView switch depend on different user type
+    general user: news, journals, events
+    admin: news, journals, events, control
+
+    events fragment: click on event intent to Activity MainEvent
+    control fragment: intent to Activity ControlPanel
  */
 
-public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener,
-        FragmentListKeynote.FragmentKeynotelistener,FragmentListArticle.FragmentArticlelistener{
+public class HomePage extends AppCompatActivity implements FragmentListEvents.FragmentEventslistener{
     private Fragment fragment;
+    private static final String TAG = "HomePage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,7 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         setContentView(R.layout.activity_home_page);
         fragment = null;
 
+        //BottomNavigationView switch fragments, news, events, journals, control panel
         BottomNavigationView bottomNavigation = findViewById(R.id.toolbarBottom);
         HelperBottomNavigationView.disableShiftMode(bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -53,12 +62,22 @@ public class HomePage extends AppCompatActivity implements FragmentListEvents.Fr
         transaction.commit();
     }
 
+    //event listener listens event fragment, not in control mode, intent to activity mainEvent
     public void getEventKey(String k){
         Intent i = new Intent(HomePage.this, MainEvent.class);
         i.putExtra("eventKey", k);
         startActivity(i);
     }
 
-    public void getKeynoteKey(String k){}
-    public void getArticleKey(String k){}
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.i(TAG, "start");
+    }
+
+    @Override
+    protected  void onStop(){
+        super.onStop();
+        Log.i(TAG, "stop");
+    }
 }

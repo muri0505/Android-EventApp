@@ -18,18 +18,4 @@
         android:layout_alignParentBottom="true"
         app:menu="@menu/home_bottom_admin" />
 
-    <android.support.v4.widget.DrawerLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/user"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:fitsSystemWindows="true"
-            app:menu="@menu/user_login"/>
-
-    </android.support.v4.widget.DrawerLayout>
-
 </RelativeLayout>

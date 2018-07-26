@@ -14,6 +14,7 @@
         <activity android:name=".ActivityControlKeynote" />
         <activity android:name=".ActivityControlArticle" />
         <activity android:name=".ActivityControlSession" />
+        <activity android:name=".ActivityControlPasscode" />
         <activity android:name=".ActivityControlPanel" />
         <activity android:name=".MainEvent"/>
 

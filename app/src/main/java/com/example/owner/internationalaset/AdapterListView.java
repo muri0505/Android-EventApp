@@ -29,6 +29,7 @@ public class AdapterListView extends ArrayAdapter {
     ObjectSession session = null;
     ObjectArticle article = null;
     ObjectKeynote keynote = null;
+    ObjectPasscode passcode = null;
     int resource;
 
     boolean span = false;
@@ -181,6 +182,16 @@ public class AdapterListView extends ArrayAdapter {
                     keynoteDes.setOnClickListener(keynoteListener);
                 }
             }
+        }
+
+        if(getObject(position) instanceof ObjectPasscode) {
+            passcode = (ObjectPasscode) getObject(position);
+            TextView passcodeName = (TextView) view.findViewById(R.id.passcodeName);
+            TextView passcodeCode = (TextView) view.findViewById(R.id.passcodeCode);
+            TextView passcodeType = (TextView) view.findViewById(R.id.passcodeType);
+            setTextView(passcodeName, passcode.getPasscodeName());
+            setTextView(passcodeCode, passcode.getPasscodeCode());
+            setTextView(passcodeType,passcode.getPasscodeType());
         }
 
         return view;

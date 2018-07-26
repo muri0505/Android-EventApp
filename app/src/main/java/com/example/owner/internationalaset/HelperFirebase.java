@@ -10,6 +10,7 @@ public class HelperFirebase {
         mDatabase= FirebaseDatabase.getInstance().getReference();
     }
 
+    //event, session, article, keynote
     public DatabaseReference helperEvent(){
         return mDatabase.child("Events");
     }
@@ -40,5 +41,14 @@ public class HelperFirebase {
 
     public DatabaseReference helperKeynoteKey(String eventKey, String sessionKey, String keynoteKey){
         return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Keynote").child(keynoteKey);
+    }
+
+    //passcode
+    public DatabaseReference helperPasscode(){
+        return mDatabase.child("Passcode");
+    }
+
+    public DatabaseReference helperPasscodeKey(String passcode){
+        return mDatabase.child("Passcode").child(passcode);
     }
 }

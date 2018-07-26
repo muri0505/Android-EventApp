@@ -19,6 +19,8 @@
     <!-- Control modify -->
     <string name="home">Home</string>
     <string name="control">Control Panel</string>
+    <string name="passcode">Passcode</string>
+
     <string name="level">Level</string>
     <string name="list">List</string>
     <string name="back">Back</string>
@@ -60,6 +62,11 @@
     <string name="keynoteStartTime">Keynote StartTime</string>
     <string name="keynoteEndTime">Keynote EndTime</string>
 
+    <!--ObjectPasscode-->
+    <string name="passcodeName">Passcode Name</string>
+    <string name="passcodeCode">Passcode Code</string>
+    <string name="passcodeType">Passcode Type</string>
+
     <!-- Main event detail title -->
     <string name="date">Date</string>
     <string name="des">Description</string>
@@ -76,4 +83,10 @@
     <string name="login">Login</string>
     <string name="profile">Profile</string>
     <string name="create_account">Create Account</string>
+    <string name="user">User</string>
+
+    <!-- User Login-->
+    <string name="loginTitle">User Login</string>
+    <string name="loginEmail">Email Address</string>
+    <string name="loginPassword">Password</string>
 </resources>

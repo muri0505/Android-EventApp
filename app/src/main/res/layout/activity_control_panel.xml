@@ -12,17 +12,19 @@
 
         <Button
             android:id="@+id/controlEvent"
-            android:layout_height="match_parent"
-            android:layout_weight = "1"
-            android:text="@string/controlEvent"
-            android:layout_width="match_parent" />
+            style="@style/login"
+            android:layout_marginTop="15dp"
+            android:text="@string/controlEvent"/>
+
+        <Button
+            android:id="@+id/passcode"
+            style="@style/login"
+            android:text="@string/passcode"/>
 
         <Button
             android:id="@+id/home"
-            android:layout_height="match_parent"
-            android:layout_weight = "1"
-            android:text="@string/home"
-            android:layout_width="match_parent" />
+            style="@style/login"
+            android:text="@string/home"/>
 
     </LinearLayout>
 

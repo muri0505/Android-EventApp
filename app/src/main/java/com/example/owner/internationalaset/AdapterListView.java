@@ -55,6 +55,11 @@ public class AdapterListView extends ArrayAdapter {
         LayoutInflater i = LayoutInflater.from(getContext());
         View view = i.inflate(resource,null);
 
+        if(getObject(position) instanceof String){
+            TextView string = (TextView) view.findViewById(R.id.eventName);
+            setTextView(string, (String)getObject(position));
+        }
+
         if(getObject(position) instanceof ObjectEvent){
             event = (ObjectEvent)getObject(position);
             TextView eventName = (TextView) view.findViewById(R.id.eventName);
@@ -190,7 +195,7 @@ public class AdapterListView extends ArrayAdapter {
             TextView passcodeCode = (TextView) view.findViewById(R.id.passcodeCode);
             TextView passcodeType = (TextView) view.findViewById(R.id.passcodeType);
             setTextView(passcodeName, passcode.getPasscodeName());
-            setTextView(passcodeCode, passcode.getPasscodeCode());
+            setPasscode(passcodeCode, passcode.getPasscodeCode());
             setTextView(passcodeType,passcode.getPasscodeType());
         }
 
@@ -229,6 +234,15 @@ public class AdapterListView extends ArrayAdapter {
             text.setText("");
             if(!string.equals("")){
                 text.setText("Author: " + string);
+            }
+        }
+    }
+
+    public void setPasscode(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText("Passcode: " +string);
             }
         }
     }

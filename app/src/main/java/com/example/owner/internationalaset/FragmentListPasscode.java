@@ -16,6 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentListPasscode: showing all passcode with adapterListView, click on passcode to get passcodeKey
+*/
 public class FragmentListPasscode extends Fragment {
     private ListView listView;
     private ArrayList<ObjectPasscode> passcodeList;

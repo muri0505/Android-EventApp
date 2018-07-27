@@ -19,7 +19,7 @@
     <!-- Control modify -->
     <string name="home">Home</string>
     <string name="control">Control Panel</string>
-    <string name="passcode">Passcode</string>
+    <string name="passcode">Control Passcode</string>
 
     <string name="level">Level</string>
     <string name="list">List</string>
@@ -66,6 +66,11 @@
     <string name="passcodeName">Passcode Name</string>
     <string name="passcodeCode">Passcode Code</string>
     <string name="passcodeType">Passcode Type</string>
+    <array name="passcodeTypeChoice">
+        <item>Event</item>
+        <item>Registration</item>
+        <item>Other</item>
+    </array>
 
     <!-- Main event detail title -->
     <string name="date">Date</string>

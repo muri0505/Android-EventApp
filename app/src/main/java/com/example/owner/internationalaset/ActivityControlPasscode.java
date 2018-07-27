@@ -1,5 +1,7 @@
 package com.example.owner.internationalaset;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+/*
+    ActivityControlPasscode: admin passcode control,
+    default showing all passcode, create&edit button intent to FragmentModifyPasscode, delete button to delete data
+*/
 public class ActivityControlPasscode extends HelperControl implements FragmentListPasscode.FragmentPasscodelistener{
     private HelperFirebase helperFirebase = new HelperFirebase();
     private Fragment fragment;

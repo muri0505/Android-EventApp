@@ -30,7 +30,9 @@ import android.view.View;
     control fragment: intent to Activity ControlPanel
  */
 
-public class HomePage extends HelperUserNavigationView implements FragmentListEvents.FragmentEventslistener, FragmentUserLogin.FragmentUserLoginlistener{
+public class HomePage extends HelperUserNavigationView implements FragmentListEvents.FragmentEventslistener,
+        FragmentUserLogin.FragmentUserLoginlistener, FragmentUserRegPasscode.FragmentUserRegPasscodelistener,
+        FragmentUserRegInfor.FragmentUserRegInforlistener{
     private Fragment fragment;
     private BottomNavigationView bottomNavigation;
     private static final String TAG = "HomePage";
@@ -85,6 +87,11 @@ public class HomePage extends HelperUserNavigationView implements FragmentListEv
     public void backDefault(){
         defaultFragment();
         bottomNavigation.getMenu().getItem(1).setChecked(true);
+    }
+
+    public void userRegInfor(){
+        fragment = new FragmentUserRegInfor();
+        fragmentSwitch(fragment);
     }
 
     @Override

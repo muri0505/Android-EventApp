@@ -41,6 +41,10 @@ public class HelperUserNavigationView extends AppCompatActivity {
                             fragment = new FragmentUserLogin();
                             fragmentSwitch(fragment);
                             break;
+                        case R.id.create_account:
+                            fragment = new FragmentUserRegPasscode();
+                            fragmentSwitch(fragment);
+                            break;
                     }
                 }
                 return true;

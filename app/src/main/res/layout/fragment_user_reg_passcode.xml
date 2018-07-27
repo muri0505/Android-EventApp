@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/activePasscode"
+        style="@style/login"
+        android:layout_marginTop="15dp"
+        android:text="@string/activePasscode" />
+
+    <EditText
+        android:id="@+id/passcodeCode"
+        style="@style/login"
+        android:inputType="text"
+        android:hint="@string/passcodeCode" />
+
+    <Button
+        android:id="@+id/submit"
+        style="@style/login"
+        android:text="@string/submit" />
+
+    <Button
+        android:id="@+id/cancel"
+        style="@style/login"
+        android:text="@string/cancel" />
+
+</LinearLayout>

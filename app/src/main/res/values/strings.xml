@@ -94,4 +94,19 @@
     <string name="loginTitle">User Login</string>
     <string name="loginEmail">Email Address</string>
     <string name="loginPassword">Password</string>
+
+    <!--User Registration-->
+    <string name="activePasscode">Active Passcode</string>
+    <string name="submit">Submit</string>
+    <string name="userInfor">User Information</string>
+    <string name="createAccount">Create Account</string>
+
+    <!--Object User-->
+    <string name="userFirstName">First Name</string>
+    <string name="userMiddleName">Middle Name (Option)</string>
+    <string name="userLastName">Last Name</string>
+    <string name="userEmail">Email</string>
+    <string name="userPassword">Password</string>
+    <string name="userInstitution">Institution</string>
+    <string name="userCountry">Country</string>
 </resources>

@@ -99,7 +99,7 @@ public class FragmentModifyPasscode extends HelperDateTime{
                 });
 
                 builder.setView(eventListView);
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setTitle("Events").setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         passcodeName.setText(selectedEventName);

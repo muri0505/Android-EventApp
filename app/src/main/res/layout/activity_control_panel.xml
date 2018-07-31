@@ -17,9 +17,14 @@
             android:text="@string/controlEvent"/>
 
         <Button
-            android:id="@+id/passcode"
+            android:id="@+id/controlPasscode"
             style="@style/login"
-            android:text="@string/passcode"/>
+            android:text="@string/controlPasscode"/>
+
+        <Button
+            android:id="@+id/controlUser"
+            style="@style/login"
+            android:text="@string/controlUser"/>
 
         <Button
             android:id="@+id/home"

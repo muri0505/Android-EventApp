@@ -9,7 +9,6 @@
     <string name="eventLocation">Event Location</string>
     <string name="eventVenue">Event Venue</string>
     <string name="events">Events</string>
-    <string name="controlEvent">Control Event</string>
 
     <!-- Home toolbarHelper -->
     <string name="journals">Journals</string>
@@ -19,7 +18,9 @@
     <!-- Control modify -->
     <string name="home">Home</string>
     <string name="control">Control Panel</string>
-    <string name="passcode">Control Passcode</string>
+    <string name="controlEvent">Control Event</string>
+    <string name="controlPasscode">Control Passcode</string>
+    <string name="controlUser">Control User</string>
 
     <string name="level">Level</string>
     <string name="list">List</string>
@@ -100,6 +101,11 @@
     <string name="submit">Submit</string>
     <string name="userInfor">User Information</string>
     <string name="createAccount">Create Account</string>
+    <string name="emailValidation">Email Already Registered</string>
+
+    <!--Object Account-->
+    <string name="accountEmail">Account Email</string>
+    <string name="accountPassword">Account Password</string>
 
     <!--Object User-->
     <string name="userFirstName">First Name</string>

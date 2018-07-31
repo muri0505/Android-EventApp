@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="25dp"
+    android:layout_marginRight="25dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+        <TextView
+            android:id="@+id/userFirstName"
+            android:text="@string/userFirstName"
+            style="@style/userFirstName"/>
+
+        <TextView
+            android:id="@+id/userMiddleName"
+            android:text="@string/userMiddleName"
+            android:layout_toRightOf="@+id/userFirstName"
+            style="@style/userMiddleName"/>
+
+        <TextView
+            android:id="@+id/userLastName"
+            android:text="@string/userLastName"
+            android:layout_toRightOf="@+id/userMiddleName"
+            style="@style/userMiddleName"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/accountEmail"
+            android:text="@string/accountEmail"
+            android:textColor="@color/gray"
+            style="@style/userFirstName"/>
+
+        <TextView
+            android:id="@+id/accountPassword"
+            android:text="@string/accountPassword"
+            android:textColor="@color/gray"
+            android:layout_toRightOf="@+id/accountEmail"
+            style="@style/userFirstName"/>
+    </RelativeLayout>
+</LinearLayout>

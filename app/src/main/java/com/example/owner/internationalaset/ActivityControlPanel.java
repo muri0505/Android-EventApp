@@ -33,10 +33,18 @@ public class ActivityControlPanel extends AppCompatActivity {
             }
         });
 
-        Button passcode = (Button) findViewById(R.id.passcode);
+        Button passcode = (Button) findViewById(R.id.controlPasscode);
         passcode.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent i = new Intent(ActivityControlPanel.this, ActivityControlPasscode.class);
+                startActivity(i);
+            }
+        });
+
+        Button user = (Button) findViewById(R.id.controlUser);
+        user.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(ActivityControlPanel.this, ActivityControlUser.class);
                 startActivity(i);
             }
         });

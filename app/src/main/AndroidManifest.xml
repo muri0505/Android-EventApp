@@ -15,6 +15,7 @@
         <activity android:name=".ActivityControlArticle" />
         <activity android:name=".ActivityControlSession" />
         <activity android:name=".ActivityControlPasscode" />
+        <activity android:name=".ActivityControlUser" />
         <activity android:name=".ActivityControlPanel" />
         <activity android:name=".MainEvent"/>
 

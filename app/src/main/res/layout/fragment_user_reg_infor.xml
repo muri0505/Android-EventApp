@@ -9,22 +9,37 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/login"
-            android:layout_marginTop="15dp"
-            android:text="@string/createAccount" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/createAccount" />
+
+            <TextView
+                android:id="@+id/emailValidation"
+                android:layout_toRightOf="@+id/create"
+                android:visibility="invisible"
+                style="@style/loginEmailReg"
+                android:text="@string/emailValidation" />
+        </RelativeLayout>
 
         <EditText
-            android:id="@+id/userEmail"
-            style="@style/login"
-            android:inputType="text"
-            android:hint="@string/userEmail" />
+            android:id="@+id/accountEmail"
+            style="@style/loginEmail"
+            android:inputType="textEmailAddress"
+            android:hint="@string/accountEmail" />
 
         <EditText
-            android:id="@+id/userPassword"
+            android:id="@+id/accountPassword"
             style="@style/login"
             android:inputType="text"
-            android:hint="@string/userPassword" />
+            android:hint="@string/accountPassword" />
 
         <TextView
             android:id="@+id/userInfor"

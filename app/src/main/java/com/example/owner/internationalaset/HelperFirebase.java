@@ -10,7 +10,7 @@ public class HelperFirebase {
         mDatabase= FirebaseDatabase.getInstance().getReference();
     }
 
-    //event, session, article, keynote
+    //event
     public DatabaseReference helperEvent(){
         return mDatabase.child("Events");
     }
@@ -19,6 +19,7 @@ public class HelperFirebase {
         return mDatabase.child("Events").child(eventKey);
     }
 
+    //session
     public DatabaseReference helperSession(String eventKey){
         return mDatabase.child("Events").child(eventKey).child("Sessions");
     }
@@ -27,6 +28,7 @@ public class HelperFirebase {
         return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey);
     }
 
+    //article
     public DatabaseReference helperArticle(String eventKey, String sessionKey){
         return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Article");
     }
@@ -35,6 +37,7 @@ public class HelperFirebase {
         return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Article").child(articleKey);
     }
 
+    //keynote
     public DatabaseReference helperKeynote(String eventKey, String sessionKey){
         return mDatabase.child("Events").child(eventKey).child("Sessions").child(sessionKey).child("Keynote");
     }
@@ -51,4 +54,9 @@ public class HelperFirebase {
     public DatabaseReference helperPasscodeKey(String passcode){
         return mDatabase.child("Passcode").child(passcode);
     }
+
+    //user
+    public DatabaseReference helperUser() { return mDatabase.child("User"); }
+
+    public DatabaseReference helperUserKey(String userKey) { return mDatabase.child("User").child(userKey); }
 }

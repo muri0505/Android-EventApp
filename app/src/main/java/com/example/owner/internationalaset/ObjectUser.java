@@ -3,7 +3,7 @@ package com.example.owner.internationalaset;
 import android.accounts.Account;
 import java.util.HashMap;
 
-public class ObjectUser extends Account {
+public class ObjectUser extends ObjectAccount {
     private String userFirstName;
     private String userMiddleName;
     private String userLastName;

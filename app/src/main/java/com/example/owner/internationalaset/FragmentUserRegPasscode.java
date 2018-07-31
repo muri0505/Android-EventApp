@@ -17,6 +17,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/*
+    FragmentUserRegPasscode: get input passcode from user, check passcode validation
+    if passcode valid, process to FragmentUserRegInfor
+    cancel button back to listener default
+ */
 public class FragmentUserRegPasscode extends Fragment {
     HelperFirebase helperFirebase = new HelperFirebase();
     ArrayList<String> passcodeCodeList;

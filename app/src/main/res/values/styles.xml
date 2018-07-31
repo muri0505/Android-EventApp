@@ -143,6 +143,23 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
+    <style name="loginEmail">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+    </style>
+
+    <style name="loginEmailReg">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
     <style name="login">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -168,6 +185,23 @@
         <item name="android:textColor">@color/red</item>
         <item name="android:layout_marginLeft">25dp</item>
         <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="userMiddleName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginBottom">2dp</item>
+    </style>
+
+    <style name="userFirstName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginLeft">25dp</item>
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 </resources>

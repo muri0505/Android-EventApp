@@ -30,6 +30,8 @@ public class AdapterListView extends ArrayAdapter {
     ObjectArticle article = null;
     ObjectKeynote keynote = null;
     ObjectPasscode passcode = null;
+    ObjectUser user = null;
+    ObjectAccount account = null;
     int resource;
 
     boolean span = false;
@@ -199,6 +201,27 @@ public class AdapterListView extends ArrayAdapter {
             setTextView(passcodeType,passcode.getPasscodeType());
         }
 
+        if(getObject(position) instanceof ObjectAccount){
+            account = (ObjectAccount) getObject(position);
+            TextView accountEmail = (TextView) view.findViewById(R.id.accountEmail);
+            TextView accountPassword = (TextView) view.findViewById(R.id.accountPassword);
+            setEmail(accountEmail, account.getAccountEmail());
+            setPassword(accountPassword, account.getAccountPassword());
+        }
+
+        if(getObject(position) instanceof ObjectUser){
+            user = (ObjectUser) getObject(position);
+            TextView userFirstName = (TextView) view.findViewById(R.id.userFirstName);
+            TextView userMiddleName = (TextView) view.findViewById(R.id.userMiddleName);
+            TextView userLastName = (TextView) view.findViewById(R.id.userLastName);
+            TextView userInstitution = (TextView) view.findViewById(R.id.userInstitution);
+            TextView userCountry = (TextView) view.findViewById(R.id.userCountry);
+            setName(userFirstName,user.getUserFirstName());
+            setName(userMiddleName,user.getUserMiddleName());
+            setTextView(userLastName,user.getUserLastName());
+            setTextView(userInstitution,user.getUserInstitution());
+            setTextView(userCountry,user.getUserCountry());
+        }
         return view;
     }
 
@@ -242,7 +265,34 @@ public class AdapterListView extends ArrayAdapter {
         if(text != null){
             text.setText("");
             if(!string.equals("")){
-                text.setText("Passcode: " +string);
+                text.setText("Passcode: " + string);
+            }
+        }
+    }
+
+    public void setName(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText(string + " ");
+            }
+        }
+    }
+
+    public void setEmail(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText("Email: " + string);
+            }
+        }
+    }
+
+    public void setPassword(TextView text, String string){
+        if(text != null){
+            text.setText("");
+            if(!string.equals("")){
+                text.setText("Password: " + string);
             }
         }
     }

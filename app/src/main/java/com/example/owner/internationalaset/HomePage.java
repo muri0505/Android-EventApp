@@ -89,6 +89,9 @@ public class HomePage extends HelperUserNavigationView implements FragmentListEv
         bottomNavigation.getMenu().getItem(1).setChecked(true);
     }
 
+    public void navigationView(){
+    }
+
     public void userRegInfor(){
         fragment = new FragmentUserRegInfor();
         fragmentSwitch(fragment);
